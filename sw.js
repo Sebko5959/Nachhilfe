@@ -1,5 +1,5 @@
 // Einfacher Service Worker: App-Hülle offline verfügbar, API immer online
-const C = "nh-shell-v4", SHELL = ["./", "index.html", "manifest.webmanifest", "icon.svg"];
+const C = "nh-shell-v8", SHELL = ["./", "index.html", "manifest.webmanifest", "icon.svg"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(C).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== C).map(x => caches.delete(x)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", e => {

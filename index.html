@@ -3,79 +3,93 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Mathe-Ablage</title>
+<title>Nachhilfe</title>
 <meta name="theme-color" content="#1f4e8c">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Mathe">
+<meta name="apple-mobile-web-app-title" content="Nachhilfe">
 <script>try{var t=localStorage.getItem('nh_theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 <style>
-:root{--bg:#eff1f5;--side:#e6e9ef;--card:#fff;--tx:#25324a;--mut:#667389;--main:#1f5bd6;--on:#fff;--ok:#2f7d1f;--warn:#b26a00;--red:#be0d33;--bd:#ccd3de;--hov:#e4e9f2;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1e1e2e;--side:#181825;--card:#2b2b3d;--tx:#cdd6f4;--mut:#a6adc8;--main:#89b4fa;--on:#11111b;--ok:#a6e3a1;--warn:#f9e2af;--red:#f38ba8;--bd:#45475a;--hov:#313244;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#1e1e2e;--side:#181825;--card:#2b2b3d;--tx:#cdd6f4;--mut:#a6adc8;--main:#89b4fa;--on:#11111b;--ok:#a6e3a1;--warn:#f9e2af;--red:#f38ba8;--bd:#45475a;--hov:#313244;color-scheme:dark}
+:root{--bg:#fafafa;--side:#ffffff;--card:#ffffff;--tx:#171717;--mut:#636b78;--main:#4f46e5;--on:#fff;--ring:#6366f1;--ok:#15803d;--warn:#b45309;--red:#dc2626;--on-s:#fff;--bd:#e5e7eb;--hov:#f3f4f6;--sh:0 1px 2px rgba(16,24,40,.05);--shl:0 12px 32px -8px rgba(16,24,40,.18);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0f19;--side:#0b0f19;--card:#111827;--tx:#e8eaf0;--mut:#9aa3b2;--main:#818cf8;--on:#0b0f19;--ring:#6366f1;--ok:#4ade80;--warn:#fbbf24;--red:#f87171;--on-s:#0b0f19;--bd:#1f2937;--hov:#182030;--sh:0 1px 2px rgba(0,0,0,.4);--shl:0 16px 40px -8px rgba(0,0,0,.6);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b0f19;--side:#0b0f19;--card:#111827;--tx:#e8eaf0;--mut:#9aa3b2;--main:#818cf8;--on:#0b0f19;--ring:#6366f1;--ok:#4ade80;--warn:#fbbf24;--red:#f87171;--on-s:#0b0f19;--bd:#1f2937;--hov:#182030;--sh:0 1px 2px rgba(0,0,0,.4);--shl:0 16px 40px -8px rgba(0,0,0,.6);color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--tx);padding-bottom:env(safe-area-inset-bottom)}
-.ic{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;flex:none}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font:15px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Segoe UI",system-ui,sans-serif;letter-spacing:-.006em;-webkit-font-smoothing:antialiased;background:var(--bg);color:var(--tx);padding-bottom:env(safe-area-inset-bottom)}
+::selection{background:color-mix(in srgb,var(--ring) 30%,transparent)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;z-index:200}.skip:focus{left:8px}
+.ic{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;flex:none}
 .ic.f{fill:currentColor}
-header{background:var(--side);border-bottom:1px solid var(--bd);padding:calc(12px + env(safe-area-inset-top)) 16px 12px}
-header .in{max-width:960px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem}
-.logo span.m{width:32px;height:32px;border-radius:8px;background:var(--main);color:var(--on);display:grid;place-items:center}
-main{max-width:960px;margin:auto;padding:16px}
-nav.tabs{display:flex;gap:6px;margin:0 0 16px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--side) 82%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--bd);padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
+header .in{max-width:960px;margin:auto;flex-wrap:wrap;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:650;font-size:1rem;letter-spacing:-.02em}
+.logo span.m{width:28px;height:28px;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15),var(--sh);background:var(--main);color:var(--on);display:grid;place-items:center}
+main{max-width:960px;margin:auto;padding:20px 16px 40px}
+nav.tabs{display:flex;gap:4px;margin:0 0 22px;overflow-x:auto;border-bottom:1px solid var(--bd);scrollbar-width:none}
 nav.tabs::-webkit-scrollbar{display:none}
-.tab{display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid transparent;color:var(--mut);border-radius:8px;padding:9px 13px;font-weight:600;white-space:nowrap}
-.tab.on{background:var(--hov);color:var(--main);border-color:var(--bd)}
-.view{display:none}.view.on{display:block}
-h1{font-size:1.35rem;margin:0 0 14px}
-h3{font-size:1rem;margin:0 0 10px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:14px;overflow-wrap:break-word}
+.tab{display:inline-flex;align-items:center;gap:7px;background:transparent!important;border:0;border-bottom:2px solid transparent;color:var(--mut)!important;border-radius:0;padding:10px 12px;margin-bottom:-1px;font-weight:550;font-size:.9rem;white-space:nowrap;box-shadow:none!important}
+.tab:hover{color:var(--tx)!important;filter:none}
+.tab.on{color:var(--tx)!important;border-bottom-color:var(--ring)}
+.tab.on .ic{color:var(--ring)}
+.view{display:none}.view.on{display:block;animation:fin .22s ease both}
+@keyframes fin{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+h1{font-size:1.5rem;font-weight:650;letter-spacing:-.025em;margin:0 0 16px}
+h3{font-size:.95rem;font-weight:620;letter-spacing:-.01em;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:12px;overflow-wrap:break-word;box-shadow:var(--sh);transition:border-color .15s,box-shadow .15s}
+.card:hover{border-color:color-mix(in srgb,var(--tx) 16%,var(--bd))}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:14px;align-items:start;margin-bottom:14px}
 .grid>.card{margin-bottom:0}
-button,.btn{font:inherit;font-weight:600;font-size:.92rem;border:0;border-radius:7px;padding:9px 14px;background:var(--main);color:var(--on);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;touch-action:manipulation}
-button.g,.btn.g{background:var(--bd);color:var(--tx)}
-button.r{background:var(--red);color:#fff}
-button.s,.btn.s{padding:6px 10px;font-size:.84rem}
-button:disabled{opacity:.5}
-:focus-visible{outline:2px solid var(--main);outline-offset:2px}
-input,select,textarea{font:inherit;padding:9px 10px;border-radius:7px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);max-width:100%;width:100%}
-input[type=checkbox]{width:auto}
+button,.btn{font:inherit;font-weight:560;font-size:.88rem;border:1px solid transparent;border-radius:8px;padding:8px 14px;min-height:36px;background:var(--main);color:var(--on);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;touch-action:manipulation;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),var(--sh);transition:background-color .15s,border-color .15s,filter .15s,transform .1s}
+button:hover,.btn:hover{filter:brightness(1.08)}
+button:active,.btn:active{transform:scale(.98);filter:brightness(.96)}
+button.g,.btn.g{background:transparent;color:var(--tx);border-color:var(--bd);box-shadow:none}
+button.g:hover,.btn.g:hover{background:var(--hov);filter:none}
+button.r{background:var(--red);color:var(--on-s)}
+button.s,.btn.s{padding:5px 10px;min-height:30px;font-size:.82rem}
+button:disabled{opacity:.5;pointer-events:none}
+:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+input,select,textarea{font:inherit;font-size:.92rem;padding:8px 11px;min-height:38px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);max-width:100%;width:100%;transition:border-color .15s,box-shadow .15s}
+input::placeholder,textarea::placeholder{color:color-mix(in srgb,var(--mut) 75%,transparent)}
+input:hover,select:hover,textarea:hover{border-color:color-mix(in srgb,var(--tx) 22%,var(--bd))}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:0;border-color:var(--ring);box-shadow:0 0 0 3px color-mix(in srgb,var(--ring) 25%,transparent)}
+input[type=checkbox]{width:auto;min-height:0;accent-color:var(--ring)}
 textarea{resize:vertical;min-height:90px}
-.lbl{display:block;font-size:.82rem;color:var(--mut);margin:10px 0 4px}
+.lbl{display:block;font-size:.78rem;font-weight:550;color:var(--mut);margin:14px 0 5px}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .row>*{width:auto}.row>input,.row>select{flex:1;min-width:120px}
-.meta{color:var(--mut);font-size:.85rem}
-.seg{display:flex;background:var(--side);border-radius:8px;padding:3px;gap:3px;margin-bottom:10px}
-.seg button{flex:1;background:none;color:var(--mut);padding:8px;font-weight:500;justify-content:center}
-.seg button.on{background:var(--hov);color:var(--main);font-weight:700}
-.chip{display:inline-flex;align-items:center;gap:6px;background:var(--hov);color:var(--tx);border-radius:999px;padding:5px 12px;margin:0 6px 6px 0;font-size:.84rem;font-weight:500;border:1px solid transparent}
-.chip.on{background:var(--main);color:var(--on)}
+.meta{color:var(--mut);font-size:.84rem}
+.seg{display:flex;background:var(--hov);border-radius:9px;padding:3px;gap:3px;margin-bottom:10px}
+.seg button{flex:1;background:none;color:var(--mut);padding:6px;font-weight:520;justify-content:center;box-shadow:none;border-radius:7px}
+.seg button.on{background:var(--card);color:var(--tx);font-weight:600;box-shadow:var(--sh),0 0 0 1px var(--bd)}
+.chip{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--tx);border-radius:999px;padding:4px 12px;margin:0 6px 6px 0;font-size:.82rem;font-weight:500;border:1px solid var(--bd);transition:background-color .15s,border-color .15s}
+label.chip:hover{background:var(--hov)}
+.chip.on{background:var(--main);color:var(--on);border-color:transparent}
 label.chip input{margin:0}
 .file{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .file b{word-break:break-word}
 .file.isdone{opacity:.62}
-.star{background:transparent!important;color:var(--mut)!important;padding:5px 7px!important}
+.star{background:transparent!important;color:var(--mut)!important;padding:5px 7px!important;box-shadow:none!important;border-color:transparent!important}
 .star.on{color:#d9a000!important}
 .done{display:flex;align-items:center;gap:7px;font-size:.84rem;color:var(--mut);margin-top:4px}
 .done input{width:18px;height:18px;accent-color:var(--ok)}
-.bar{height:9px;background:var(--hov);border-radius:99px;overflow:hidden}
+.bar{height:6px;background:var(--hov);border-radius:99px;overflow:hidden}
 .bar>i{display:block;height:100%;background:var(--ok);transition:width .4s}
-.big{font-size:2.6rem;font-weight:800;color:var(--main);line-height:1}
+.big{font-size:2.4rem;font-weight:700;letter-spacing:-.03em;color:var(--main);line-height:1}
 .hero{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-.tm{font-size:4rem;font-weight:800;text-align:center;font-variant-numeric:tabular-nums;color:var(--main);line-height:1.1}
+.tm{font-size:4.2rem;font-weight:650;letter-spacing:-.04em;text-align:center;font-variant-numeric:tabular-nums;color:var(--main);line-height:1.1}
 .grade{display:inline-block;min-width:32px;text-align:center;border-radius:8px;padding:2px 9px;font-weight:800;color:#fff}
 .g1,.g2{background:#2f7d1f}.g3{background:#b26a00}.g4,.g5{background:#be0d33}
-#drop{border:2px dashed var(--bd);border-radius:12px;padding:20px;text-align:center;color:var(--mut)}
-#drop.over{border-color:var(--main);background:var(--hov)}
+#drop{border:1px dashed color-mix(in srgb,var(--tx) 25%,var(--bd));border-radius:10px;padding:20px;text-align:center;color:var(--mut);transition:border-color .15s,background-color .15s}
+#drop.over{border-color:var(--ring);background:color-mix(in srgb,var(--ring) 8%,transparent)}
 #off{display:none;background:#b26a00;color:#fff;text-align:center;padding:6px;font-size:.85rem}
 #toasts{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:8px;z-index:100;pointer-events:none}
-.toast{pointer-events:auto;background:#222b38;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 4px 18px rgba(0,0,0,.35);display:flex;gap:12px;align-items:center;max-width:92vw}
-.toast.err{background:var(--red)}
-.toast button{background:transparent;color:#9cc4ff;padding:0 4px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;display:none;align-items:center;justify-content:center;padding:12px}
+.toast{pointer-events:auto;background:#111827;color:#f3f4f6;border:1px solid #2a3344;font-size:.88rem;padding:10px 14px;border-radius:10px;box-shadow:var(--shl);animation:fin .2s ease both;display:flex;gap:12px;align-items:center;max-width:92vw}
+.toast.err{background:#7f1d1d;border-color:#b91c1c}
+.toast button{background:transparent;color:#a5b4fc;padding:0 4px;min-height:0;box-shadow:none}
+.modal{position:fixed;inset:0;background:rgba(5,8,15,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:50;display:none;align-items:center;justify-content:center;padding:12px}
 .modal.on{display:flex}
-.box{background:var(--card);border-radius:14px;width:min(900px,100%);max-height:94vh;display:flex;flex-direction:column;overflow:hidden}
+.box{background:var(--card);border:1px solid var(--bd);box-shadow:var(--shl);animation:fin .2s ease both;border-radius:14px;width:min(900px,100%);max-height:94vh;display:flex;flex-direction:column;overflow:hidden}
 .box .hd{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--bd)}
 .box .bd{padding:14px;overflow:auto;flex:1}
 #pvbody{overflow:auto;background:#8a8f98;max-height:76vh;text-align:center;-webkit-overflow-scrolling:touch;min-height:120px}
@@ -84,15 +98,58 @@ label.chip input{margin:0}
 #pvbody .msg{padding:30px;color:#fff}
 .tb{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .linkc{display:flex;justify-content:space-between;align-items:center;gap:10px;color:inherit;text-decoration:none}
-.linkc:hover{border-color:var(--main)}
+.linkc:hover{border-color:var(--ring)}
 .hide{display:none!important}
 .empty{text-align:center;color:var(--mut);padding:20px}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.92rem}.kv span:nth-child(odd){color:var(--mut)}
 textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monospace}
-.note{font-size:.84rem;color:var(--mut);border-left:3px solid var(--bd);padding-left:10px;margin-top:10px}
+.note{font-size:.82rem;color:var(--mut);border-left:2px solid var(--bd);padding-left:10px;margin-top:10px}
+.neu{display:inline-block;background:color-mix(in srgb,var(--ring) 14%,transparent);color:var(--main);font-size:.68rem;font-weight:650;border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:2px;letter-spacing:.03em}
+.wich{display:inline-block;background:#d9a000;color:#1b1b1b;font-size:.7rem;font-weight:700;border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:2px}
+.card.col{border-left:3px solid var(--c);background:color-mix(in srgb,var(--c) 9%,var(--card))}
+.card.hl{box-shadow:0 0 0 2px var(--c,#d9a000),0 4px 16px rgba(0,0,0,.18);background:color-mix(in srgb,var(--c,#d9a000) 16%,var(--card))}
+.card.hl b{font-size:1.05rem}
+[data-color=red]{--c:#d64545}[data-color=orange]{--c:#e07b1a}[data-color=yellow]{--c:#d9a000}[data-color=green]{--c:#2f9e44}[data-color=blue]{--c:#1f5bd6}[data-color=purple]{--c:#8a4fd6}
+.dots{display:flex;gap:8px;flex-wrap:wrap}
+.cdot{min-height:0;box-shadow:none;width:30px;height:30px;border-radius:50%;border:3px solid transparent;background:var(--c,var(--bd));padding:0;cursor:pointer}
+.cdot.on{border-color:var(--tx)}
+.cdot.none{background:var(--card);border:2px dashed var(--bd)}
+.cdot.none.on{border:3px solid var(--tx)}
+.mv{display:flex;flex-direction:column;gap:2px}
+.mv button{padding:1px 8px;min-height:0}
+.streak{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.sdots{display:flex;gap:6px}
+.sd{width:26px;height:26px;border-radius:50%;background:var(--hov);display:grid;place-items:center;font-size:.68rem;color:var(--mut);font-weight:700}
+.sd.on{background:var(--ok);color:var(--on-s)}
+.sd.today{outline:2px solid var(--ring);outline-offset:1px}
+.board{border-left:3px solid var(--ring)}
+.board .txt{white-space:pre-wrap;margin:6px 0 0}
+.gate{max-width:400px;margin:14vh auto 0;padding:0 16px}
+.gate .card{padding:26px;box-shadow:var(--shl)}
+.gate h1{font-size:1.4rem}
+.badge{display:inline-block;min-width:18px;text-align:center;background:var(--red);color:var(--on-s);font-size:.68rem;font-weight:700;border-radius:999px;padding:0 6px;margin-left:2px}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:1px 9px;margin-left:6px;vertical-align:2px;background:var(--hov);color:var(--mut)}
+.pill.ok{background:var(--ok);color:var(--on-s)}.pill.warn{background:#d9a000;color:#1b1b1b}.pill.bad{background:var(--red);color:var(--on-s)}
+.sec{display:flex;align-items:center;gap:8px;margin:24px 0 10px;color:var(--mut)}
+.sec h3{margin:0;flex:1;font-size:.74rem;font-weight:650;text-transform:uppercase;letter-spacing:.07em}
+.qq{margin-bottom:12px}
+.qq label.opt{display:flex;gap:8px;align-items:center;padding:8px 11px;border:1px solid var(--bd);border-radius:8px;margin-top:6px;cursor:pointer;transition:background-color .15s,border-color .15s}
+.qq label.opt:hover{background:var(--hov)}
+.qq label.opt input{width:auto}
+.res{display:flex;gap:10px;align-items:flex-start}
+.res .ic{width:22px;height:22px;margin-top:2px}
+.res.ok .ic{color:var(--ok)}.res.no .ic{color:var(--red)}
+.bubble{max-width:82%;padding:8px 12px;border-radius:14px;margin:6px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.bubble.me{margin-left:auto;background:var(--main);color:var(--on);border-bottom-right-radius:4px}
+.bubble.you{background:var(--hov);border-bottom-left-radius:4px}
+.bubble small{display:block;opacity:.7;font-size:.7rem;margin-top:2px}
+#msglist{max-height:55vh;overflow:auto;display:flex;flex-direction:column}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<a class="skip" href="#app">Zum Inhalt springen</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
 <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
@@ -111,32 +168,47 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
 <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
 <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
 <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></symbol>
+<symbol id="i-task" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 12l2 2 4-4"/></symbol>
+<symbol id="i-up" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></symbol>
+<symbol id="i-dn" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
 <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M8 7h7"/></symbol>
 </defs></svg>
 
 <div id="off">Offline – Änderungen sind gerade nicht möglich.</div>
 <header><div class="in">
-  <div class="logo"><span class="m"><svg class="ic"><use href="#i-book"/></svg></span>Mathe-Ablage</div>
+  <div class="logo"><span class="m"><svg class="ic"><use href="#i-book"/></svg></span>Nachhilfe</div>
   <div class="row" style="gap:6px">
+    <select id="cs" class="hide" aria-label="Kurs" style="min-width:0;max-width:170px;padding:6px 8px"></select>
+    <select id="ss" class="hide" aria-label="Schüler" style="min-width:0;max-width:150px;padding:6px 8px"></select>
     <button class="g s hide" id="trashBtn"><svg class="ic"><use href="#i-trash"/></svg>Papierkorb</button>
-    <button class="g s" id="loginBtn"><svg class="ic"><use href="#i-lock"/></svg>Admin</button>
     <button class="g s hide" id="logoutBtn"><svg class="ic"><use href="#i-lock"/></svg>Abmelden</button>
   </div>
 </div></header>
 
-<main>
+<div id="gate" class="gate hide"><div class="card">
+  <h1 style="margin-bottom:6px">Anmelden</h1>
+  <p class="meta" style="margin-top:0">Melde dich mit deiner E-Mail-Adresse und deinem Passwort an.</p>
+  <label class="lbl" for="nm" style="margin-top:12px">E-Mail-Adresse</label>
+  <input id="nm" type="email" inputmode="email" placeholder="name@example.com" autocomplete="username" autocapitalize="off" spellcheck="false">
+  <label class="lbl" for="pw">Passwort</label>
+  <input type="password" id="pw" autocomplete="current-password">
+  <div style="margin-top:12px"><button id="pwGo">Anmelden</button></div>
+</div></div>
+<main id="app" class="hide">
+  <div id="nocourse" class="card hide"><b>Noch kein Kurs</b><p class="meta" style="margin:4px 0 0">Du bist noch keinem Kurs zugeteilt. Dein Nachhilfelehrer fügt dich hinzu.</p></div>
   <nav class="tabs" role="tablist" aria-label="Bereiche">
     <button class="tab on" data-v="files"><svg class="ic"><use href="#i-file"/></svg>Dateien</button>
     <button class="tab" data-v="timer"><svg class="ic"><use href="#i-timer"/></svg>Lerntimer</button>
     <button class="tab" data-v="grades"><svg class="ic"><use href="#i-chart"/></svg>Noten</button>
     <button class="tab" data-v="ai"><svg class="ic"><use href="#i-spark"/></svg>KI-Prompts</button>
+    <button class="tab" data-v="msg"><svg class="ic"><use href="#i-msg"/></svg>Nachrichten<span class="badge hide" id="msgbadge">0</span></button>
+    <button class="tab hide" id="tabSim" data-v="sim"><svg class="ic"><use href="#i-user"/></svg>Schüler</button>
     <button class="tab" data-v="links"><svg class="ic"><use href="#i-link"/></svg>Links</button>
     <button class="tab" data-v="set"><svg class="ic"><use href="#i-gear"/></svg>Einstellungen</button>
   </nav>
-
-  <div id="login" class="card hide">
-    <div class="row"><input type="password" id="pw" placeholder="Admin-Passwort" autocomplete="current-password"><button id="pwGo">Anmelden</button></div>
-  </div>
 
   <!-- ===== Dateien ===== -->
   <section class="view on" id="v-files">
@@ -145,9 +217,19 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
       <label class="lbl" for="cat">Kategorie</label>
       <input list="cats" id="cat" value="Erklärzettel">
       <datalist id="cats"><option>Erklärzettel</option><option>Blitz</option><option>Lösungen</option><option>Übungen</option><option>Schularbeit</option><option>Formelkarte</option></datalist>
-      <div id="drop" style="margin-top:12px">PDFs hierher ziehen oder <button class="s" id="pick"><svg class="ic"><use href="#i-plus"/></svg>Dateien wählen</button>
+      <div class="row" style="margin-top:10px"><button class="g s" id="newQuiz"><svg class="ic"><use href="#i-plus"/></svg>Neues Quiz</button><button class="g s" id="newTask"><svg class="ic"><use href="#i-plus"/></svg>Neue Aufgabe</button></div>
+      <label class="chip" style="margin-top:10px"><input type="checkbox" id="unotify" checked> Teilnehmer per E-Mail benachrichtigen</label>
+      <div id="drop" style="margin-top:6px">PDFs hierher ziehen oder <button class="s" id="pick"><svg class="ic"><use href="#i-plus"/></svg>Dateien wählen</button>
         <input type="file" id="fi" multiple accept=".pdf,application/pdf,image/*" class="hide"></div>
     </div>
+    <div id="board" class="card board hide"></div>
+    <div id="boardEd" class="card hide">
+      <h3>Pinnwand (Nachricht an alle im Kurs)</h3>
+      <textarea id="bin" rows="3" placeholder="Wichtige Meldung, z. B. Morgen bitte Zettel 3 fertig machen"></textarea>
+      <label class="chip" style="margin-top:8px"><input type="checkbox" id="bmail" checked> Auch per E-Mail senden</label>
+      <div class="row" style="margin-top:6px"><button id="bpub">Veröffentlichen</button><button class="g" id="bclr">Entfernen</button></div>
+    </div>
+    <div id="streak" class="card"></div>
     <div id="hero" class="card hide"></div>
     <div class="card hide" id="prog"></div>
     <div class="row"><input id="q" type="search" placeholder="Suchen …" aria-label="Suchen">
@@ -228,7 +310,7 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
       <div class="card"><h3>3 · Über mich</h3>
         <div class="kv" style="margin-bottom:6px"><span>Schule</span><b id="psch">–</b><span>Klasse</span><b id="pcl">–</b><span>Zweig</span><b id="pzw">–</b></div>
         <p class="meta" style="margin:0 0 4px">Schule, Klasse und Zweig stellt dein Nachhilfelehrer ein.</p>
-        <label class="lbl" for="aname">Vorname (optional)</label><input id="aname" placeholder="z. B. Simon" autocomplete="given-name">
+        <label class="lbl" for="aname">Vorname (optional)</label><input id="aname" placeholder="Vorname" autocomplete="given-name">
         <label class="lbl" for="aint">Das interessiert mich (für Beispiele)</label><input id="aint" placeholder="z. B. Videos schneiden, Games, Fußball">
         <label class="lbl" for="atried">Wo hänge ich gerade? (optional)</label><input id="atried" placeholder="z. B. Ich verstehe das Kürzen nicht">
       </div>
@@ -251,6 +333,21 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
       </div>
       <p class="note">Tipp: Die KI kann Fehler machen. Rechne wichtige Ergebnisse nach und frag im Zweifel bei deinem Nachhilfelehrer oder in der Schule nach.</p>
     </div>
+  </section>
+
+  <!-- ===== Nachrichten ===== -->
+  <section class="view" id="v-msg">
+    <h1>Nachrichten</h1>
+    <div class="card"><div id="msglist"></div>
+      <textarea id="msgin" rows="2" placeholder="Nachricht schreiben …" style="margin-top:10px;min-height:60px"></textarea>
+      <div class="row" style="margin-top:8px"><button id="msgsend">Senden</button>
+        <label class="chip adm hide" id="msgmailw"><input type="checkbox" id="msgmail"> Auch per E-Mail an <span id="msgto">den Schüler</span></label></div></div>
+  </section>
+
+  <!-- ===== Simon (Übersicht für Admin) ===== -->
+  <section class="view" id="v-sim">
+    <h1 id="simh">Übersicht</h1>
+    <div id="simbox"><div class="empty">Lade …</div></div>
   </section>
 
   <!-- ===== Links ===== -->
@@ -277,6 +374,11 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
       </div>
       <div class="card"><h3>Schule und Klasse</h3><div id="schbox"></div></div>
       <div class="card"><h3>Schularbeiten und Tests</h3><div id="tbox"></div></div>
+      <div class="card hide" id="peoplecard" style="grid-column:1/-1"><h3>Kurse und Personen (nur Admin)</h3><div id="peoplebox"></div></div>
+      <div class="card hide" id="coursecard"><h3>Inhalt dieses Kurses (nur Admin)</h3>
+        <p class="meta" style="margin-top:0">Fertige Übungsquizze zu Wurzeln, Reellen Zahlen, Termen und Bruchtermen mit einem Klick laden. Du kannst sie danach bearbeiten oder löschen.</p>
+        <button class="s" id="seedq">Starter-Quizze laden</button></div>
+      <div class="card hide" id="mailcard"><h3>E-Mail-Erinnerungen (nur Admin)</h3><div id="mailbox"></div></div>
       <div class="card"><h3>Backup</h3>
         <p class="meta" style="margin-top:0">Erledigt-Häkchen, Favoriten, Noten, Lernzeit und dein Profil liegen nur auf diesem Gerät. Hier kannst du sie sichern oder wiederherstellen.</p>
         <div class="row"><button class="s" id="bkx"><svg class="ic"><use href="#i-down"/></svg>Backup speichern</button>
@@ -301,6 +403,8 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
   <div class="bd">
     <label class="lbl" for="edn" style="margin-top:0">Name</label><input id="edn">
     <label class="lbl" for="edc">Kategorie</label><input id="edc" list="cats">
+    <span class="lbl">Farbe</span><div class="dots" id="edcol"></div>
+    <label class="chip" style="margin-top:12px"><input type="checkbox" id="edhl"> Hervorheben (wichtig)</label>
     <div style="margin-top:14px"><button id="eds">Speichern</button></div>
   </div>
 </div></div>
@@ -311,6 +415,43 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
   <div class="bd" id="trl"></div>
 </div></div>
 
+<!-- Quiz-Player -->
+<div class="modal" id="qzm"><div class="box" style="width:min(680px,100%)">
+  <div class="hd"><b id="qzt"></b><button class="g s" id="qzx" aria-label="Schließen"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="bd" id="qzb"></div>
+</div></div>
+
+<!-- Quiz bearbeiten -->
+<div class="modal" id="qem"><div class="box" style="width:min(640px,100%)">
+  <div class="hd"><b>Quiz</b><button class="g s" id="qex" aria-label="Schließen"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="bd">
+    <label class="lbl" for="qetitle" style="margin-top:0">Titel</label><input id="qetitle" placeholder="z. B. Wurzeln – Basics">
+    <label class="lbl" for="qecat">Abschnitt</label><input id="qecat" list="cats" placeholder="z. B. Wurzeln">
+    <label class="lbl" for="qesrc">Fragen (eine pro Zeile)</label>
+    <textarea id="qesrc" rows="10" placeholder="Wie viel ist √81? ; 9 ; weil 9·9=81"></textarea>
+    <p class="note">Format: <b>Frage ; Antwort ; Erklärung</b> (Erklärung optional). Mehrere richtige Schreibweisen mit <b>|</b> trennen, z. B. <i>3/4 | 0,75</i>. Zahlen werden tolerant geprüft (Komma/Bruch). Mehrfachauswahl: <i>Frage ; ? falsch | richtig* | falsch</i> (richtige Option mit * markieren).</p>
+    <div style="margin-top:12px"><button id="qes">Speichern</button></div>
+  </div>
+</div></div>
+
+<!-- Aufgabe ansehen / abgeben / bewerten -->
+<div class="modal" id="tkm"><div class="box" style="width:min(640px,100%)">
+  <div class="hd"><b id="tkt"></b><button class="g s" id="tkx" aria-label="Schließen"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="bd" id="tkb"></div>
+</div></div>
+
+<!-- Aufgabe bearbeiten -->
+<div class="modal" id="tem"><div class="box" style="width:min(520px,100%)">
+  <div class="hd"><b>Aufgabe</b><button class="g s" id="tex" aria-label="Schließen"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="bd">
+    <label class="lbl" for="tetitle" style="margin-top:0">Titel</label><input id="tetitle" placeholder="z. B. Zettel 3, Nr. 1 bis 5">
+    <label class="lbl" for="tecat">Abschnitt</label><input id="tecat" list="cats">
+    <label class="lbl" for="tedue">Abgabe bis (optional)</label><input id="tedue" type="date">
+    <label class="lbl" for="tedesc">Beschreibung</label><textarea id="tedesc" rows="4" placeholder="Was soll Simon machen?"></textarea>
+    <div style="margin-top:12px"><button id="tes">Speichern</button></div>
+  </div>
+</div></div>
+
 <div id="toasts" aria-live="polite"></div>
 
 <script>
@@ -318,9 +459,10 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
 const API = "https://nachhilfe-dateien.trecka-peter123.workers.dev";
 
 const $ = id => document.getElementById(id);
+const SYNC = ["nh_done","nh_fav","nh_grades","nh_active","nh_log","nh_seen","nh_mytests","nh_recent"];
 const store = {
   get(k){ try{ return localStorage.getItem(k) }catch(e){ return null } },
-  set(k,v){ try{ localStorage.setItem(k,v) }catch(e){} },
+  set(k,v){ try{ localStorage.setItem(k,v) }catch(e){} if(SYNC.includes(k) && typeof schedulePush === "function") schedulePush(); },
   del(k){ try{ localStorage.removeItem(k) }catch(e){} },
 };
 const J = (k, d) => { try{ return JSON.parse(store.get(k)) || d }catch(e){ return d } };
@@ -329,7 +471,7 @@ const ic = (n, cls = "") => `<svg class="ic ${cls}"><use href="#i-${n}"/></svg>`
 const size = n => n > 1048576 ? (n/1048576).toFixed(1)+" MB" : Math.max(1,Math.round(n/1024))+" KB";
 const dt = s => s ? new Date(s).toLocaleDateString("de-AT") : "";
 const isImg = f => (f.type||"").startsWith("image/");
-const fileUrl = (id, dl) => `${API}/api/file/${encodeURIComponent(id)}${dl?"?download=1":""}`;
+const fileUrl = (id, dl) => `${API}/api/file/${encodeURIComponent(id)}?t=${encodeURIComponent(token || "")}&c=${encodeURIComponent(CID)}${dl?"&download=1":""}`;
 const DEFAULT_CFG = { school:"Brucknergymnasium", klasse:"4. Klasse", zweig:"Medienzweig" };
 const DEFAULT_LINKS = [
   { name:"Serlo – Mathe erklärt", url:"https://de.serlo.org/mathe", cat:"Mathe" },
@@ -340,11 +482,15 @@ const DEFAULT_LINKS = [
   { name:"LEO – Wörterbuch", url:"https://dict.leo.org/", cat:"Deutsch & Sprachen" },
 ];
 
-let DONE = J("nh_done", {}), FAV = J("nh_fav", {}), RECENT = J("nh_recent", []), onlyFav = false, cfg = {};
+let COURSES = [], CID = store.get("nh_course") || "", MEMBERS = [], SUID = "", MYUID = "", MYNAME = "", PEOPLE = null, pedit = null;
+const SNAME = () => ADM ? ((MEMBERS.find(m => m.id === SUID) || {}).name || "Teilnehmer") : MYNAME;
+let ROLE = null, ADM = false, QZ = [], TK = [], COURSE = { order: [] }, MSG = [], SEEN = J("nh_seen", {}), BOARD = {}, MAIL = null, edColor = "", DONE = J("nh_done", {}), FAV = J("nh_fav", {}), RECENT = J("nh_recent", []), onlyFav = false, cfg = {};
 let token = store.get("nh_token"), files = [], cat = "", sorting = store.get("nh_sort") || "cat", editId = null;
 $("sort").value = sorting;
 const C = () => ({ ...DEFAULT_CFG, ...cfg });
 const LINKS = () => Array.isArray(cfg.links) ? cfg.links : DEFAULT_LINKS;
+function markSeen(id){ if(!SEEN[id]){ SEEN[id] = 1; store.set("nh_seen", JSON.stringify(SEEN)); render(); } }
+document.addEventListener("click", e => { const a = e.target.closest("a[href*='download=1']"); if(a){ const m = a.href.match(/\/api\/file\/([^?]+)/); if(m) markSeen(decodeURIComponent(m[1])); } });
 function markRecent(id){ RECENT = [id, ...RECENT.filter(x => x !== id)].slice(0, 5); store.set("nh_recent", JSON.stringify(RECENT)); }
 
 /* ---------- Toast ---------- */
@@ -363,6 +509,8 @@ function toast(text, o = {}){
 async function api(path, opt = {}){
   const h = { ...(opt.headers||{}) };
   if(token) h.Authorization = "Bearer " + token;
+  if(CID) h["X-Course"] = CID;
+  if(ADM && SUID) h["X-User"] = SUID;
   const r = await fetch(API + path, { ...opt, headers: h });
   let data = {}; try{ data = await r.json() }catch(e){}
   if(r.status === 401 && token && !path.startsWith("/api/login")){ logout(true); }
@@ -378,8 +526,10 @@ async function saveCfg(patch){
 
 /* ---------- Tabs ---------- */
 function showTab(v){
+  if(v === "sim") drawSim();
   document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x.dataset.v === v));
   document.querySelectorAll(".view").forEach(x => x.classList.toggle("on", x.id === "v-" + v));
+  if(v === "msg"){ loadMsgs(); } else if(MSG.length) drawMsgs();
 }
 document.querySelectorAll(".tab").forEach(b => b.onclick = () => showTab(b.dataset.v));
 
@@ -401,10 +551,26 @@ async function load(){
   try{ files = await api("/api/files"); render(); fillFileSelect(); }
   catch(e){ toast("Liste konnte nicht geladen werden (API-Adresse prüfen).", {err:true}); }
 }
+const catSort = arr => [...arr].sort((a, b) => (b.pos === undefined) - (a.pos === undefined) || (a.pos ?? 0) - (b.pos ?? 0));
+async function saveLayout(){
+  const order = files.filter(f => f.pos !== undefined).sort((a,b) => a.pos - b.pos).map(f => f.id);
+  const marks = {}; files.forEach(f => { if(f.color || f.hl) marks[f.id] = { color: f.color || "", hl: !!f.hl }; });
+  await api("/api/layout", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ order, marks }) });
+}
+async function moveFile(id, dir){
+  const f = files.find(x => x.id === id); if(!f) return;
+  const grp = catSort(files.filter(x => (x.category||"Sonstiges") === (f.category||"Sonstiges")));
+  const i = grp.findIndex(x => x.id === id), j = i + dir; if(j < 0 || j >= grp.length) return;
+  [grp[i], grp[j]] = [grp[j], grp[i]];
+  const ids = grp.map(x => x.id), rest = files.filter(x => x.pos !== undefined && !ids.includes(x.id)).sort((a,b) => a.pos - b.pos).map(x => x.id);
+  [...rest, ...ids].forEach((fid, k) => { files.find(x => x.id === fid).pos = k });
+  render();
+  try{ await saveLayout(); }catch(e){ toast(e.message, {err:true}); load(); }
+}
 function render(){
   drawHero();
   const q = $("q").value.toLowerCase();
-  const cats = [...new Set(files.map(f => f.category || "Sonstiges"))].sort();
+  const cats = secOrder([...new Set([...files.map(f => f.category), ...QZ.map(x => x.cat), ...TK.map(x => x.cat)].map(c => c || "Sonstiges"))]);
   if(cat && !cats.includes(cat)) cat = "";
   $("chips").innerHTML = (cats.length > 1 ? ["", ...cats].map(c =>
     `<button class="chip${c===cat&&!onlyFav?" on":""}" data-c="${esc(c)}">${c ? esc(c) : "Alle"}</button>`).join("") : "")
@@ -413,27 +579,54 @@ function render(){
   $("prog").classList.toggle("hide", !files.length);
   $("prog").innerHTML = `<div class="row" style="justify-content:space-between"><b>Dein Fortschritt</b><span class="meta">${nd} von ${files.length} erledigt</span></div><div class="bar" style="margin-top:8px"><i style="width:${files.length ? nd/files.length*100 : 0}%"></i></div>`;
   let list = files.filter(f => (f.name+" "+f.category).toLowerCase().includes(q) && (!cat || (f.category||"Sonstiges")===cat) && (!onlyFav || FAV[f.id]));
+  const canMove = ADM && sorting === "cat" && !q && !onlyFav;
   if(sorting === "new") list.sort((a,b) => (b.date||"").localeCompare(a.date||""));
   if(sorting === "name") list.sort((a,b) => a.name.localeCompare(b.name, "de", {numeric:true}));
-  const card = f => `
-    <div class="card file${DONE[f.id]?" isdone":""}">
-      <div><b>${esc(f.name)}</b><div class="meta">${esc(f.category||"")} · ${size(f.size||0)} · ${dt(f.date)}</div>
+  const isNew = f => !SEEN[f.id] && f.date && (Date.now() - new Date(f.date).getTime()) < 30 * 86400000;
+  const card = (f, i, arr) => `
+    <div class="card file${DONE[f.id]?" isdone":""}${f.color?" col":""}${f.hl?" hl":""}"${f.color ? ` data-color="${f.color}"` : (f.hl ? ' data-color="yellow"' : "")}>
+      ${canMove ? `<div class="mv"><button class="g s" data-a="up" data-id="${esc(f.id)}" ${i===0?"disabled":""} aria-label="Nach oben">${ic("up")}</button><button class="g s" data-a="dn" data-id="${esc(f.id)}" ${i===arr.length-1?"disabled":""} aria-label="Nach unten">${ic("dn")}</button></div>` : ""}
+      <div style="flex:1;min-width:160px"><b>${esc(f.name)}</b>${isNew(f) ? '<span class="neu">NEU</span>' : ""}${f.hl ? '<span class="wich">Wichtig</span>' : ""}<div class="meta">${esc(f.category||"")} · ${size(f.size||0)} · ${dt(f.date)}</div>
         <label class="done"><input type="checkbox" data-a="done" data-id="${esc(f.id)}"${DONE[f.id]?" checked":""}> erledigt</label></div>
       <div class="row" style="gap:6px">
         <button class="star${FAV[f.id]?" on":""}" data-a="fav" data-id="${esc(f.id)}" title="Favorit" aria-label="Favorit">${ic("star", FAV[f.id]?"f":"")}</button>
         <button class="s" data-a="view" data-id="${esc(f.id)}">${ic("eye")}Ansehen</button>
         <a class="btn g s" href="${fileUrl(f.id,true)}">${ic("down")}Download</a>
-        <button class="g s" data-a="copy" data-id="${esc(f.id)}" title="Link kopieren" aria-label="Link kopieren">${ic("copy")}</button>
-        ${token ? `<button class="g s" data-a="edit" data-id="${esc(f.id)}" title="Bearbeiten" aria-label="Bearbeiten">${ic("edit")}</button>
+        ${ADM ? `<button class="g s" data-a="edit" data-id="${esc(f.id)}" title="Bearbeiten" aria-label="Bearbeiten">${ic("edit")}</button>
                    <button class="r s" data-a="del" data-id="${esc(f.id)}" title="In den Papierkorb" aria-label="In den Papierkorb">${ic("trash")}</button>` : ""}
       </div>
     </div>`;
-  if(!list.length){ $("list").innerHTML = `<div class="empty">${files.length ? "Nichts gefunden." : "Noch keine Dateien."}</div>`; return; }
+  const hit = x => !q || (x.title || "").toLowerCase().includes(q);
+  const qs = QZ.filter(x => hit(x) && (!cat || (x.cat||"Sonstiges") === cat) && !onlyFav);
+  const ts = TK.filter(x => hit(x) && (!cat || (x.cat||"Sonstiges") === cat) && !onlyFav);
+  if(!list.length && !qs.length && !ts.length){ $("list").innerHTML = `<div class="empty">${files.length || QZ.length || TK.length ? "Nichts gefunden." : "Noch keine Inhalte."}</div>`; return; }
+  const extra = x => x;
   if(sorting === "cat"){
-    const g = {}; list.forEach(f => (g[f.category||"Sonstiges"] ||= []).push(f));
-    $("list").innerHTML = Object.keys(g).sort().map(k => `<h3 style="margin:18px 0 8px;color:var(--main)">${esc(k)}</h3>` + g[k].map(card).join("")).join("");
-  } else $("list").innerHTML = list.map(card).join("");
+    const g = {}, add = (c, h) => (g[c || "Sonstiges"] ||= []).push(h);
+    const canSec = ADM && !q && !cat && !onlyFav;
+    catSort(list).forEach(f => add(f.category, "F:" + f.id)); qs.forEach(x => add(x.cat, "Q:" + x.id)); ts.forEach(x => add(x.cat, "T:" + x.id));
+    const keys = secOrder(Object.keys(g));
+    const byCat = {}; list.forEach(f => (byCat[f.category||"Sonstiges"] ||= []).push(f));
+    $("list").innerHTML = keys.map((k, ki) => `<div class="sec"><h3>${esc(k)}</h3>${canSec ? `<button class="g s" data-sec="up" data-k="${esc(k)}" ${ki===0?"disabled":""} aria-label="Abschnitt nach oben">${ic("up")}</button><button class="g s" data-sec="dn" data-k="${esc(k)}" ${ki===keys.length-1?"disabled":""} aria-label="Abschnitt nach unten">${ic("dn")}</button>` : ""}</div>` +
+      g[k].map(h => { const kind = h[0], id = h.slice(2);
+        if(kind === "F"){ const arr = catSort(byCat[k] || []); const f = files.find(x => x.id === id); return card(f, arr.findIndex(x => x.id === id), arr); }
+        if(kind === "Q") return quizCard(QZ.find(x => x.id === id));
+        return taskCard(TK.find(x => x.id === id)); }).join("")).join("");
+  } else {
+    $("list").innerHTML = list.map(card).join("") + ((qs.length || ts.length) ? `<div class="sec"><h3>Quiz und Aufgaben</h3></div>` + qs.map(quizCard).join("") + ts.map(taskCard).join("") : "");
+  }
 }
+function secOrder(keys){
+  const o = (COURSE.order || []).filter(k => keys.includes(k));
+  return [...o, ...keys.filter(k => !o.includes(k)).sort((a, b) => a.localeCompare(b, "de", { numeric:true }))];
+}
+$("list").addEventListener("click", async e => {
+  const b = e.target.closest("[data-sec]"); if(!b) return;
+  const all = secOrder([...new Set([...files.map(f => f.category), ...QZ.map(x => x.cat), ...TK.map(x => x.cat)].map(c => c || "Sonstiges"))]);
+  const i = all.indexOf(b.dataset.k), j = i + (b.dataset.sec === "up" ? -1 : 1); if(i < 0 || j < 0 || j >= all.length) return;
+  [all[i], all[j]] = [all[j], all[i]]; COURSE.order = all; render();
+  try{ await api("/api/course", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ order: all }) }); }catch(err){ toast(err.message, {err:true}); }
+});
 $("q").addEventListener("input", render);
 $("sort").onchange = e => { sorting = e.target.value; store.set("nh_sort", sorting); render(); };
 $("chips").addEventListener("click", e => {
@@ -449,6 +642,7 @@ $("list").addEventListener("click", async e => {
   const b = e.target.closest("button[data-a]"); if(!b) return;
   const id = b.dataset.id, f = files.find(x => x.id === id); if(!f) return;
   const a = b.dataset.a;
+  if(a === "up" || a === "dn") return moveFile(id, a === "up" ? -1 : 1);
   if(a === "view") return openPreview(f);
   if(a === "fav"){ FAV[id] ? delete FAV[id] : FAV[id] = 1; store.set("nh_fav", JSON.stringify(FAV)); return render(); }
   if(a === "copy"){
@@ -456,7 +650,7 @@ $("list").addEventListener("click", async e => {
     try{ await navigator.clipboard.writeText(link); toast("Link kopiert"); }
     catch(e){ prompt("Link kopieren:", link); }
   }
-  if(a === "edit"){ editId = id; $("edn").value = f.name; $("edc").value = f.category || ""; $("edm").classList.add("on"); }
+  if(a === "edit"){ editId = id; $("edn").value = f.name; $("edc").value = f.category || ""; $("edhl").checked = !!f.hl; edColor = f.color || ""; drawEdCol(); $("edm").classList.add("on"); }
   if(a === "del") trashFile(f);
 });
 
@@ -495,7 +689,7 @@ function loadPdfLib(){
 }
 const pvMsg = txt => { const d = document.createElement("div"); d.className = "msg"; d.textContent = txt; $("pvbody").replaceChildren(d); };
 async function openPreview(f){
-  markRecent(f.id);
+  markRecent(f.id); markSeen(f.id);
   VW.id = f.id; VW.zoom = 1; $("zl").textContent = "100%"; const my = ++VW.gen;
   $("pvt").textContent = f.name; $("pvdl").href = fileUrl(f.id, true);
   $("pvtab").onclick = () => window.open(fileUrl(f.id), "_blank", "noopener");
@@ -551,12 +745,16 @@ document.querySelectorAll(".modal").forEach(m => m.addEventListener("click", e =
 document.addEventListener("keydown", e => { if(e.key === "Escape"){ closePreview(); $("edm").classList.remove("on"); $("trm").classList.remove("on"); } });
 
 /* ---------- Bearbeiten / Papierkorb ---------- */
+const COLS = [["", "Keine"], ["red","Rot"], ["orange","Orange"], ["yellow","Gelb"], ["green","Grün"], ["blue","Blau"], ["purple","Lila"]];
+function drawEdCol(){ $("edcol").innerHTML = COLS.map(([k, n]) => `<button class="cdot${k ? "" : " none"}${edColor === k ? " on" : ""}" ${k ? `data-color="${k}"` : ""} data-k="${k}" title="${n}" aria-label="${n}"></button>`).join(""); }
+$("edcol").addEventListener("click", e => { const b = e.target.closest("[data-k]"); if(b){ edColor = b.dataset.k; drawEdCol(); } });
 $("edx").onclick = () => $("edm").classList.remove("on");
 $("eds").onclick = async () => {
   try{
     const r = await api("/api/file/" + encodeURIComponent(editId), { method:"PATCH",
       headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ name:$("edn").value, category:$("edc").value }) });
-    files = files.map(f => f.id === editId ? r.file : f); render();
+    files = files.map(f => f.id === editId ? { ...f, ...r.file, color: edColor || undefined, hl: $("edhl").checked || undefined } : f);
+    await saveLayout(); render();
     $("edm").classList.remove("on"); toast("Gespeichert");
   }catch(e){ toast(e.message, {err:true}); }
 };
@@ -593,41 +791,53 @@ $("trl").addEventListener("click", async e => {
   }
 });
 
-/* ---------- Login ---------- */
-function setAdmin(on){
-  $("admin").classList.toggle("hide", !on); $("logoutBtn").classList.toggle("hide", !on);
-  $("trashBtn").classList.toggle("hide", !on); $("loginBtn").classList.toggle("hide", on);
-  $("login").classList.add("hide"); drawAll();
+/* ---------- Login / Rollen ---------- */
+function applyRole(){
+  ADM = ROLE === "admin";
+  $("gate").classList.add("hide"); $("app").classList.remove("hide"); $("logoutBtn").classList.remove("hide");
+  ["admin","trashBtn","tabSim","coursecard","msgmailw","peoplecard"].forEach(id => $(id).classList.toggle("hide", !ADM));
+  drawAll(); drawBoard();
+}
+function showGate(){
+  ROLE = null; ADM = false; $("app").classList.add("hide"); $("gate").classList.remove("hide");
+  $("logoutBtn").classList.add("hide"); $("trashBtn").classList.add("hide"); setTimeout(() => $("pw").focus(), 50);
 }
 function logout(expired){
   if(token) fetch(API + "/api/logout", { method:"POST", headers:{ Authorization:"Bearer " + token } }).catch(()=>{});
-  token = null; store.del("nh_token"); setAdmin(false);
-  toast(expired === true ? "Sitzung abgelaufen – bitte neu anmelden." : "Abgemeldet.");
+  token = null; store.del("nh_token"); COURSES = []; MEMBERS = []; showGate();
+  if(expired === true) toast("Sitzung abgelaufen – bitte neu anmelden.");
 }
-$("loginBtn").onclick = () => { $("login").classList.toggle("hide"); $("pw").focus(); };
 $("logoutBtn").onclick = () => logout();
 $("pwGo").onclick = async () => {
   try{
-    const r = await api("/api/login", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ password: $("pw").value }) });
-    token = r.token; store.set("nh_token", token); setAdmin(true); toast("Angemeldet");
-  }catch(e){ toast(e.message, {err:true}); }
-  $("pw").value = "";
+    const r = await api("/api/login", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ email: $("nm").value, password: $("pw").value }) });
+    const prev = store.get("nh_uid");
+    if(prev && prev !== r.uid){ try{ Object.keys(localStorage).filter(k => k.startsWith("nh_") && !["nh_theme","nh_sort"].includes(k)).forEach(k => localStorage.removeItem(k)); }catch(e){} }
+    token = r.token; store.set("nh_token", token); store.set("nh_uid", r.uid); $("pw").value = "";
+    if(prev && prev !== r.uid){ location.reload(); return; }
+    await boot();
+  }catch(e){ toast(e.message, {err:true}); $("pw").value = ""; }
 };
-$("pw").addEventListener("keydown", e => { if(e.key === "Enter") $("pwGo").click(); });
+$("pw").addEventListener("keydown", e => { if(e.key === "Enter") $("pwGo").click(); }); $("nm").addEventListener("keydown", e => { if(e.key === "Enter") $("pw").focus(); });
 
 /* ---------- Upload ---------- */
 async function upload(list){
-  const c = $("cat").value.trim() || "Sonstiges";
+  const c = $("cat").value.trim() || "Sonstiges", done = [];
   for(const f of list){
     toast("Lade hoch: " + f.name + " …");
     try{
       const r = await api("/api/upload", { method:"POST", body:f, headers:{
         "Content-Type": f.type || "application/pdf",
         "X-Filename": encodeURIComponent(f.name), "X-Category": encodeURIComponent(c) } });
-      files.unshift(r.file); render(); fillFileSelect();
-    }catch(e){ toast("Fehler bei " + f.name + ": " + e.message, {err:true}); return; }
+      files.unshift(r.file); done.push({ name: f.name, category: c }); render(); fillFileSelect();
+    }catch(e){ toast("Fehler bei " + f.name + ": " + e.message, {err:true}); break; }
   }
+  if(!done.length) return;
   toast("Hochgeladen");
+  if($("unotify").checked){
+    try{ const n = await api("/api/notify", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ files: done }) });
+      if(n.sent) toast("E-Mail gesendet"); else if(n.error) toast("E-Mail nicht gesendet: " + n.error, {err:true}); }catch(e){}
+  }
 }
 $("pick").onclick = () => $("fi").click();
 $("fi").onchange = e => { upload([...e.target.files]); e.target.value = ""; };
@@ -644,9 +854,9 @@ function drawLinks(){
   $("lk-all").innerHTML = keys.length ? keys.map(k => `<h3 style="margin:16px 0 8px;color:var(--main)">${esc(k)}</h3><div class="grid">` +
     g[k].map(l => `<div class="card linkc">
       <a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;flex:1;min-width:0"><b>${esc(l.name)}</b><div class="meta" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.url.replace(/^https:\/\/(www\.)?/, ""))}</div></a>
-      ${token ? `<button class="r s" data-ld="${l.i}" aria-label="Link löschen">${ic("trash")}</button>` : ic("ext")}</div>`).join("") + `</div>`).join("")
+      ${ADM ? `<button class="r s" data-ld="${l.i}" aria-label="Link löschen">${ic("trash")}</button>` : ic("ext")}</div>`).join("") + `</div>`).join("")
     : `<div class="empty">Noch keine Links.</div>`;
-  $("lk-admin").classList.toggle("hide", !token);
+  $("lk-admin").classList.toggle("hide", !ADM);
   $("lkcs").innerHTML = [...new Set(L.map(l => l.cat).filter(Boolean))].map(c => `<option>${esc(c)}</option>`).join("");
 }
 $("lk-all").addEventListener("click", async e => {
@@ -668,28 +878,28 @@ $("lka").onclick = async () => {
 /* ---------- Einstellungen: Schule/Klasse + Schularbeit ---------- */
 function drawSettings(){
   const c = C();
-  $("schbox").innerHTML = token ? `
+  $("schbox").innerHTML = ADM ? `
     <label class="lbl" for="sc1" style="margin-top:0">Schule</label><input id="sc1" value="${esc(c.school)}">
     <label class="lbl" for="sc2">Klasse</label><input id="sc2" value="${esc(c.klasse)}" placeholder="z. B. 4. Klasse">
     <label class="lbl" for="sc3">Zweig</label><input id="sc3" value="${esc(c.zweig)}" placeholder="z. B. Medienzweig">
     <div style="margin-top:12px"><button id="scs">Speichern</button></div>`
     : `<div class="kv"><span>Schule</span><b>${esc(c.school)}</b><span>Klasse</span><b>${esc(c.klasse)}</b><span>Zweig</span><b>${esc(c.zweig)}</b></div>
        <p class="note">Schule, Klasse und Zweig stellt dein Nachhilfelehrer ein. Sie werden im KI-Prompt-Generator verwendet.</p>`;
-  if(token) $("scs").onclick = async () => { try{ await saveCfg({ school:$("sc1").value, klasse:$("sc2").value, zweig:$("sc3").value }); toast("Gespeichert"); }catch(e){ toast(e.message,{err:true}); } };
+  if(ADM) $("scs").onclick = async () => { try{ await saveCfg({ school:$("sc1").value, klasse:$("sc2").value, zweig:$("sc3").value }); toast("Gespeichert"); }catch(e){ toast(e.message,{err:true}); } };
   drawTests();
 }
 const TYPEN = ["Schularbeit","Test","Wiederholung","Abgabe","Sonstiges"];
 function drawTests(){
   const all = termine();
   $("tbox").innerHTML = (all.length ? all.map(x => { const d = daysTo(x.date), past = d < 0;
-    const canDel = token ? !x.own : x.own;
+    const canDel = ADM ? !x.own : x.own;
     return `<div class="row" style="justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd);${past ? "opacity:.5" : ""}">
       <div style="flex:1;min-width:0"><b>${esc(tName(x))}</b> <span class="meta">${esc(x.subj || "")}</span>
         <div class="meta">${new Date(x.date).toLocaleDateString("de-AT")} · ${past ? "vorbei" : dayTxt(d)}${x.note ? " · " + esc(x.note) : ""}${x.own ? " · eigener Eintrag" : ""}</div></div>
       ${canDel ? `<button class="g s" data-td="${esc(x.id)}" data-own="${x.own ? 1 : 0}" aria-label="Löschen">${ic("trash")}</button>` : ""}</div>`; }).join("")
     : `<p class="meta" style="margin:0">Noch keine Termine eingetragen.</p>`)
     + `<h3 style="margin:16px 0 4px">Termin hinzufügen</h3>
-    <p class="meta" style="margin:0 0 4px">${token ? "Gilt für Simon auf allen Geräten." : "Nur für dich auf diesem Gerät."}</p>
+    <p class="meta" style="margin:0 0 4px">${ADM ? "Gilt für alle im Kurs auf allen Geräten." : "Nur für dich auf diesem Gerät."}</p>
     <div class="row"><select id="tty" aria-label="Art">${TYPEN.map(x => `<option>${x}</option>`).join("")}</select>
       <select id="tsu" aria-label="Fach">${FAECHER.map(x => `<option>${esc(x)}</option>`).join("")}</select></div>
     <div class="row" style="margin-top:8px"><input id="tla" placeholder="Bezeichnung, z. B. 1. M-SA"><input type="date" id="tda" style="max-width:170px"></div>
@@ -708,7 +918,7 @@ $("tbox").addEventListener("click", async e => {
   if(!e.target.closest("#tad")) return;
   const x = { id: Date.now().toString(36), type: $("tty").value, subj: $("tsu").value, label: $("tla").value.trim(), date: $("tda").value, note: $("tno").value.trim() };
   if(!x.date) return toast("Bitte ein Datum wählen.", {err:true});
-  if(token){
+  if(ADM){
     try{ await saveCfg({ tests: [...(cfg.tests || termine().filter(y => !y.own)), x] }); toast("Termin eingetragen"); }catch(err){ toast(err.message, {err:true}); }
   } else { MY.push(x); store.set("nh_mytests", JSON.stringify(MY)); drawAll(); toast("Termin eingetragen"); }
 });
@@ -817,6 +1027,375 @@ function drawAiProfile(){ const c = C(); $("psch").textContent = c.school || "�
 
 function drawAll(){ render(); drawLinks(); drawSettings(); drawAiProfile(); if($("aout").value !== undefined && window.__aiReady) aiGen(); }
 
+/* ---------- Pinnwand ---------- */
+async function loadBoard(){ try{ BOARD = await api("/api/board"); }catch(e){ BOARD = {}; } drawBoard(); }
+function drawBoard(){
+  const el = $("board"), dismissed = !ADM && BOARD.date && store.get("nh_boardseen") === BOARD.date;
+  $("boardEd").classList.toggle("hide", !ADM);
+  if(!BOARD.text || dismissed){ el.classList.add("hide"); return; }
+  el.classList.remove("hide");
+  el.innerHTML = `<div class="row" style="justify-content:space-between"><b>Pinnwand</b><span class="meta">${dt(BOARD.date)}</span></div><p class="txt">${esc(BOARD.text)}</p>` +
+    (ADM ? "" : `<div style="margin-top:10px"><button class="g s" id="bok">Gelesen</button></div>`);
+  if(!ADM) $("bok").onclick = () => { store.set("nh_boardseen", BOARD.date); drawBoard(); };
+}
+$("bpub").onclick = async () => {
+  try{ const r = await api("/api/board", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ text: $("bin").value, mail: $("bmail").checked }) });
+    BOARD = r.board; $("bin").value = ""; drawBoard(); toast(r.mailed ? "Veröffentlicht und per E-Mail gesendet" : "Veröffentlicht"); }
+  catch(e){ toast(e.message, {err:true}); }
+};
+$("bclr").onclick = async () => { try{ await api("/api/board", { method:"DELETE" }); BOARD = {}; drawBoard(); toast("Entfernt"); }catch(e){ toast(e.message, {err:true}); } };
+
+/* ---------- Lernserie (Streak): Tag zählt nach 10 Minuten auf der Seite ---------- */
+const GOAL = 600;
+let ACT = J("nh_active", {}), lastAct = Date.now(), actN = 0;
+const dkey = d => d.toLocaleDateString("sv-SE");
+function streakInfo(){
+  const ok = d => (ACT[dkey(d)] || 0) >= GOAL, d = new Date(); let n = 0;
+  if(!ok(d)) d.setDate(d.getDate() - 1);
+  while(ok(d)){ n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+function drawStreak(){
+  const n = streakInfo(), today = Math.min(GOAL, Math.floor(ACT[dkey(new Date())] || 0)), done = today >= GOAL;
+  const days = [...Array(7)].map((_, i) => { const d = new Date(); d.setDate(d.getDate() - (6 - i)); return d; });
+  $("streak").innerHTML = `<div class="streak"><div><div class="big">${n}</div></div>
+    <div style="flex:1;min-width:150px"><b>${n === 1 ? "Tag" : "Tage"} in Folge</b>
+      <div class="meta">${done ? "Heute geschafft" : "Heute noch " + Math.ceil((GOAL - today) / 60) + " Min auf der Seite bleiben"}</div>
+      <div class="bar" style="margin-top:6px"><i style="width:${today / GOAL * 100}%"></i></div></div>
+    <div class="sdots" aria-label="Letzte 7 Tage">${days.map((d, i) => `<span class="sd${(ACT[dkey(d)] || 0) >= GOAL ? " on" : ""}${i === 6 ? " today" : ""}" title="${d.toLocaleDateString("de-AT")}">${"SMDMDFS"[d.getDay()]}</span>`).join("")}</div></div>`;
+}
+function actTick(){
+  const now = Date.now(), dt = (now - lastAct) / 1000; lastAct = now;
+  if(document.visibilityState !== "visible" || dt > 20) return;
+  const k = dkey(new Date()), before = ACT[k] || 0; ACT[k] = before + dt;
+  if(before < GOAL && ACT[k] >= GOAL) toast("Tag geschafft – die Serie läuft weiter.");
+  if(++actN % 3 === 0 || ACT[k] >= GOAL && before < GOAL) store.set("nh_active", JSON.stringify(ACT));
+  drawStreak();
+}
+setInterval(actTick, 5000); document.addEventListener("visibilitychange", () => { lastAct = Date.now(); store.set("nh_active", JSON.stringify(ACT)); });
+drawStreak();
+
+/* ---------- E-Mail-Einstellungen (nur Admin) ---------- */
+async function loadMail(){ if(!ADM){ $("mailcard").classList.add("hide"); return; } try{ MAIL = await api("/api/mailcfg"); drawMail(); }catch(e){} }
+function drawMail(){
+  $("mailcard").classList.toggle("hide", !ADM || !MAIL); if(!ADM || !MAIL) return;
+  const m = MAIL, D = [[7,"7 Tage"],[5,"5 Tage"],[3,"3 Tage"],[2,"2 Tage"],[1,"1 Tag"],[0,"am Tag selbst"]];
+  $("mailbox").innerHTML = (m.ready ? "" : `<p class="note" style="margin-top:0">Mail-Dienst im Worker noch nicht eingerichtet (BREVO_API_KEY und SENDER_EMAIL fehlen).</p>`) + `
+    <label class="chip"><input type="checkbox" id="mEn"${m.enabled ? " checked" : ""}> Erinnerungen vor Schularbeiten/Tests senden</label><p class="note" style="margin:2px 0 0">Die E-Mail-Adresse jedes Teilnehmers trägst du unter „Kurse und Personen“ ein.</p>
+    <label class="lbl" for="mHr">Uhrzeit</label><select id="mHr">${[...Array(24)].map((_, h) => `<option value="${h}"${h === m.hour ? " selected" : ""}>${String(h).padStart(2, "0")}:00 Uhr</option>`).join("")}</select>
+    <span class="lbl">Erinnern</span><div>${D.map(([d, n]) => `<label class="chip"><input type="checkbox" class="mDay" value="${d}"${m.days.includes(d) ? " checked" : ""}> ${n} vorher</label>`).join("")}</div>
+    <div style="margin-top:6px"><label class="chip"><input type="checkbox" id="mNew"${m.onNew ? " checked" : ""}> Neue Zettel automatisch melden</label></div>
+    <label class="lbl" for="mAdm">Deine E-Mail (Benachrichtigung bei Abgaben, Nachrichten, Quiz; auch für die Test-Mail)</label><input id="mAdm" type="email" value="${esc(m.adminTo || "")}" placeholder="du@example.com">
+    <label class="lbl" for="mUrl">Adresse der Seite (für den Link in der Mail)</label><input id="mUrl" value="${esc(m.siteUrl)}" placeholder="https://…github.io/mathe-ablage/">
+    <div class="row" style="margin-top:12px"><button id="mSave">Speichern</button><button class="g" id="mTest">Test-Mail senden</button></div>
+    <p class="note">Die Erinnerungen werden stündlich vom Worker geprüft und zur gewählten Uhrzeit (Wiener Zeit) gesendet.</p>`;
+  const body = () => ({ enabled: $("mEn").checked, hour: +$("mHr").value, days: [...document.querySelectorAll(".mDay")].filter(x => x.checked).map(x => +x.value), onNew: $("mNew").checked, onBoard: true, adminTo: $("mAdm").value.trim(), siteUrl: $("mUrl").value.trim() });
+  const save = async () => { const r = await api("/api/mailcfg", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(body()) }); MAIL = { ...MAIL, ...r.mailcfg }; };
+  $("mSave").onclick = async () => { try{ await save(); toast("Gespeichert"); drawMail(); }catch(e){ toast(e.message, {err:true}); } };
+  $("mTest").onclick = async () => { try{ await save(); await api("/api/mail/test", { method:"POST" }); toast("Test-Mail gesendet"); }catch(e){ toast(e.message, {err:true}); } };
+}
+
+/* ---------- Quiz ---------- */
+async function loadQuizzes(){ try{ QZ = await api("/api/quizzes"); }catch(e){ QZ = []; } render(); }
+const quizCard = x => { const a = x.attempts;
+  return `<div class="card file"><div style="flex:1;min-width:160px"><b>${esc(x.title)}</b><span class="pill">Quiz</span>
+    <div class="meta">${x.n} Fragen${a ? ` · Beste: ${a.best} von ${a.total} · ${a.count}× gemacht` : " · noch nicht gemacht"}</div></div>
+    <div class="row" style="gap:6px"><button class="s" data-qa="play" data-id="${esc(x.id)}">${ic("play")}${a ? "Nochmal" : "Starten"}</button>
+    ${ADM ? `<button class="g s" data-qa="edit" data-id="${esc(x.id)}" aria-label="Bearbeiten">${ic("edit")}</button><button class="r s" data-qa="del" data-id="${esc(x.id)}" aria-label="Löschen">${ic("trash")}</button>` : ""}</div></div>`; };
+let QP = null;
+async function playQuiz(id){
+  try{ const q = await api("/api/quiz/" + encodeURIComponent(id)); QP = { id, q };
+    $("qzt").textContent = q.title; drawQuizForm(); $("qzm").classList.add("on"); }
+  catch(e){ toast(e.message, {err:true}); }
+}
+function drawQuizForm(){
+  const { q } = QP;
+  $("qzb").innerHTML = q.questions.map((x, i) => `<div class="card qq"><b>${i + 1}. ${esc(x.q)}</b>` +
+    (x.type === "choice" ? x.opts.map((o, k) => `<label class="opt"><input type="radio" name="q${i}" value="${k}"> ${esc(o)}</label>`).join("")
+      : `<input id="qa${i}" placeholder="Deine Antwort" autocomplete="off" style="margin-top:8px">`) + `</div>`).join("") +
+    `<button id="qsub">Abgeben</button>`;
+  $("qsub").onclick = submitQuiz;
+}
+async function submitQuiz(){
+  const answers = {};
+  QP.q.questions.forEach((x, i) => { answers[i] = x.type === "choice" ? (document.querySelector(`input[name=q${i}]:checked`) || {}).value : $("qa" + i).value; });
+  $("qsub").disabled = true;
+  try{
+    const r = await api("/api/quiz/" + encodeURIComponent(QP.id) + "/submit", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ answers }) });
+    const pct = Math.round(r.score / r.total * 100);
+    $("qzb").innerHTML = `<div class="card hero"><div class="big">${r.score}/${r.total}</div><div style="flex:1;min-width:140px"><b>${pct >= 80 ? "Sehr gut" : pct >= 50 ? "Solide, übe die roten Fragen noch einmal" : "Noch üben – schau dir die Erklärungen an"}</b>
+      <div class="bar" style="margin-top:8px"><i style="width:${pct}%"></i></div></div></div>` +
+      r.results.map((x, i) => `<div class="card res ${x.ok ? "ok" : "no"}">${ic(x.ok ? "check" : "x")}<div><b>${i + 1}. ${esc(QP.q.questions[i].q)}</b>
+        <div class="meta">Deine Antwort: ${esc(x.given || "–")}</div>${x.ok ? "" : `<div>Richtig: <b>${esc(x.correct)}</b></div>`}${x.exp ? `<div class="meta">${esc(x.exp)}</div>` : ""}</div></div>`).join("") +
+      `<div class="row"><button id="qagain">Nochmal</button><button class="g" id="qclose">Schließen</button></div>`;
+    $("qagain").onclick = drawQuizForm; $("qclose").onclick = () => $("qzm").classList.remove("on");
+    loadQuizzes();
+  }catch(e){ toast(e.message, {err:true}); $("qsub").disabled = false; }
+}
+$("qzx").onclick = () => $("qzm").classList.remove("on");
+let qeId = null;
+async function editQuiz(id){
+  qeId = id || null; $("qetitle").value = ""; $("qecat").value = $("cat").value || ""; $("qesrc").value = "";
+  if(id){ try{ const q = await api("/api/quiz/" + encodeURIComponent(id) + "?full=1"); $("qetitle").value = q.title; $("qecat").value = q.cat; $("qesrc").value = q.src; }catch(e){ return toast(e.message, {err:true}); } }
+  $("qem").classList.add("on");
+}
+$("newQuiz").onclick = () => editQuiz();
+$("qex").onclick = () => $("qem").classList.remove("on");
+$("qes").onclick = async () => {
+  try{ const r = await api("/api/quiz", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ id: qeId, title: $("qetitle").value, cat: $("qecat").value, src: $("qesrc").value }) });
+    $("qem").classList.remove("on"); toast("Quiz gespeichert (" + r.n + " Fragen)"); loadQuizzes(); }catch(e){ toast(e.message, {err:true}); }
+};
+const SEED = [
+ { title:"Wurzeln – Basics", cat:"Wurzeln", src:`Wie viel ist √144? ; 12 ; 12·12 = 144
+Wie viel ist √49 + √81? ; 16 ; 7 + 9 = 16
+Wie viel ist √(36·4)? ; 12 ; √144 = 12 (oder 6·2)
+Wie viel ist √810000? ; 900 ; √81 · √10000 = 9 · 100
+Zwischen welchen ganzen Zahlen liegt √30? ; ? 4 und 5 | 5 und 6* | 6 und 7 ; 25 < 30 < 36, also 5 < √30 < 6
+Vereinfache √50 (teilweise Wurzelziehen). ; 5√2 | 5√(2) ; √50 = √25 · √2 = 5√2
+Fasse zusammen: 3√2 + 5√2 ; 8√2 ; gleiche Wurzel, also 3 + 5 = 8
+Ist √(9+16) gleich √9 + √16? ; ? Ja | Nein* ; √25 = 5, aber √9 + √16 = 7. Summen darf man nicht einzeln unter die Wurzel ziehen.
+Mache den Nenner wurzelfrei: 6/√3 ; 2√3 ; mit √3 erweitern: 6√3/3 = 2√3
+Wie viel ist (√7)²? ; 7 ; Wurzel und Quadrat heben sich auf
+Wie viel ist √(81/16)? ; 9/4 | 2,25 ; √81 = 9 und √16 = 4` },
+ { title:"Reelle Zahlen und Intervalle", cat:"Reelle Zahlen", src:`Zu welcher kleinsten Zahlenmenge gehört −4? ; ? ℕ | ℤ* | ℚ | ℝ ; −4 ist eine negative ganze Zahl
+Zu welcher kleinsten Zahlenmenge gehört 0,75? ; ? ℤ | ℚ* | ℝ ; 0,75 = 3/4, ein Bruch
+Ist √2 rational oder irrational? ; ? rational | irrational* ; √2 hat unendlich viele Nachkommastellen ohne Periode
+Ist √49 rational oder irrational? ; ? rational* | irrational ; √49 = 7
+Schreibe 0,333… (periodisch) als Bruch. ; 1/3 ; 10x − x = 3, also x = 3/9 = 1/3
+Wie schreibt man −3 < x ≤ 2 als Intervall? ; ? [−3;2] | ]−3;2]* | ]−3;2[ | [−3;2[ ; links offen (<), rechts geschlossen (≤)
+Berechne [1;5] ∩ [3;8]. ; ? [3;5]* | [1;8] | ]3;5[ ; Durchschnitt = Überlappung
+Berechne [0;3] ∪ ]2;6[. ; ? [0;6[* | [0;6] | ]2;3] ; alles zusammen: von 0 (inklusive) bis 6 (exklusive)` },
+ { title:"Terme und Faktorisieren", cat:"Terme", src:`Berechne 2x² − 3x für x = −2. ; 14 ; 2·4 − 3·(−2) = 8 + 6
+Fasse zusammen: 5x + 3x − 2x ; 6x ; 5 + 3 − 2 = 6
+Löse die Klammer auf: (x+4)(x−4) ; x²−16 | x^2-16 ; dritte binomische Formel
+Hebe heraus: 6x² + 9x ; 3x(2x+3) ; gemeinsamer Faktor 3x
+Welche binomische Formel passt zu x² − 10x + 25? Schreibe als Produkt. ; (x−5)² | (x-5)^2 | (x-5)(x-5) ; zweite binomische Formel
+Faktorisiere vollständig: 3x³ − 75x ; 3x(x−5)(x+5) | 3x(x+5)(x−5) ; erst 3x herausheben, dann dritte binomische Formel
+Richtig ist (a+b)² = ? ; ? a² + b² | a² + 2ab + b²* | a² − 2ab + b² ; das Mittelglied 2ab nicht vergessen
+Schreibe als Term: Das Doppelte von x, vermindert um 3. ; 2x−3 | 2x - 3 ; Doppeltes = 2x, vermindert um 3 = −3` },
+ { title:"Bruchterme", cat:"Bruchterme", src:`Welche Zahl darf bei 5/x nicht eingesetzt werden? ; 0 ; Nenner darf nie 0 sein
+Welche Zahl darf bei (x+1)/(x−4) nicht eingesetzt werden? ; 4 ; x − 4 = 0 ergibt x = 4
+Kürze: 3x²/(6x) ; x/2 | 0,5x | 1/2x ; durch 3x kürzen
+Kürze: (2x+6)/(x+3) ; 2 ; erst herausheben: 2(x+3)/(x+3)
+Kürze: (x²−9)/(x−3) ; x+3 ; dritte binomische Formel: (x−3)(x+3)
+Kürze: (x−3)/(3−x) ; -1 | −1 ; 3−x = −(x−3), also Ergebnis −1
+Was darf man beim Kürzen NICHT? ; ? Faktoren kürzen | Summanden kürzen* | Zähler und Nenner durch dieselbe Zahl teilen ; nur Faktoren, nie Summanden
+Bestimme das kgV von 2x und 6x². ; 6x² | 6x^2 ; höchste Potenz und kleinste gemeinsame Zahl
+Definitionsmenge von 3/(x²−9)? ; ? ℝ\\{9} | ℝ\\{−3, 3}* | ℝ\\{3} ; x² − 9 = (x−3)(x+3), beide Nullstellen ausschließen` },
+];
+$("seedq").onclick = async () => {
+  if(!confirm("4 Starter-Quizze (Wurzeln, Reelle Zahlen, Terme, Bruchterme) anlegen?")) return;
+  try{ for(const s of SEED) await api("/api/quiz", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(s) }); toast("Starter-Quizze geladen"); loadQuizzes(); }
+  catch(e){ toast(e.message, {err:true}); }
+};
+
+/* ---------- Aufgaben ---------- */
+async function loadTasks(){ try{ TK = await api("/api/tasks"); }catch(e){ TK = []; } render(); }
+function taskState(x){
+  if(x.fb) return [x.fb.grade ? "Bewertet, Note " + x.fb.grade : "Rückmeldung da", "ok"];
+  if(x.sub) return [ADM ? "Neue Abgabe" : "Abgegeben", ADM ? "warn" : "ok"];
+  const d = x.due ? daysTo(x.due) : null;
+  return d !== null && d < 0 ? ["Überfällig", "bad"] : ["Offen", ""];
+}
+const taskCard = x => { const [lbl, cls] = taskState(x);
+  return `<div class="card file"><div style="flex:1;min-width:160px"><b>${esc(x.title)}</b><span class="pill">Aufgabe</span><span class="pill ${cls}">${lbl}</span>
+    <div class="meta">${x.due ? "Abgabe bis " + dt(x.due) : "ohne Termin"}</div></div>
+    <div class="row" style="gap:6px"><button class="s" data-ta="open" data-id="${esc(x.id)}">${ic("task")}${ADM ? "Öffnen" : x.sub ? "Ansehen" : "Abgeben"}</button>
+    ${ADM ? `<button class="g s" data-ta="edit" data-id="${esc(x.id)}" aria-label="Bearbeiten">${ic("edit")}</button><button class="r s" data-ta="del" data-id="${esc(x.id)}" aria-label="Löschen">${ic("trash")}</button>` : ""}</div></div>`; };
+const subUrl = id => `${API}/api/sub/${encodeURIComponent(id)}?t=${encodeURIComponent(token || "")}&c=${encodeURIComponent(CID)}&u=${encodeURIComponent(SUID)}`;
+let tkId = null;
+function openTask(id){
+  const x = TK.find(y => y.id === id); if(!x) return; tkId = id;
+  $("tkt").textContent = x.title;
+  const subInfo = x.sub ? `<div class="card"><b>${ADM ? "Abgabe von " + esc(SNAME()) : "Deine Abgabe"}</b><div class="meta">${esc(x.sub.name)} · ${dt(x.sub.date)}</div>
+      <div style="margin-top:8px"><a class="btn s" href="${subUrl(id)}" target="_blank" rel="noopener">${ic("eye")}Ansehen</a></div></div>` : "";
+  let h = `<p style="white-space:pre-wrap;margin-top:0">${esc(x.desc || "")}</p><p class="meta">${x.due ? "Abgabe bis " + dt(x.due) : ""}</p>` + subInfo;
+  if(x.fb) h += `<div class="card" style="border-left:6px solid var(--ok)"><b>Rückmeldung${x.fb.grade ? " – Note " + x.fb.grade : ""}</b><p style="white-space:pre-wrap;margin:6px 0 0">${esc(x.fb.text || "")}</p></div>`;
+  if(ADM){
+    h += `<h3>Bewertung</h3><label class="lbl" for="fbt" style="margin-top:0">Rückmeldung</label><textarea id="fbt" rows="3">${esc(x.fb ? x.fb.text : "")}</textarea>
+      <div class="row" style="margin-top:8px"><select id="fbg"><option value="0">ohne Note</option>${[1,2,3,4,5].map(n => `<option value="${n}"${x.fb && x.fb.grade === n ? " selected" : ""}>Note ${n}</option>`).join("")}</select>
+      <label class="chip"><input type="checkbox" id="fbm"> Per E-Mail senden</label></div><div style="margin-top:10px"><button id="fbs">Speichern</button></div>`;
+  } else {
+    h += `<h3>${x.sub ? "Neu abgeben (ersetzt die alte Abgabe)" : "Abgeben"}</h3>
+      <label class="lbl" for="tkf" style="margin-top:0">Foto oder PDF deiner Lösung</label><input type="file" id="tkf" accept="image/*,application/pdf">
+      <label class="lbl" for="tkn">oder Text</label><textarea id="tkn" rows="3" placeholder="Deine Lösung als Text"></textarea>
+      <div style="margin-top:10px"><button id="tks">Abgeben</button></div>`;
+  }
+  $("tkb").innerHTML = h; $("tkm").classList.add("on");
+  if($("fbs")) $("fbs").onclick = async () => { try{ await api("/api/fb/" + encodeURIComponent(id), { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ text: $("fbt").value, grade: +$("fbg").value, mail: $("fbm").checked }) });
+    toast("Gespeichert"); $("tkm").classList.remove("on"); loadTasks(); }catch(e){ toast(e.message, {err:true}); } };
+  if($("tks")) $("tks").onclick = async () => {
+    const f = $("tkf").files[0], txt = $("tkn").value.trim(); if(!f && !txt) return toast("Bitte eine Datei wählen oder Text eingeben.", {err:true});
+    try{ await api("/api/sub/" + encodeURIComponent(id), f ? { method:"POST", body:f, headers:{ "Content-Type": f.type || "application/octet-stream", "X-Filename": encodeURIComponent(f.name) } }
+      : { method:"POST", body:txt, headers:{ "Content-Type":"text/plain", "X-Kind":"text" } });
+      toast("Abgegeben"); $("tkm").classList.remove("on"); loadTasks(); }catch(e){ toast(e.message, {err:true}); } };
+}
+$("tkx").onclick = () => $("tkm").classList.remove("on");
+let teId = null;
+function editTask(id){
+  const x = id ? TK.find(y => y.id === id) : null; teId = id || null;
+  $("tetitle").value = x ? x.title : ""; $("tecat").value = x ? x.cat : ($("cat").value || ""); $("tedue").value = x ? x.due : ""; $("tedesc").value = x ? x.desc : "";
+  $("tem").classList.add("on");
+}
+$("newTask").onclick = () => editTask();
+$("tex").onclick = () => $("tem").classList.remove("on");
+$("tes").onclick = async () => {
+  try{ await api("/api/task", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ id: teId, title: $("tetitle").value, cat: $("tecat").value, due: $("tedue").value, desc: $("tedesc").value }) });
+    $("tem").classList.remove("on"); toast("Aufgabe gespeichert"); loadTasks(); }catch(e){ toast(e.message, {err:true}); }
+};
+$("list").addEventListener("click", async e => {
+  const b = e.target.closest("[data-qa],[data-ta]"); if(!b) return; const id = b.dataset.id;
+  if(b.dataset.qa === "play") return playQuiz(id);
+  if(b.dataset.qa === "edit") return editQuiz(id);
+  if(b.dataset.qa === "del"){ if(!confirm("Quiz löschen?")) return; try{ await api("/api/quiz/" + encodeURIComponent(id), { method:"DELETE" }); loadQuizzes(); toast("Quiz gelöscht"); }catch(err){ toast(err.message, {err:true}); } return; }
+  if(b.dataset.ta === "open") return openTask(id);
+  if(b.dataset.ta === "edit") return editTask(id);
+  if(b.dataset.ta === "del"){ if(!confirm("Aufgabe samt Abgabe löschen?")) return; try{ await api("/api/task/" + encodeURIComponent(id), { method:"DELETE" }); loadTasks(); toast("Aufgabe gelöscht"); }catch(err){ toast(err.message, {err:true}); } }
+});
+
+/* ---------- Nachrichten ---------- */
+async function loadMsgs(){ try{ MSG = await api("/api/messages"); }catch(e){} drawMsgs(); }
+const lastMsg = () => MSG.length ? MSG[MSG.length - 1].date : "";
+function unreadMsgs(){ const s = store.get("nh_msgseen") || ""; return MSG.filter(m => m.from !== ROLE && m.date > s).length; }
+function drawMsgs(){
+  const open = document.getElementById("v-msg").classList.contains("on");
+  if(open && lastMsg()) store.set("nh_msgseen", lastMsg());
+  const n = open ? 0 : unreadMsgs(); $("msgbadge").textContent = n; $("msgbadge").classList.toggle("hide", !n);
+  $("msglist").innerHTML = MSG.length ? MSG.map(m => `<div class="bubble ${m.from === ROLE ? "me" : "you"}">${esc(m.text)}<small>${m.from === ROLE ? "Du" : m.from === "admin" ? "Nachhilfelehrer" : esc(SNAME())} · ${new Date(m.date).toLocaleString("de-AT", { day:"numeric", month:"numeric", hour:"2-digit", minute:"2-digit" })}</small></div>`).join("") : `<div class="empty">Noch keine Nachrichten.</div>`;
+  if(open) $("msglist").scrollTop = $("msglist").scrollHeight;
+}
+$("msgsend").onclick = async () => {
+  const text = $("msgin").value.trim(); if(!text) return;
+  try{ const r = await api("/api/messages", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ text, mail: ADM && $("msgmail").checked }) });
+    MSG.push(r.msg); $("msgin").value = ""; drawMsgs(); }catch(e){ toast(e.message, {err:true}); }
+};
+setInterval(() => { if(token && ROLE && document.visibilityState === "visible") loadMsgs(); }, 45000);
+
+/* ---------- Übersicht für Admin ---------- */
+async function drawSim(){
+  if(!ADM) return; const box = $("simbox"); $("simh").textContent = "Übersicht: " + SNAME();
+  if(!MEMBERS.length){ box.innerHTML = `<div class="empty">In diesem Kurs sind noch keine Teilnehmer.</div>`; return; }
+  try{
+    const [st, at, ts] = await Promise.all([api("/api/state?u=" + encodeURIComponent(SUID)), api("/api/attempts"), api("/api/tasks")]);
+    const S = st.state || {}, P = k => { try{ return JSON.parse(S[k]) || null }catch(e){ return null } };
+    const act = P("nh_active") || {}, gr = P("nh_grades") || [], done = Object.keys(P("nh_done") || {}).length;
+    const ok = d => (act[dkey(d)] || 0) >= GOAL; let streak = 0; { const d = new Date(); if(!ok(d)) d.setDate(d.getDate() - 1); while(ok(d)){ streak++; d.setDate(d.getDate() - 1); } }
+    const days = [...Array(14)].map((_, i) => { const d = new Date(); d.setDate(d.getDate() - i); return d; });
+    const avg = gr.length ? (gr.reduce((a, g) => a + g.g, 0) / gr.length).toFixed(2).replace(".", ",") : "–";
+    const open = ts.filter(x => x.sub && !x.fb).length, noSub = ts.filter(x => !x.sub).length;
+    box.innerHTML = `<div class="grid">
+      <div class="card hero"><div><div class="meta">Lernserie</div><div class="big">${streak}</div></div><div class="meta">${st.ts ? "Zuletzt synchronisiert " + new Date(st.ts).toLocaleString("de-AT") : "Noch keine Daten von " + esc(SNAME())}<br>${done} Zettel erledigt</div></div>
+      <div class="card"><h3>Offene Aufgaben</h3><div class="kv"><span>Abgaben zu bewerten</span><b>${open}</b><span>Noch nicht abgegeben</span><b>${noSub}</b></div></div></div>
+      <div class="card"><h3>Zeit auf der Seite (letzte 14 Tage)</h3>${days.map(d => { const m = Math.round((act[dkey(d)] || 0) / 60);
+        return `<div class="row" style="flex-wrap:nowrap;gap:10px;margin:4px 0"><span class="meta" style="width:78px">${d.toLocaleDateString("de-AT", { weekday:"short", day:"numeric", month:"numeric" })}</span><div class="bar" style="flex:1"><i style="width:${Math.min(100, m / 20 * 100)}%;${m >= 10 ? "" : "background:var(--mut)"}"></i></div><span class="meta" style="width:48px;text-align:right">${m} Min</span></div>`; }).join("")}
+        <p class="note">Grün = Tagesziel (10 Minuten) erreicht.</p></div>
+      <div class="card"><h3>Quiz-Ergebnisse</h3>${at.length ? at.map(a => { const q = QZ.find(x => x.id === a.id); return `<div class="row" style="justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--bd)"><span>${esc(q ? q.title : a.id)}</span><span class="meta">Beste ${a.best}/${a.total} · zuletzt ${a.last}/${a.total} · ${a.count}×</span></div>`; }).join("") : `<p class="meta" style="margin:0">Noch kein Quiz gemacht.</p>`}</div>
+      <div class="card"><h3>Noten (von ${esc(SNAME())} eingetragen)</h3>${gr.length ? `<div class="meta" style="margin-bottom:6px">Schnitt ${avg}</div>` + [...gr].sort((a, b) => (b.d || "").localeCompare(a.d || "")).map(g => `<div class="row" style="justify-content:space-between;padding:4px 0"><span>${esc(g.l || "Note")} <span class="meta">${g.d ? dt(g.d) : ""}</span></span><span class="grade g${g.g}">${g.g}</span></div>`).join("") : `<p class="meta" style="margin:0">Keine Noten eingetragen.</p>`}</div>`;
+  }catch(e){ box.innerHTML = `<div class="empty">Übersicht nicht verfügbar: ${esc(e.message)}</div>`; }
+}
+
+/* ---------- Synchronisation von Simons Daten ---------- */
+let pushT;
+function schedulePush(){ if(ROLE !== "student") return; clearTimeout(pushT); pushT = setTimeout(pushState, 45000); }
+async function pushState(){
+  if(ROLE !== "student") return; const s = {}; SYNC.forEach(k => { const v = store.get(k); if(v) s[k] = v; });
+  try{ await api("/api/state", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ state: s }) }); }catch(e){}
+}
+async function syncDown(){
+  try{
+    const { state } = await api("/api/state"); let changed = false;
+    Object.entries(state || {}).forEach(([k, v]) => {
+      const loc = store.get(k);
+      if(!loc){ try{ localStorage.setItem(k, v); changed = true; }catch(e){} }
+      else if(k === "nh_active" || k === "nh_log"){ try{ const a = JSON.parse(loc), b = JSON.parse(v); let ch = false; Object.keys(b).forEach(d => { if((b[d] || 0) > (a[d] || 0)){ a[d] = b[d]; ch = true; } }); if(ch){ localStorage.setItem(k, JSON.stringify(a)); changed = true; } }catch(e){} }
+    });
+    if(changed && !sessionStorage.getItem("nh_rl")){ sessionStorage.setItem("nh_rl", "1"); location.reload(); return true; }
+    sessionStorage.removeItem("nh_rl");
+  }catch(e){}
+  return false;
+}
+window.addEventListener("pagehide", () => { if(ROLE === "student"){ try{ const s = {}; SYNC.forEach(k => { const v = store.get(k); if(v) s[k] = v; });
+  fetch(API + "/api/state", { method:"PUT", keepalive:true, headers:{ "Content-Type":"application/json", Authorization:"Bearer " + token }, body: JSON.stringify({ state: s }) }); }catch(e){} } });
+
+/* ---------- Start ---------- */
+function drawSel(){
+  const cs = $("cs"); cs.innerHTML = COURSES.map(c => `<option value="${esc(c.id)}"${c.id === CID ? " selected" : ""}>${esc(c.name)}</option>`).join("");
+  cs.classList.toggle("hide", COURSES.length < 2);
+  const ss = $("ss"); ss.innerHTML = MEMBERS.map(u => `<option value="${esc(u.id)}"${u.id === SUID ? " selected" : ""}>${esc(u.name)}</option>`).join("");
+  ss.classList.toggle("hide", !(ADM && MEMBERS.length > 1));
+  $("msgto").textContent = SNAME();
+  $("nocourse").classList.toggle("hide", ADM || COURSES.length > 0);
+}
+async function loadMembers(){
+  if(!ADM){ MEMBERS = []; SUID = MYUID; return; }
+  try{ MEMBERS = await api("/api/members"); }catch(e){ MEMBERS = []; }
+  if(!MEMBERS.some(m => m.id === SUID)) SUID = MEMBERS[0] ? MEMBERS[0].id : "";
+}
+async function loadCourseData(){
+  files = []; QZ = []; TK = []; MSG = []; BOARD = {}; COURSE = { order: [] }; cfg = {};
+  await loadMembers(); drawSel();
+  await Promise.all([load(), loadCfg(), loadBoard(), loadCourse(), loadQuizzes(), loadTasks(), loadMsgs()]);
+  drawAll(); drawBoard();
+}
+async function refreshMe(){
+  const me = await api("/api/me");
+  ROLE = me.role; MYUID = me.uid; MYNAME = me.name; COURSES = me.courses;
+  if(!COURSES.some(c => c.id === CID)) CID = COURSES[0] ? COURSES[0].id : "";
+  store.set("nh_course", CID);
+}
+async function boot(){
+  if(!token){ showGate(); return; }
+  try{ await refreshMe(); }catch(e){ showGate(); return; }
+  applyRole();
+  if(ROLE === "student" && await syncDown()) return;
+  if(CID) await loadCourseData(); else { drawSel(); }
+  if(ADM){ loadMail(); loadPeople(); }
+  if(ROLE === "student") schedulePush();
+}
+$("cs").onchange = async e => { CID = e.target.value; store.set("nh_course", CID); await loadCourseData(); if(ADM) drawSim(); };
+$("ss").onchange = async e => { SUID = e.target.value; drawSel(); await Promise.all([loadTasks(), loadMsgs()]); if(document.getElementById("v-sim").classList.contains("on")) drawSim(); };
+
+/* ---------- Kurse und Personen (Admin) ---------- */
+async function loadPeople(){ if(!ADM) return; try{ PEOPLE = await api("/api/admin/users"); }catch(e){} drawPeople(); }
+async function peopleChanged(){ await loadPeople(); const cur = CID; await refreshMe(); drawSel(); if(CID !== cur || !files.length) await loadCourseData(); else { await loadMembers(); drawSel(); } }
+function drawPeople(){
+  const box = $("peoplebox"); if(!box || !PEOPLE) return;
+  const U = pedit && pedit !== "new" ? PEOPLE.users.find(u => u.id === pedit) : null;
+  const cn = id => (PEOPLE.courses.find(c => c.id === id) || {}).name || "?";
+  box.innerHTML = `<span class="lbl" style="margin-top:0">Kurse</span>` +
+    PEOPLE.courses.map(c => `<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)"><span><b>${esc(c.name)}</b> <span class="meta">${PEOPLE.users.filter(u => u.courses.includes(c.id)).length} Teilnehmer</span></span>
+      <span class="row" style="gap:6px"><button class="g s" data-cr="${esc(c.id)}">Umbenennen</button>${c.id === "main" ? "" : `<button class="r s" data-cd="${esc(c.id)}" aria-label="Kurs löschen">${ic("trash")}</button>`}</span></div>`).join("") +
+    `<div class="row" style="margin-top:8px"><input id="cnew" placeholder="Neuer Kurs, z. B. Mathe 3. Klasse"><button class="s" id="cadd">${ic("plus")}Kurs anlegen</button></div>
+    <span class="lbl">Personen</span>` +
+    (PEOPLE.users.length ? PEOPLE.users.map(u => `<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)"><span><b>${esc(u.name)}</b> <span class="meta">${u.courses.length ? u.courses.map(cn).map(esc).join(", ") : "kein Kurs"}${u.email ? " · " + esc(u.email) : ""}</span></span>
+      <button class="g s" data-pe="${esc(u.id)}">${ic("edit")}Bearbeiten</button></div>`).join("") : `<p class="meta" style="margin:0">Noch keine Personen.</p>`) +
+    (pedit ? `<div class="card" style="margin-top:10px"><h3>${U ? "Person bearbeiten" : "Neue Person"}</h3>
+      <label class="lbl" for="pm">E-Mail-Adresse (zum Anmelden und für Erinnerungen)</label><input id="pm" type="email" value="${esc(U ? U.email : "")}" placeholder="name@example.com" autocomplete="off">
+      <label class="lbl" for="pn">Anzeigename</label><input id="pn" value="${esc(U ? U.name : "")}" autocomplete="off">
+      <label class="lbl" for="pp">Passwort ${U ? "(leer lassen = unverändert)" : ""}</label><input id="pp" type="text" autocomplete="off" placeholder="${U ? (U.legacy ? "aktuell: STUDENT_PASSWORD" : "unverändert") : "mind. 4 Zeichen"}">
+      <span class="lbl">Kurse</span><div>${PEOPLE.courses.map(c => `<label class="chip"><input type="checkbox" class="pc" value="${esc(c.id)}"${(U ? U.courses.includes(c.id) : c.id === CID) ? " checked" : ""}> ${esc(c.name)}</label>`).join("")}</div>
+      <div class="row" style="margin-top:12px"><button id="psave">Speichern</button><button class="g" id="pcancel">Abbrechen</button>${U ? `<button class="r" id="pdel">Löschen</button>` : ""}</div></div>`
+    : `<div class="row" style="margin-top:10px"><button class="s" id="padd">${ic("plus")}Person hinzufügen</button></div>`);
+}
+$("peoplebox").addEventListener("click", async e => {
+  const b = e.target.closest("button"); if(!b) return;
+  try{
+    if(b.id === "cadd"){ const n = $("cnew").value.trim(); if(!n) return; await api("/api/admin/course", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ name: n }) }); toast("Kurs angelegt"); await peopleChanged(); }
+    else if(b.dataset.cr){ const c = PEOPLE.courses.find(x => x.id === b.dataset.cr); const n = prompt("Neuer Name des Kurses:", c.name); if(!n || !n.trim()) return; await api("/api/admin/course", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ id: c.id, name: n }) }); await peopleChanged(); }
+    else if(b.dataset.cd){ const c = PEOPLE.courses.find(x => x.id === b.dataset.cd); if(!confirm("Kurs „" + c.name + "“ mit allen Dateien, Quizzen, Aufgaben und Abgaben endgültig löschen?")) return; await api("/api/admin/course/" + encodeURIComponent(c.id), { method:"DELETE" }); toast("Kurs gelöscht"); if(CID === c.id) CID = ""; await peopleChanged(); }
+    else if(b.id === "padd"){ pedit = "new"; drawPeople(); }
+    else if(b.dataset.pe){ pedit = b.dataset.pe; drawPeople(); }
+    else if(b.id === "pcancel"){ pedit = null; drawPeople(); }
+    else if(b.id === "psave"){
+      await api("/api/admin/user", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ id: pedit === "new" ? undefined : pedit, name: $("pn").value, password: $("pp").value, email: $("pm").value, courses: [...document.querySelectorAll(".pc")].filter(x => x.checked).map(x => x.value) }) });
+      toast("Gespeichert"); pedit = null; await peopleChanged();
+    }
+    else if(b.id === "pdel"){ const u = PEOPLE.users.find(x => x.id === pedit); if(!confirm(u.name + " samt Quiz-Ergebnissen, Abgaben und Nachrichten löschen?")) return;
+      const r = await api("/api/admin/user/" + encodeURIComponent(u.id), { method:"DELETE" }); toast(r.note || "Person gelöscht", r.note ? { err:true } : {}); pedit = null; await peopleChanged(); }
+  }catch(err){ toast(err.message, {err:true}); }
+});
+async function loadCourse(){ try{ COURSE = await api("/api/course"); }catch(e){} render(); }
+
 /* ---------- Lerntimer ---------- */
 let TM = Object.assign({ mode:"work", left:25*60, run:false, end:0 }, J("nh_timer", {}));
 const LOG = J("nh_log", {});
@@ -833,7 +1412,7 @@ function tmDraw(){
   $("tms").textContent = TM.run ? "Pause" : "Start";
   const sum = n => { let t = 0; for(let i = 0; i < n; i++){ const d = new Date(); d.setDate(d.getDate() - i); t += LOG[dayKey(d)] || 0; } return Math.round(t/60); };
   $("today").textContent = sum(1); $("week").textContent = sum(7);
-  document.title = TM.run ? $("tmd").textContent + " · Mathe-Ablage" : "Mathe-Ablage";
+  document.title = TM.run ? $("tmd").textContent + " · Nachhilfe" : "Nachhilfe";
 }
 function tmTick(){
   if(!TM.run) return;
@@ -890,13 +1469,12 @@ $("bkf").onchange = async e => {
 
 /* ---------- Offline + PWA ---------- */
 const net = () => { $("off").style.display = navigator.onLine ? "none" : "block"; };
-addEventListener("online", () => { net(); load(); loadCfg(); }); addEventListener("offline", net); net();
+addEventListener("online", () => { net(); if(token && ROLE) boot(); }); addEventListener("offline", net); net();
 if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register("sw.js").catch(()=>{});
 
 /* ---------- Start ---------- */
 aiInit(); window.__aiReady = true;
-drawAll(); load(); loadCfg();
-if(token){ api("/api/session").then(() => setAdmin(true)).catch(() => {}); }
+boot();
 </script>
 </body>
 </html>
