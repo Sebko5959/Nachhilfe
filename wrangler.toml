@@ -1,7 +1,0 @@
-name = "nachhilfe-dateien"
-main = "worker.js"
-compatibility_date = "2025-01-01"
-
-[[kv_namespaces]]
-binding = "FILES"
-id = "HIER_KV_ID_EINTRAGEN"   # npx wrangler kv namespace create FILES
