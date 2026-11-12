@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mathe-Ablage</title>
+<meta name="theme-color" content="#1f4e8c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mathe">
+<script>try{var t=localStorage.getItem('nh_theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+:root{--bg:#eff1f5;--side:#e6e9ef;--card:#fff;--tx:#25324a;--mut:#667389;--main:#1f5bd6;--on:#fff;--ok:#2f7d1f;--warn:#b26a00;--red:#be0d33;--bd:#ccd3de;--hov:#e4e9f2;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1e1e2e;--side:#181825;--card:#2b2b3d;--tx:#cdd6f4;--mut:#a6adc8;--main:#89b4fa;--on:#11111b;--ok:#a6e3a1;--warn:#f9e2af;--red:#f38ba8;--bd:#45475a;--hov:#313244;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1e1e2e;--side:#181825;--card:#2b2b3d;--tx:#cdd6f4;--mut:#a6adc8;--main:#89b4fa;--on:#11111b;--ok:#a6e3a1;--warn:#f9e2af;--red:#f38ba8;--bd:#45475a;--hov:#313244;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--tx);padding-bottom:env(safe-area-inset-bottom)}
+.ic{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;flex:none}
+.ic.f{fill:currentColor}
+header{background:var(--side);border-bottom:1px solid var(--bd);padding:calc(12px + env(safe-area-inset-top)) 16px 12px}
+header .in{max-width:960px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem}
+.logo span.m{width:32px;height:32px;border-radius:8px;background:var(--main);color:var(--on);display:grid;place-items:center}
+main{max-width:960px;margin:auto;padding:16px}
+nav.tabs{display:flex;gap:6px;margin:0 0 16px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+.tab{display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid transparent;color:var(--mut);border-radius:8px;padding:9px 13px;font-weight:600;white-space:nowrap}
+.tab.on{background:var(--hov);color:var(--main);border-color:var(--bd)}
+.view{display:none}.view.on{display:block}
+h1{font-size:1.35rem;margin:0 0 14px}
+h3{font-size:1rem;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:14px;overflow-wrap:break-word}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:14px;align-items:start;margin-bottom:14px}
+.grid>.card{margin-bottom:0}
+button,.btn{font:inherit;font-weight:600;font-size:.92rem;border:0;border-radius:7px;padding:9px 14px;background:var(--main);color:var(--on);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;touch-action:manipulation}
+button.g,.btn.g{background:var(--bd);color:var(--tx)}
+button.r{background:var(--red);color:#fff}
+button.s,.btn.s{padding:6px 10px;font-size:.84rem}
+button:disabled{opacity:.5}
+:focus-visible{outline:2px solid var(--main);outline-offset:2px}
+input,select,textarea{font:inherit;padding:9px 10px;border-radius:7px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);max-width:100%;width:100%}
+input[type=checkbox]{width:auto}
+textarea{resize:vertical;min-height:90px}
+.lbl{display:block;font-size:.82rem;color:var(--mut);margin:10px 0 4px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row>*{width:auto}.row>input,.row>select{flex:1;min-width:120px}
+.meta{color:var(--mut);font-size:.85rem}
+.seg{display:flex;background:var(--side);border-radius:8px;padding:3px;gap:3px;margin-bottom:10px}
+.seg button{flex:1;background:none;color:var(--mut);padding:8px;font-weight:500;justify-content:center}
+.seg button.on{background:var(--hov);color:var(--main);font-weight:700}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--hov);color:var(--tx);border-radius:999px;padding:5px 12px;margin:0 6px 6px 0;font-size:.84rem;font-weight:500;border:1px solid transparent}
+.chip.on{background:var(--main);color:var(--on)}
+label.chip input{margin:0}
+.file{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.file b{word-break:break-word}
+.file.isdone{opacity:.62}
+.star{background:transparent!important;color:var(--mut)!important;padding:5px 7px!important}
+.star.on{color:#d9a000!important}
+.done{display:flex;align-items:center;gap:7px;font-size:.84rem;color:var(--mut);margin-top:4px}
+.done input{width:18px;height:18px;accent-color:var(--ok)}
+.bar{height:9px;background:var(--hov);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--ok);transition:width .4s}
+.big{font-size:2.6rem;font-weight:800;color:var(--main);line-height:1}
+.hero{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.tm{font-size:4rem;font-weight:800;text-align:center;font-variant-numeric:tabular-nums;color:var(--main);line-height:1.1}
+.grade{display:inline-block;min-width:32px;text-align:center;border-radius:8px;padding:2px 9px;font-weight:800;color:#fff}
+.g1,.g2{background:#2f7d1f}.g3{background:#b26a00}.g4,.g5{background:#be0d33}
+#drop{border:2px dashed var(--bd);border-radius:12px;padding:20px;text-align:center;color:var(--mut)}
+#drop.over{border-color:var(--main);background:var(--hov)}
+#off{display:none;background:#b26a00;color:#fff;text-align:center;padding:6px;font-size:.85rem}
+#toasts{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:8px;z-index:100;pointer-events:none}
+.toast{pointer-events:auto;background:#222b38;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 4px 18px rgba(0,0,0,.35);display:flex;gap:12px;align-items:center;max-width:92vw}
+.toast.err{background:var(--red)}
+.toast button{background:transparent;color:#9cc4ff;padding:0 4px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;display:none;align-items:center;justify-content:center;padding:12px}
+.modal.on{display:flex}
+.box{background:var(--card);border-radius:14px;width:min(900px,100%);max-height:94vh;display:flex;flex-direction:column;overflow:hidden}
+.box .hd{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--bd)}
+.box .bd{padding:14px;overflow:auto;flex:1}
+#pvbody{overflow:auto;background:#8a8f98;max-height:76vh;text-align:center;-webkit-overflow-scrolling:touch;min-height:120px}
+#pvbody canvas{display:block;margin:8px auto;background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.4)}
+#pvbody iframe{width:100%;height:76vh;border:0;background:#fff}
+#pvbody .msg{padding:30px;color:#fff}
+.tb{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.linkc{display:flex;justify-content:space-between;align-items:center;gap:10px;color:inherit;text-decoration:none}
+.linkc:hover{border-color:var(--main)}
+.hide{display:none!important}
+.empty{text-align:center;color:var(--mut);padding:20px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.92rem}.kv span:nth-child(odd){color:var(--mut)}
+textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monospace}
+.note{font-size:.84rem;color:var(--mut);border-left:3px solid var(--bd);padding-left:10px;margin-top:10px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+<symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.8 6 6.2.7-4.6 4.3 1.4 6.5-5.8-3.3-5.8 3.3 1.4-6.5L3 9.7 9.2 9z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l4.5 4.5L19 7"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM13 7l4 4"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M8 7h7"/></symbol>
+</defs></svg>
+
+<div id="off">Offline – Änderungen sind gerade nicht möglich.</div>
+<header><div class="in">
+  <div class="logo"><span class="m"><svg class="ic"><use href="#i-book"/></svg></span>Mathe-Ablage</div>
+  <div class="row" style="gap:6px">
+    <button class="g s hide" id="trashBtn"><svg class="ic"><use href="#i-trash"/></svg>Papierkorb</button>
+    <button class="g s" id="loginBtn"><svg class="ic"><use href="#i-lock"/></svg>Admin</button>
+    <button class="g s hide" id="logoutBtn"><svg class="ic"><use href="#i-lock"/></svg>Abmelden</button>
+  </div>
+</div></header>
+
+<main>
+  <nav class="tabs" role="tablist" aria-label="Bereiche">
+    <button class="tab on" data-v="files"><svg class="ic"><use href="#i-file"/></svg>Dateien</button>
+    <button class="tab" data-v="timer"><svg class="ic"><use href="#i-timer"/></svg>Lerntimer</button>
+    <button class="tab" data-v="grades"><svg class="ic"><use href="#i-chart"/></svg>Noten</button>
+    <button class="tab" data-v="ai"><svg class="ic"><use href="#i-spark"/></svg>KI-Prompts</button>
+    <button class="tab" data-v="links"><svg class="ic"><use href="#i-link"/></svg>Links</button>
+    <button class="tab" data-v="set"><svg class="ic"><use href="#i-gear"/></svg>Einstellungen</button>
+  </nav>
+
+  <div id="login" class="card hide">
+    <div class="row"><input type="password" id="pw" placeholder="Admin-Passwort" autocomplete="current-password"><button id="pwGo">Anmelden</button></div>
+  </div>
+
+  <!-- ===== Dateien ===== -->
+  <section class="view on" id="v-files">
+    <div id="admin" class="card hide">
+      <h3>Dateien hochladen</h3>
+      <label class="lbl" for="cat">Kategorie</label>
+      <input list="cats" id="cat" value="Erklärzettel">
+      <datalist id="cats"><option>Erklärzettel</option><option>Blitz</option><option>Lösungen</option><option>Übungen</option><option>Schularbeit</option><option>Formelkarte</option></datalist>
+      <div id="drop" style="margin-top:12px">PDFs hierher ziehen oder <button class="s" id="pick"><svg class="ic"><use href="#i-plus"/></svg>Dateien wählen</button>
+        <input type="file" id="fi" multiple accept=".pdf,application/pdf,image/*" class="hide"></div>
+    </div>
+    <div id="hero" class="card hide"></div>
+    <div class="card hide" id="prog"></div>
+    <div class="row"><input id="q" type="search" placeholder="Suchen …" aria-label="Suchen">
+      <select id="sort" aria-label="Sortierung"><option value="cat">Nach Kategorie</option><option value="new">Neueste zuerst</option><option value="name">Nach Name</option></select></div>
+    <div style="margin-top:10px" id="chips"></div>
+    <div id="list"></div>
+  </section>
+
+  <!-- ===== Lerntimer ===== -->
+  <section class="view" id="v-timer">
+    <h1>Lerntimer</h1>
+    <div class="grid">
+      <div class="card">
+        <div class="tm" id="tmd">25:00</div>
+        <p class="meta" style="text-align:center" id="tmm">Lernphase</p>
+        <div class="row" style="justify-content:center;margin:12px 0">
+          <button id="tms">Start</button><button class="g" id="tmr">Zurücksetzen</button>
+        </div>
+        <div class="row" style="justify-content:center">
+          <label class="meta">Lernen (Min) <input type="number" id="tw" min="5" max="90" value="25" style="width:72px"></label>
+          <label class="meta">Pause (Min) <input type="number" id="tbk" min="1" max="30" value="5" style="width:72px"></label>
+        </div>
+      </div>
+      <div class="card"><h3>Gelernt</h3>
+        <div class="kv"><span>Heute</span><b><span id="today">0</span> Min</b><span>Diese Woche</span><b><span id="week">0</span> Min</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Noten ===== -->
+  <section class="view" id="v-grades">
+    <h1>Noten</h1>
+    <div class="card"><h3>Note eintragen</h3>
+      <div class="row">
+        <input id="gl" placeholder="z. B. 1. Schularbeit">
+        <input type="date" id="gd" style="max-width:170px">
+        <select id="gg" style="max-width:90px" aria-label="Note"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        <button id="ga"><svg class="ic"><use href="#i-plus"/></svg>Eintragen</button>
+      </div>
+    </div>
+    <div class="card hero"><div><div class="meta">Mathe-Schnitt</div><div class="big" id="avg">–</div></div><div id="gbars" class="meta"></div></div>
+    <div id="glist"></div>
+    <p class="meta">Die Noten bleiben nur auf diesem Gerät gespeichert.</p>
+  </section>
+
+  <!-- ===== KI-Prompts ===== -->
+  <section class="view" id="v-ai">
+    <h1>KI-Prompt-Generator</h1>
+    <p class="meta" style="margin-top:-8px">Baut dir einen fertigen Prompt für einen KI-Chat, passend zu deiner Klasse. Kopiere ihn und füge ihn im Chat ein.</p>
+    <div class="grid">
+      <div class="card"><h3>1 · Worum geht's?</h3>
+        <label class="lbl" for="asubj">Fach</label><select id="asubj"></select>
+        <label class="lbl" for="atopic">Thema</label><input id="atopic" placeholder="z. B. Wurzeln ziehen">
+        <div id="asug" style="margin-top:8px"></div>
+        <label class="lbl" for="atype">Was soll die KI machen?</label>
+        <select id="atype">
+          <option value="ex">Übungsaufgaben mit Lösung</option><option value="exp">Einfach erklärt</option>
+          <option value="sum">Zusammenfassung und Kontrollfragen</option><option value="quiz">Probetest</option>
+          <option value="tutor">Mich abfragen (Tutor-Modus)</option><option value="hint">Hilfe bei einer Aufgabe (nur Hinweise)</option>
+          <option value="check">Meine Lösung prüfen</option><option value="cards">Karteikarten</option><option value="plan">Lernplan bis zum Test</option>
+        </select>
+        <label class="lbl" for="afile">Thema aus einem Zettel übernehmen</label><select id="afile"></select>
+        <div style="margin-top:10px"><button class="g s" id="anext">Nächsten Termin übernehmen</button></div>
+        <p class="meta" id="awhen" style="margin:6px 0 0"></p>
+      </div>
+
+      <div class="card"><h3>2 · Feinschliff</h3>
+        <label class="lbl" for="alv">Mein Stand</label>
+        <select id="alv"><option value="Einsteiger, ich fange bei null an">Einsteiger</option><option value="Grundlagen sitzen, ich möchte üben und vertiefen" selected>Mittel</option><option value="Ich bin fit, ich brauche knifflige Aufgaben auf Schularbeitsniveau">Schularbeit-Niveau</option></select>
+        <div class="row"><div style="flex:1"><label class="lbl" for="an">Anzahl</label><select id="an"><option>3</option><option selected>5</option><option>8</option><option>10</option></select></div>
+        <div style="flex:2"><label class="lbl" for="alg">Sprache</label><select id="alg"><option value="de" selected>Deutsch</option><option value="de-en">Deutsch mit englischen Fachwörtern</option><option value="en">Nur Englisch (Übung)</option></select></div></div>
+        <label class="lbl" for="atool">Für welche KI?</label>
+        <select id="atool"><option value="any" selected>Egal (neutral)</option><option value="claude">Claude (mit Struktur-Tags)</option><option value="gpt">ChatGPT / Copilot / Gemini</option></select>
+        <span class="lbl">Zusätze</span>
+        <div id="aopts"></div>
+      </div>
+
+      <div class="card"><h3>3 · Über mich</h3>
+        <div class="kv" style="margin-bottom:6px"><span>Schule</span><b id="psch">–</b><span>Klasse</span><b id="pcl">–</b><span>Zweig</span><b id="pzw">–</b></div>
+        <p class="meta" style="margin:0 0 4px">Schule, Klasse und Zweig stellt dein Nachhilfelehrer ein.</p>
+        <label class="lbl" for="aname">Vorname (optional)</label><input id="aname" placeholder="z. B. Simon" autocomplete="given-name">
+        <label class="lbl" for="aint">Das interessiert mich (für Beispiele)</label><input id="aint" placeholder="z. B. Videos schneiden, Games, Fußball">
+        <label class="lbl" for="atried">Wo hänge ich gerade? (optional)</label><input id="atried" placeholder="z. B. Ich verstehe das Kürzen nicht">
+      </div>
+    </div>
+
+    <div class="card"><h3>4 · Eigenes Material (optional)</h3>
+      <label class="lbl" for="amat">Aufgabentext oder deine Lösung</label>
+      <textarea id="amat" placeholder="Hier einfügen, wenn die KI damit arbeiten soll"></textarea>
+    </div>
+
+    <div class="card"><h3>Dein Prompt</h3>
+      <textarea id="aout" readonly aria-label="Fertiger Prompt"></textarea>
+      <p class="meta" style="margin:10px 0"><span id="acount"></span> · Wenn du oben etwas änderst, wird der Text neu erzeugt.</p>
+      <div class="row">
+        <button id="acopy"><svg class="ic"><use href="#i-copy"/></svg>Kopieren</button>
+        <button class="g" data-ai="https://copilot.microsoft.com/">Kopieren &amp; Copilot</button>
+        <button class="g" data-ai="https://chatgpt.com/">Kopieren &amp; ChatGPT</button>
+        <button class="g" data-ai="https://claude.ai/new">Kopieren &amp; Claude</button>
+        <button class="g" data-ai="https://gemini.google.com/app">Kopieren &amp; Gemini</button>
+      </div>
+      <p class="note">Tipp: Die KI kann Fehler machen. Rechne wichtige Ergebnisse nach und frag im Zweifel bei deinem Nachhilfelehrer oder in der Schule nach.</p>
+    </div>
+  </section>
+
+  <!-- ===== Links ===== -->
+  <section class="view" id="v-links">
+    <h1>Nützliche Links</h1>
+    <div id="lk-all"></div>
+    <div class="card hide" id="lk-admin"><h3>Link hinzufügen (nur Admin)</h3>
+      <label class="lbl" for="lkn">Name</label><input id="lkn" placeholder="z. B. Mathe-Videos">
+      <label class="lbl" for="lku">Adresse</label><input id="lku" placeholder="https://…">
+      <label class="lbl" for="lkc">Gruppe</label><input id="lkc" list="lkcs" placeholder="z. B. Mathe"><datalist id="lkcs"></datalist>
+      <div class="row" style="margin-top:12px"><button id="lka"><svg class="ic"><use href="#i-plus"/></svg>Hinzufügen</button></div>
+    </div>
+  </section>
+
+  <!-- ===== Einstellungen ===== -->
+  <section class="view" id="v-set">
+    <h1>Einstellungen</h1>
+    <div class="grid">
+      <div class="card"><h3>Darstellung</h3>
+        <span class="lbl" style="margin-top:0">Farbschema</span>
+        <div class="seg" id="thseg" role="group" aria-label="Farbschema">
+          <button data-th="auto">Automatisch</button><button data-th="dark">Dunkel</button><button data-th="light">Hell</button></div>
+        <p class="meta" style="margin:0">„Automatisch“ folgt der Einstellung deines Geräts. Gilt nur für dieses Gerät.</p>
+      </div>
+      <div class="card"><h3>Schule und Klasse</h3><div id="schbox"></div></div>
+      <div class="card"><h3>Schularbeiten und Tests</h3><div id="tbox"></div></div>
+      <div class="card"><h3>Backup</h3>
+        <p class="meta" style="margin-top:0">Erledigt-Häkchen, Favoriten, Noten, Lernzeit und dein Profil liegen nur auf diesem Gerät. Hier kannst du sie sichern oder wiederherstellen.</p>
+        <div class="row"><button class="s" id="bkx"><svg class="ic"><use href="#i-down"/></svg>Backup speichern</button>
+          <button class="g s" id="bki">Backup laden</button><input type="file" id="bkf" accept="application/json" class="hide"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Viewer -->
+<div class="modal" id="pvm"><div class="box">
+  <div class="hd"><b id="pvt" style="word-break:break-word"></b>
+    <div class="tb"><button class="g s" id="zo" aria-label="Verkleinern">−</button><span class="meta" id="zl">100%</span><button class="g s" id="zi" aria-label="Vergrößern">+</button>
+    <button class="g s" id="pvtab"><svg class="ic"><use href="#i-ext"/></svg>Neuer Tab</button><a class="btn s" id="pvdl"><svg class="ic"><use href="#i-down"/></svg>Download</a><button class="g s" id="pvx" aria-label="Schließen"><svg class="ic"><use href="#i-x"/></svg></button></div></div>
+  <div id="pvbody"></div>
+  <div class="meta" id="pvinfo" style="padding:6px 14px"></div>
+</div></div>
+
+<!-- Bearbeiten -->
+<div class="modal" id="edm"><div class="box" style="width:min(460px,100%)">
+  <div class="hd"><b>Datei bearbeiten</b><button class="g s" id="edx" aria-label="Schließen"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="bd">
+    <label class="lbl" for="edn" style="margin-top:0">Name</label><input id="edn">
+    <label class="lbl" for="edc">Kategorie</label><input id="edc" list="cats">
+    <div style="margin-top:14px"><button id="eds">Speichern</button></div>
+  </div>
+</div></div>
+
+<!-- Papierkorb -->
+<div class="modal" id="trm"><div class="box" style="width:min(640px,100%)">
+  <div class="hd"><b>Papierkorb <span class="meta">(30 Tage)</span></b><button class="g s" id="trx" aria-label="Schließen"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="bd" id="trl"></div>
+</div></div>
+
+<div id="toasts" aria-live="polite"></div>
+
+<script>
+// >>> Nach dem Worker-Deploy hier die Worker-URL eintragen:
+const API = "https://nachhilfe-dateien.DEIN-NAME.workers.dev";
+
+const $ = id => document.getElementById(id);
+const store = {
+  get(k){ try{ return localStorage.getItem(k) }catch(e){ return null } },
+  set(k,v){ try{ localStorage.setItem(k,v) }catch(e){} },
+  del(k){ try{ localStorage.removeItem(k) }catch(e){} },
+};
+const J = (k, d) => { try{ return JSON.parse(store.get(k)) || d }catch(e){ return d } };
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ic = (n, cls = "") => `<svg class="ic ${cls}"><use href="#i-${n}"/></svg>`;
+const size = n => n > 1048576 ? (n/1048576).toFixed(1)+" MB" : Math.max(1,Math.round(n/1024))+" KB";
+const dt = s => s ? new Date(s).toLocaleDateString("de-AT") : "";
+const isImg = f => (f.type||"").startsWith("image/");
+const fileUrl = (id, dl) => `${API}/api/file/${encodeURIComponent(id)}${dl?"?download=1":""}`;
+const DEFAULT_CFG = { school:"Brucknergymnasium", klasse:"4. Klasse", zweig:"Medienzweig" };
+const DEFAULT_LINKS = [
+  { name:"Serlo – Mathe erklärt", url:"https://de.serlo.org/mathe", cat:"Mathe" },
+  { name:"Studyflix – Mathe", url:"https://studyflix.de/mathematik", cat:"Mathe" },
+  { name:"Matheretter", url:"https://www.matheretter.de/", cat:"Mathe" },
+  { name:"GeoGebra", url:"https://www.geogebra.org/", cat:"Mathe" },
+  { name:"Duden – Rechtschreibung", url:"https://www.duden.de/", cat:"Deutsch & Sprachen" },
+  { name:"LEO – Wörterbuch", url:"https://dict.leo.org/", cat:"Deutsch & Sprachen" },
+];
+
+let DONE = J("nh_done", {}), FAV = J("nh_fav", {}), RECENT = J("nh_recent", []), onlyFav = false, cfg = {};
+let token = store.get("nh_token"), files = [], cat = "", sorting = store.get("nh_sort") || "cat", editId = null;
+$("sort").value = sorting;
+const C = () => ({ ...DEFAULT_CFG, ...cfg });
+const LINKS = () => Array.isArray(cfg.links) ? cfg.links : DEFAULT_LINKS;
+function markRecent(id){ RECENT = [id, ...RECENT.filter(x => x !== id)].slice(0, 5); store.set("nh_recent", JSON.stringify(RECENT)); }
+
+/* ---------- Toast ---------- */
+function toast(text, o = {}){
+  const t = document.createElement("div");
+  t.className = "toast" + (o.err ? " err" : "");
+  t.setAttribute("role", o.err ? "alert" : "status");
+  const s = document.createElement("span"); s.textContent = text; t.appendChild(s);
+  if(o.undo){ const b = document.createElement("button"); b.textContent = "Rückgängig";
+    b.onclick = () => { t.remove(); o.undo(); }; t.appendChild(b); }
+  $("toasts").appendChild(t);
+  setTimeout(() => t.remove(), o.undo ? 6500 : 3200);
+}
+
+/* ---------- API ---------- */
+async function api(path, opt = {}){
+  const h = { ...(opt.headers||{}) };
+  if(token) h.Authorization = "Bearer " + token;
+  const r = await fetch(API + path, { ...opt, headers: h });
+  let data = {}; try{ data = await r.json() }catch(e){}
+  if(r.status === 401 && token && !path.startsWith("/api/login")){ logout(true); }
+  if(!r.ok) throw new Error(data.error || ("Fehler " + r.status));
+  return data;
+}
+async function saveCfg(patch){
+  const next = { ...cfg, ...patch };
+  if(!Array.isArray(next.links)) next.links = LINKS();
+  const r = await api("/api/config", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(next) });
+  cfg = r.cfg; drawAll(); return r;
+}
+
+/* ---------- Tabs ---------- */
+function showTab(v){
+  document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x.dataset.v === v));
+  document.querySelectorAll(".view").forEach(x => x.classList.toggle("on", x.id === "v-" + v));
+}
+document.querySelectorAll(".tab").forEach(b => b.onclick = () => showTab(b.dataset.v));
+
+/* ---------- Farbschema ---------- */
+function thDraw(){
+  const cur = document.documentElement.dataset.theme || "auto";
+  document.querySelectorAll("#thseg button").forEach(b => b.classList.toggle("on", b.dataset.th === cur));
+}
+document.querySelectorAll("#thseg button").forEach(b => b.onclick = () => {
+  const t = b.dataset.th;
+  if(t === "auto"){ delete document.documentElement.dataset.theme; store.del("nh_theme"); }
+  else { document.documentElement.dataset.theme = t; store.set("nh_theme", t); }
+  thDraw();
+});
+thDraw();
+
+/* ---------- Dateien ---------- */
+async function load(){
+  try{ files = await api("/api/files"); render(); fillFileSelect(); }
+  catch(e){ toast("Liste konnte nicht geladen werden (API-Adresse prüfen).", {err:true}); }
+}
+function render(){
+  drawHero();
+  const q = $("q").value.toLowerCase();
+  const cats = [...new Set(files.map(f => f.category || "Sonstiges"))].sort();
+  if(cat && !cats.includes(cat)) cat = "";
+  $("chips").innerHTML = (cats.length > 1 ? ["", ...cats].map(c =>
+    `<button class="chip${c===cat&&!onlyFav?" on":""}" data-c="${esc(c)}">${c ? esc(c) : "Alle"}</button>`).join("") : "")
+    + (Object.keys(FAV).length ? `<button class="chip${onlyFav?" on":""}" data-fav="1">${ic("star","f")}Favoriten</button>` : "");
+  const nd = files.filter(f => DONE[f.id]).length;
+  $("prog").classList.toggle("hide", !files.length);
+  $("prog").innerHTML = `<div class="row" style="justify-content:space-between"><b>Dein Fortschritt</b><span class="meta">${nd} von ${files.length} erledigt</span></div><div class="bar" style="margin-top:8px"><i style="width:${files.length ? nd/files.length*100 : 0}%"></i></div>`;
+  let list = files.filter(f => (f.name+" "+f.category).toLowerCase().includes(q) && (!cat || (f.category||"Sonstiges")===cat) && (!onlyFav || FAV[f.id]));
+  if(sorting === "new") list.sort((a,b) => (b.date||"").localeCompare(a.date||""));
+  if(sorting === "name") list.sort((a,b) => a.name.localeCompare(b.name, "de", {numeric:true}));
+  const card = f => `
+    <div class="card file${DONE[f.id]?" isdone":""}">
+      <div><b>${esc(f.name)}</b><div class="meta">${esc(f.category||"")} · ${size(f.size||0)} · ${dt(f.date)}</div>
+        <label class="done"><input type="checkbox" data-a="done" data-id="${esc(f.id)}"${DONE[f.id]?" checked":""}> erledigt</label></div>
+      <div class="row" style="gap:6px">
+        <button class="star${FAV[f.id]?" on":""}" data-a="fav" data-id="${esc(f.id)}" title="Favorit" aria-label="Favorit">${ic("star", FAV[f.id]?"f":"")}</button>
+        <button class="s" data-a="view" data-id="${esc(f.id)}">${ic("eye")}Ansehen</button>
+        <a class="btn g s" href="${fileUrl(f.id,true)}">${ic("down")}Download</a>
+        <button class="g s" data-a="copy" data-id="${esc(f.id)}" title="Link kopieren" aria-label="Link kopieren">${ic("copy")}</button>
+        ${token ? `<button class="g s" data-a="edit" data-id="${esc(f.id)}" title="Bearbeiten" aria-label="Bearbeiten">${ic("edit")}</button>
+                   <button class="r s" data-a="del" data-id="${esc(f.id)}" title="In den Papierkorb" aria-label="In den Papierkorb">${ic("trash")}</button>` : ""}
+      </div>
+    </div>`;
+  if(!list.length){ $("list").innerHTML = `<div class="empty">${files.length ? "Nichts gefunden." : "Noch keine Dateien."}</div>`; return; }
+  if(sorting === "cat"){
+    const g = {}; list.forEach(f => (g[f.category||"Sonstiges"] ||= []).push(f));
+    $("list").innerHTML = Object.keys(g).sort().map(k => `<h3 style="margin:18px 0 8px;color:var(--main)">${esc(k)}</h3>` + g[k].map(card).join("")).join("");
+  } else $("list").innerHTML = list.map(card).join("");
+}
+$("q").addEventListener("input", render);
+$("sort").onchange = e => { sorting = e.target.value; store.set("nh_sort", sorting); render(); };
+$("chips").addEventListener("click", e => {
+  const b = e.target.closest("button"); if(!b) return;
+  if(b.dataset.fav){ onlyFav = !onlyFav; cat = ""; return render(); }
+  if(b.dataset.c !== undefined){ cat = b.dataset.c; onlyFav = false; render(); } });
+$("list").addEventListener("change", e => {
+  if(e.target.dataset.a !== "done") return;
+  e.target.checked ? DONE[e.target.dataset.id] = 1 : delete DONE[e.target.dataset.id];
+  store.set("nh_done", JSON.stringify(DONE)); render();
+});
+$("list").addEventListener("click", async e => {
+  const b = e.target.closest("button[data-a]"); if(!b) return;
+  const id = b.dataset.id, f = files.find(x => x.id === id); if(!f) return;
+  const a = b.dataset.a;
+  if(a === "view") return openPreview(f);
+  if(a === "fav"){ FAV[id] ? delete FAV[id] : FAV[id] = 1; store.set("nh_fav", JSON.stringify(FAV)); return render(); }
+  if(a === "copy"){
+    const link = fileUrl(id);
+    try{ await navigator.clipboard.writeText(link); toast("Link kopiert"); }
+    catch(e){ prompt("Link kopieren:", link); }
+  }
+  if(a === "edit"){ editId = id; $("edn").value = f.name; $("edc").value = f.category || ""; $("edm").classList.add("on"); }
+  if(a === "del") trashFile(f);
+});
+
+/* ---------- Start-Karte ---------- */
+function daysTo(iso){ const d = new Date(iso + "T00:00:00"), n = new Date(); n.setHours(0,0,0,0); return Math.round((d - n) / 86400000); }
+let MY = J("nh_mytests", []);
+function termine(){
+  const srv = Array.isArray(cfg.tests) ? cfg.tests : (cfg.examDate ? [{ id:"legacy", type:"Schularbeit", label:cfg.examLabel || "", subj:"Mathematik", date:cfg.examDate, note:cfg.note || "" }] : []);
+  return [...srv.map(x => ({ ...x, own:false })), ...MY.map(x => ({ ...x, own:true }))].sort((a,b) => a.date.localeCompare(b.date));
+}
+const tName = x => (x.label && x.label.toLowerCase().includes(x.type.toLowerCase())) ? x.label : (x.type + (x.label ? " " + x.label : ""));
+const dayTxt = d => d === 0 ? "heute" : d === 1 ? "morgen" : "in " + d + " Tagen";
+function drawHero(){
+  const el = $("hero"); let h = "";
+  const up = termine().filter(x => daysTo(x.date) >= 0);
+  if(up.length){
+    const f = up[0], d = daysTo(f.date);
+    h += `<div class="hero" style="flex-wrap:nowrap"><div class="big">${d === 0 ? "Heute" : d}</div><div><b>${d === 0 ? "" : d === 1 ? "Tag bis " : "Tage bis "}${esc(tName(f))}</b><div class="meta">${esc(f.subj || "")} · ${new Date(f.date).toLocaleDateString("de-AT",{weekday:"long",day:"numeric",month:"long"})}${f.note ? " · " + esc(f.note) : ""}</div></div></div>`;
+    if(up.length > 1) h += `<div style="margin-top:12px;border-top:1px solid var(--bd);padding-top:8px">` + up.slice(1, 4).map(x => `<div class="row" style="justify-content:space-between;padding:3px 0"><span>${esc(tName(x))} <span class="meta">${esc(x.subj || "")}</span></span><span class="meta">${new Date(x.date).toLocaleDateString("de-AT",{day:"numeric",month:"numeric"})} · ${dayTxt(daysTo(x.date))}</span></div>`).join("") + `</div>`;
+  }
+  const rec = RECENT.map(id => files.find(f => f.id === id)).filter(Boolean);
+  if(rec.length) h += `<div style="margin-top:${h?12:0}px"><span class="meta">Zuletzt geöffnet</span><div style="margin-top:6px">` + rec.map(f => `<button class="chip" data-open="${esc(f.id)}">${esc(f.name.replace(/\.pdf$/i,""))}</button>`).join("") + `</div></div>`;
+  el.innerHTML = h; el.classList.toggle("hide", !h);
+}
+$("hero").addEventListener("click", e => { const b = e.target.closest("[data-open]"), f = b && files.find(x => x.id === b.dataset.open); if(f) openPreview(f); });
+async function loadCfg(){ try{ cfg = await api("/api/config"); drawAll(); }catch(e){} }
+
+/* ---------- Viewer ---------- */
+const PDFJS = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+const PDFJS_W = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+let VW = { zoom:1, doc:null, id:null, blobUrl:null, io:null, gen:0 };
+function loadPdfLib(){
+  if(window.pdfjsLib) return Promise.resolve();
+  return new Promise((res, rej) => { const s = document.createElement("script"); s.src = PDFJS;
+    s.onload = () => { pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_W; res(); }; s.onerror = () => rej(new Error("pdf.js")); document.head.appendChild(s); });
+}
+const pvMsg = txt => { const d = document.createElement("div"); d.className = "msg"; d.textContent = txt; $("pvbody").replaceChildren(d); };
+async function openPreview(f){
+  markRecent(f.id);
+  VW.id = f.id; VW.zoom = 1; $("zl").textContent = "100%"; const my = ++VW.gen;
+  $("pvt").textContent = f.name; $("pvdl").href = fileUrl(f.id, true);
+  $("pvtab").onclick = () => window.open(fileUrl(f.id), "_blank", "noopener");
+  const pdf = !isImg(f) && /pdf/i.test(f.type || "pdf");
+  $("zo").classList.toggle("hide", !pdf); $("zi").classList.toggle("hide", !pdf); $("zl").classList.toggle("hide", !pdf);
+  $("pvinfo").textContent = ""; pvMsg("Lade …"); $("pvm").classList.add("on");
+  try{
+    if(isImg(f)){ const im = document.createElement("img"); im.alt = f.name; im.style.cssText = "max-width:100%;display:block;margin:auto"; im.src = fileUrl(f.id); $("pvbody").replaceChildren(im); return; }
+    const buf = await (await fetch(fileUrl(f.id))).arrayBuffer();
+    if(my !== VW.gen) return;
+    try{
+      await loadPdfLib();
+      VW.doc = await pdfjsLib.getDocument({ data: buf.slice(0) }).promise;
+      if(my !== VW.gen) return;
+      await renderPages(my);
+    }catch(e){
+      if(VW.blobUrl) URL.revokeObjectURL(VW.blobUrl);
+      VW.blobUrl = URL.createObjectURL(new Blob([buf], { type:"application/pdf" }));
+      const fr = document.createElement("iframe"); fr.title = f.name; fr.src = VW.blobUrl; $("pvbody").replaceChildren(fr);
+      $("pvinfo").textContent = "Einfache Ansicht – für alle Seiten ggf. „Neuer Tab“ nutzen.";
+    }
+  }catch(e){ pvMsg("Anzeige nicht möglich – bitte herunterladen."); }
+}
+async function renderPages(my){
+  const body = $("pvbody"), doc = VW.doc; body.replaceChildren();
+  if(VW.io) VW.io.disconnect();
+  const avail = Math.max(280, body.clientWidth - 16), dpr = Math.min(window.devicePixelRatio || 1, 2);
+  VW.io = new IntersectionObserver(es => es.forEach(async en => {
+    if(!en.isIntersecting) return; const c = en.target; if(c.dataset.done) return; c.dataset.done = "1";
+    const page = await doc.getPage(+c.dataset.p), vp = page.getViewport({ scale: c.dataset.s * dpr });
+    c.width = vp.width; c.height = vp.height; await page.render({ canvasContext: c.getContext("2d"), viewport: vp }).promise;
+  }), { root: body, rootMargin: "600px" });
+  for(let i = 1; i <= doc.numPages; i++){
+    const page = await doc.getPage(i); if(my !== VW.gen) return;
+    const base = page.getViewport({ scale: 1 }), s = (avail / base.width) * VW.zoom;
+    const c = document.createElement("canvas"); c.dataset.p = i; c.dataset.s = s;
+    c.style.width = Math.round(base.width * s) + "px"; c.style.height = Math.round(base.height * s) + "px";
+    c.width = 10; c.height = 10; body.appendChild(c); VW.io.observe(c);
+  }
+  $("pvinfo").textContent = doc.numPages + (doc.numPages === 1 ? " Seite" : " Seiten");
+}
+function zoom(d){
+  if(!VW.doc) return; VW.zoom = Math.min(3, Math.max(.5, +(VW.zoom + d).toFixed(2)));
+  $("zl").textContent = Math.round(VW.zoom * 100) + "%"; renderPages(VW.gen);
+}
+$("zi").onclick = () => zoom(.25); $("zo").onclick = () => zoom(-.25);
+function closePreview(){
+  VW.gen++; VW.doc = null; $("pvm").classList.remove("on"); if(VW.io) VW.io.disconnect();
+  $("pvbody").replaceChildren(); if(VW.blobUrl){ URL.revokeObjectURL(VW.blobUrl); VW.blobUrl = null; }
+}
+$("pvx").onclick = closePreview;
+document.querySelectorAll(".modal").forEach(m => m.addEventListener("click", e => { if(e.target === m){ m.classList.remove("on"); if(m.id==="pvm") closePreview(); } }));
+document.addEventListener("keydown", e => { if(e.key === "Escape"){ closePreview(); $("edm").classList.remove("on"); $("trm").classList.remove("on"); } });
+
+/* ---------- Bearbeiten / Papierkorb ---------- */
+$("edx").onclick = () => $("edm").classList.remove("on");
+$("eds").onclick = async () => {
+  try{
+    const r = await api("/api/file/" + encodeURIComponent(editId), { method:"PATCH",
+      headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ name:$("edn").value, category:$("edc").value }) });
+    files = files.map(f => f.id === editId ? r.file : f); render();
+    $("edm").classList.remove("on"); toast("Gespeichert");
+  }catch(e){ toast(e.message, {err:true}); }
+};
+async function trashFile(f){
+  try{
+    await api("/api/file/" + encodeURIComponent(f.id), { method:"DELETE" });
+    files = files.filter(x => x.id !== f.id); render();
+    toast("„" + f.name + "“ im Papierkorb", { undo: () => restore(f.id) });
+  }catch(e){ toast(e.message, {err:true}); }
+}
+async function restore(id){
+  try{ const r = await api("/api/restore/" + encodeURIComponent(id), { method:"POST" });
+    files.unshift(r.file); render(); toast("Wiederhergestellt"); if($("trm").classList.contains("on")) loadTrash();
+  }catch(e){ toast(e.message, {err:true}); }
+}
+async function loadTrash(){
+  try{
+    const t = await api("/api/trash");
+    $("trl").innerHTML = t.length ? t.map(f => `
+      <div class="card file"><div><b>${esc(f.name)}</b><div class="meta">${esc(f.category||"")} · gelöscht ${dt(f.deleted)}</div></div>
+      <div class="row"><button class="s" data-r="${esc(f.id)}">Zurückholen</button>
+      <button class="r s" data-p="${esc(f.id)}">Endgültig löschen</button></div></div>`).join("")
+      : `<div class="empty">Papierkorb ist leer.</div>`;
+  }catch(e){ toast(e.message, {err:true}); }
+}
+$("trashBtn").onclick = () => { $("trm").classList.add("on"); loadTrash(); };
+$("trx").onclick = () => $("trm").classList.remove("on");
+$("trl").addEventListener("click", async e => {
+  if(e.target.dataset.r) restore(e.target.dataset.r);
+  if(e.target.dataset.p){
+    if(!confirm("Endgültig löschen? Das geht nicht rückgängig.")) return;
+    try{ await api("/api/trash/" + encodeURIComponent(e.target.dataset.p), { method:"DELETE" }); loadTrash(); }
+    catch(err){ toast(err.message, {err:true}); }
+  }
+});
+
+/* ---------- Login ---------- */
+function setAdmin(on){
+  $("admin").classList.toggle("hide", !on); $("logoutBtn").classList.toggle("hide", !on);
+  $("trashBtn").classList.toggle("hide", !on); $("loginBtn").classList.toggle("hide", on);
+  $("login").classList.add("hide"); drawAll();
+}
+function logout(expired){
+  if(token) fetch(API + "/api/logout", { method:"POST", headers:{ Authorization:"Bearer " + token } }).catch(()=>{});
+  token = null; store.del("nh_token"); setAdmin(false);
+  toast(expired === true ? "Sitzung abgelaufen – bitte neu anmelden." : "Abgemeldet.");
+}
+$("loginBtn").onclick = () => { $("login").classList.toggle("hide"); $("pw").focus(); };
+$("logoutBtn").onclick = () => logout();
+$("pwGo").onclick = async () => {
+  try{
+    const r = await api("/api/login", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ password: $("pw").value }) });
+    token = r.token; store.set("nh_token", token); setAdmin(true); toast("Angemeldet");
+  }catch(e){ toast(e.message, {err:true}); }
+  $("pw").value = "";
+};
+$("pw").addEventListener("keydown", e => { if(e.key === "Enter") $("pwGo").click(); });
+
+/* ---------- Upload ---------- */
+async function upload(list){
+  const c = $("cat").value.trim() || "Sonstiges";
+  for(const f of list){
+    toast("Lade hoch: " + f.name + " …");
+    try{
+      const r = await api("/api/upload", { method:"POST", body:f, headers:{
+        "Content-Type": f.type || "application/pdf",
+        "X-Filename": encodeURIComponent(f.name), "X-Category": encodeURIComponent(c) } });
+      files.unshift(r.file); render(); fillFileSelect();
+    }catch(e){ toast("Fehler bei " + f.name + ": " + e.message, {err:true}); return; }
+  }
+  toast("Hochgeladen");
+}
+$("pick").onclick = () => $("fi").click();
+$("fi").onchange = e => { upload([...e.target.files]); e.target.value = ""; };
+const dz = $("drop");
+["dragover","dragenter"].forEach(t => dz.addEventListener(t, e => { e.preventDefault(); dz.classList.add("over"); }));
+["dragleave","drop"].forEach(t => dz.addEventListener(t, e => { e.preventDefault(); dz.classList.remove("over"); }));
+dz.addEventListener("drop", e => upload([...e.dataTransfer.files]));
+
+/* ---------- Links (nur Admin darf ändern) ---------- */
+function drawLinks(){
+  const L = LINKS(), g = {};
+  L.forEach((l, i) => (g[l.cat || "Sonstiges"] ||= []).push({ ...l, i }));
+  const keys = Object.keys(g).sort();
+  $("lk-all").innerHTML = keys.length ? keys.map(k => `<h3 style="margin:16px 0 8px;color:var(--main)">${esc(k)}</h3><div class="grid">` +
+    g[k].map(l => `<div class="card linkc">
+      <a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;flex:1;min-width:0"><b>${esc(l.name)}</b><div class="meta" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.url.replace(/^https:\/\/(www\.)?/, ""))}</div></a>
+      ${token ? `<button class="r s" data-ld="${l.i}" aria-label="Link löschen">${ic("trash")}</button>` : ic("ext")}</div>`).join("") + `</div>`).join("")
+    : `<div class="empty">Noch keine Links.</div>`;
+  $("lk-admin").classList.toggle("hide", !token);
+  $("lkcs").innerHTML = [...new Set(L.map(l => l.cat).filter(Boolean))].map(c => `<option>${esc(c)}</option>`).join("");
+}
+$("lk-all").addEventListener("click", async e => {
+  const b = e.target.closest("[data-ld]"); if(!b) return;
+  const L = LINKS().slice(), [gone] = L.splice(+b.dataset.ld, 1);
+  try{ await saveCfg({ links: L }); toast("Link entfernt", { undo: () => saveCfg({ links: [...L, gone] }) }); }
+  catch(err){ toast(err.message, {err:true}); }
+});
+$("lka").onclick = async () => {
+  const name = $("lkn").value.trim(); let url = $("lku").value.trim();
+  if(!name || !url) return toast("Bitte Name und Adresse angeben.", {err:true});
+  if(!/^https?:\/\//i.test(url)) url = "https://" + url;
+  if(!/^https:\/\//i.test(url)) return toast("Nur https-Adressen sind erlaubt.", {err:true});
+  try{ await saveCfg({ links: [...LINKS(), { name, url, cat: $("lkc").value.trim() || "Sonstiges" }] });
+    $("lkn").value = $("lku").value = ""; toast("Link hinzugefügt"); }
+  catch(e){ toast(e.message, {err:true}); }
+};
+
+/* ---------- Einstellungen: Schule/Klasse + Schularbeit ---------- */
+function drawSettings(){
+  const c = C();
+  $("schbox").innerHTML = token ? `
+    <label class="lbl" for="sc1" style="margin-top:0">Schule</label><input id="sc1" value="${esc(c.school)}">
+    <label class="lbl" for="sc2">Klasse</label><input id="sc2" value="${esc(c.klasse)}" placeholder="z. B. 4. Klasse">
+    <label class="lbl" for="sc3">Zweig</label><input id="sc3" value="${esc(c.zweig)}" placeholder="z. B. Medienzweig">
+    <div style="margin-top:12px"><button id="scs">Speichern</button></div>`
+    : `<div class="kv"><span>Schule</span><b>${esc(c.school)}</b><span>Klasse</span><b>${esc(c.klasse)}</b><span>Zweig</span><b>${esc(c.zweig)}</b></div>
+       <p class="note">Schule, Klasse und Zweig stellt dein Nachhilfelehrer ein. Sie werden im KI-Prompt-Generator verwendet.</p>`;
+  if(token) $("scs").onclick = async () => { try{ await saveCfg({ school:$("sc1").value, klasse:$("sc2").value, zweig:$("sc3").value }); toast("Gespeichert"); }catch(e){ toast(e.message,{err:true}); } };
+  drawTests();
+}
+const TYPEN = ["Schularbeit","Test","Wiederholung","Abgabe","Sonstiges"];
+function drawTests(){
+  const all = termine();
+  $("tbox").innerHTML = (all.length ? all.map(x => { const d = daysTo(x.date), past = d < 0;
+    const canDel = token ? !x.own : x.own;
+    return `<div class="row" style="justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd);${past ? "opacity:.5" : ""}">
+      <div style="flex:1;min-width:0"><b>${esc(tName(x))}</b> <span class="meta">${esc(x.subj || "")}</span>
+        <div class="meta">${new Date(x.date).toLocaleDateString("de-AT")} · ${past ? "vorbei" : dayTxt(d)}${x.note ? " · " + esc(x.note) : ""}${x.own ? " · eigener Eintrag" : ""}</div></div>
+      ${canDel ? `<button class="g s" data-td="${esc(x.id)}" data-own="${x.own ? 1 : 0}" aria-label="Löschen">${ic("trash")}</button>` : ""}</div>`; }).join("")
+    : `<p class="meta" style="margin:0">Noch keine Termine eingetragen.</p>`)
+    + `<h3 style="margin:16px 0 4px">Termin hinzufügen</h3>
+    <p class="meta" style="margin:0 0 4px">${token ? "Gilt für Simon auf allen Geräten." : "Nur für dich auf diesem Gerät."}</p>
+    <div class="row"><select id="tty" aria-label="Art">${TYPEN.map(x => `<option>${x}</option>`).join("")}</select>
+      <select id="tsu" aria-label="Fach">${FAECHER.map(x => `<option>${esc(x)}</option>`).join("")}</select></div>
+    <div class="row" style="margin-top:8px"><input id="tla" placeholder="Bezeichnung, z. B. 1. M-SA"><input type="date" id="tda" style="max-width:170px"></div>
+    <input id="tno" placeholder="Stoff / Hinweis (optional)" style="margin-top:8px">
+    <div style="margin-top:12px"><button id="tad">${ic("plus")}Eintragen</button></div>`;
+  $("tsu").value = "Mathematik";
+}
+$("tbox").addEventListener("click", async e => {
+  const b = e.target.closest("[data-td]"); if(b){
+    const id = b.dataset.td;
+    if(b.dataset.own === "1"){ MY = MY.filter(x => x.id !== id); store.set("nh_mytests", JSON.stringify(MY)); drawAll(); return toast("Termin gelöscht"); }
+    const L = (cfg.tests || termine().filter(x => !x.own)).filter(x => x.id !== id);
+    try{ await saveCfg({ tests: L }); toast("Termin gelöscht"); }catch(err){ toast(err.message, {err:true}); }
+    return;
+  }
+  if(!e.target.closest("#tad")) return;
+  const x = { id: Date.now().toString(36), type: $("tty").value, subj: $("tsu").value, label: $("tla").value.trim(), date: $("tda").value, note: $("tno").value.trim() };
+  if(!x.date) return toast("Bitte ein Datum wählen.", {err:true});
+  if(token){
+    try{ await saveCfg({ tests: [...(cfg.tests || termine().filter(y => !y.own)), x] }); toast("Termin eingetragen"); }catch(err){ toast(err.message, {err:true}); }
+  } else { MY.push(x); store.set("nh_mytests", JSON.stringify(MY)); drawAll(); toast("Termin eingetragen"); }
+});
+
+/* ---------- KI-Prompt-Generator ---------- */
+const FAECHER = ["Mathematik","Deutsch","Englisch","Zweite Fremdsprache","Geschichte","Geografie","Biologie","Physik","Chemie","Informatik","Musik","Bildnerische Erziehung","Medien (Zweigfach)","Anderes Fach"];
+const MATHE_THEMEN = ["Wurzeln","Rechnen mit Wurzeln","Reelle Zahlen und Intervalle","Terme und Faktorisieren","Bruchterme","Definitionsmenge","Kürzen und Erweitern"];
+const OPTS = [
+  ["step","Schritt für Schritt erklären"],["ex","Beispiele aus meinem Alltag"],["short","Kurz und knapp"],
+  ["err","Typische Fehler zeigen"],["end","Am Ende ein Merksatz"],["frac","Brüche mit Bruchstrich schreiben"],
+];
+const PG_T = {
+  ex: n => `Erstelle ${n} Übungsaufgaben mit steigender Schwierigkeit und gib danach zu jeder Aufgabe eine vollständige Lösung mit Rechenweg.`,
+  exp: () => "Erkläre das Thema so einfach wie möglich, mit einem durchgerechneten Beispiel. Prüfe zum Schluss mit 2 kurzen Fragen, ob ich es verstanden habe.",
+  sum: n => `Fasse das Thema übersichtlich zusammen (die wichtigsten Regeln und Begriffe) und stelle mir danach ${n} Kontrollfragen mit Lösungen.`,
+  quiz: n => `Erstelle einen Probetest mit ${n} Aufgaben im Stil einer Schulübung. Gib die Lösungen erst am Ende nach einer Trennlinie an und schlage einen Punkteschlüssel vor.`,
+  tutor: n => `Frage mich Schritt für Schritt ab: immer nur eine Frage auf einmal, insgesamt ${n} Fragen. Warte auf meine Antwort, bewerte sie freundlich und erkläre Fehler.`,
+  hint: () => "Hilf mir bei der Aufgabe, aber verrate die Lösung nicht. Gib mir zuerst nur einen kleinen Hinweis und warte, bis ich es probiert habe. Erst wenn ich nicht weiterkomme, gibst du den nächsten Hinweis.",
+  check: () => "Prüfe meine Lösung Schritt für Schritt. Sage mir, was richtig ist, und markiere genau die Stelle eines Fehlers mit einer Erklärung. Verbessere nicht alles auf einmal, sondern lass mich den Fehler zuerst selbst korrigieren.",
+  cards: n => `Erstelle ${n} Karteikarten (Frage vorne, Antwort hinten) zu den wichtigsten Begriffen und Regeln.`,
+  plan: () => "Erstelle einen realistischen Lernplan bis zu meinem Test, aufgeteilt in kleine Etappen mit Pausen. Pro Tag höchstens 30 bis 45 Minuten.",
+};
+const PG_D = {
+  ex: "Alle Aufgaben samt Lösungen vorhanden und der Rechenweg nachvollziehbar ist.",
+  exp: "Ich das Thema erklären kann und die zwei Kontrollfragen beantwortet habe.",
+  sum: "Zusammenfassung und Kontrollfragen mit Lösungen vorliegen.",
+  quiz: "Der Probetest samt Lösungen und Punkteschlüssel vorliegt.",
+  tutor: "Alle Fragen gestellt, bewertet und erklärt sind und du mir am Ende sagst, woran ich noch üben sollte.",
+  hint: "Ich die Aufgabe selbst gelöst habe.",
+  check: "Ich meine Lösung selbst korrigiert habe.",
+  cards: "Die Karteikarten vollständig sind.",
+  plan: "Der Plan kurz, übersichtlich und machbar ist.",
+};
+const PG_O = {
+  step: "Erkläre in kleinen, nummerierten Schritten.",
+  ex: "Nutze Beispiele aus meinem Alltag und meinen Interessen.",
+  short: "Halte dich kurz, höchstens ein paar Sätze pro Schritt.",
+  err: "Zeige typische Fehler und wie man sie vermeidet.",
+  end: "Schließe mit einem kurzen Merksatz ab.",
+  frac: "Schreibe Divisionen immer als Bruch mit Bruchstrich, nie mit Doppelpunkt.",
+};
+const PG_L = { de:"Antworte auf Deutsch.", "de-en":"Antworte auf Deutsch und nenne wichtige Fachwörter zusätzlich auf Englisch.", en:"Antworte nur auf Englisch, einfach und klar, damit ich Englisch übe." };
+
+const AI = Object.assign({ subj:"Mathematik", topic:"", type:"ex", lv:"", n:"5", lg:"de", tool:"any", name:"", int:"", tried:"", mat:"", opts:["step","ex","end","frac"] }, J("nh_ai", {}));
+function aiInit(){
+  $("asubj").innerHTML = FAECHER.map(f => `<option>${esc(f)}</option>`).join("");
+  $("aopts").innerHTML = OPTS.map(([k,t]) => `<label class="chip"><input type="checkbox" class="aopt" value="${k}"> ${esc(t)}</label>`).join("");
+  $("asubj").value = AI.subj; $("atopic").value = AI.topic; $("atype").value = AI.type;
+  if(AI.lv) $("alv").value = AI.lv; $("an").value = AI.n; $("alg").value = AI.lg; $("atool").value = AI.tool;
+  $("aname").value = AI.name; $("aint").value = AI.int; $("atried").value = AI.tried; $("amat").value = AI.mat;
+  document.querySelectorAll(".aopt").forEach(x => x.checked = AI.opts.includes(x.value));
+  ["asubj","atopic","atype","alv","an","alg","atool","aname","aint","atried","amat"].forEach(id => $(id).addEventListener(id==="atopic"||id==="aname"||id==="aint"||id==="atried"||id==="amat"?"input":"change", aiGen));
+  document.querySelectorAll(".aopt").forEach(x => x.addEventListener("change", aiGen));
+  $("asug").addEventListener("click", e => { const b = e.target.closest("[data-t]"); if(b){ $("atopic").value = b.dataset.t; aiGen(); } });
+  $("afile").onchange = e => { const f = files.find(x => x.id === e.target.value); if(f){ $("atopic").value = f.name.replace(/\.[a-z0-9]+$/i, ""); aiGen(); } e.target.value = ""; };
+  document.querySelectorAll("[data-ai]").forEach(b => b.onclick = async () => {
+    try{ await navigator.clipboard.writeText($("aout").value); toast("Kopiert – füge den Prompt im neuen Tab ein."); }
+    catch(e){ $("aout").removeAttribute("readonly"); $("aout").select(); toast("Bitte mit Strg/Cmd+C kopieren.", {err:true}); }
+    window.open(b.dataset.ai, "_blank", "noopener");
+  });
+  $("anext").onclick = () => {
+    const nx = termine().filter(x => daysTo(x.date) >= 0)[0];
+    if(!nx) return toast("Kein kommender Termin eingetragen.", {err:true});
+    if(FAECHER.includes(nx.subj)) $("asubj").value = nx.subj;
+    $("atopic").value = nx.note || nx.label || nx.type; $("atype").value = "plan"; aiGen();
+    $("awhen").textContent = "Übernommen: " + tName(nx) + " " + dayTxt(daysTo(nx.date)) + ".";
+  };
+  $("acopy").onclick = async () => { try{ await navigator.clipboard.writeText($("aout").value); toast("Prompt kopiert – füge ihn jetzt im Chat ein."); }
+    catch(e){ $("aout").removeAttribute("readonly"); $("aout").select(); toast("Bitte mit Strg/Cmd+C kopieren.", {err:true}); } };
+  aiGen();
+}
+function fillFileSelect(){
+  $("afile").innerHTML = `<option value="">Zettel auswählen …</option>` + files.map(f => `<option value="${esc(f.id)}">${esc(f.name)}</option>`).join("");
+}
+function aiGen(){
+  const g = id => $(id).value.trim(), c = C();
+  AI.subj = $("asubj").value; AI.topic = g("atopic"); AI.type = $("atype").value; AI.lv = $("alv").value; AI.n = $("an").value; AI.lg = $("alg").value; AI.tool = $("atool").value;
+  AI.name = g("aname"); AI.int = g("aint"); AI.tried = g("atried"); AI.mat = $("amat").value.trim();
+  AI.opts = [...document.querySelectorAll(".aopt")].filter(x => x.checked).map(x => x.value);
+  store.set("nh_ai", JSON.stringify(AI));
+  $("asug").innerHTML = AI.subj === "Mathematik" ? `<span class="meta">Vorschläge</span><div style="margin-top:6px">` + MATHE_THEMEN.map(t => `<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`).join("") + `</div>` : "";
+  const n = +AI.n || 5, ty = AI.type, tool = AI.tool, L = [];
+  const sec = (k, ti, b) => tool === "claude" ? `<${k}>\n${b}\n</${k}>` : `${ti}:\n${b}`;
+  const stufe = (c.klasse.match(/\d+/) || [])[0] ? +c.klasse.match(/\d+/)[0] + 4 : 0;
+  const wo = [c.klasse && "in der " + c.klasse, c.zweig && "im " + c.zweig, c.school && "am " + c.school].filter(Boolean).join(" ");
+  L.push(sec("rolle", "Rolle", "Du bist ein geduldiger, freundlicher Lerncoach für Schüler der Unterstufe. Du erklärst klar und in einfacher Sprache und machst mir Mut."));
+  let ctx = `Ich ${AI.name ? "heiße " + AI.name + " und " : ""}bin Schüler ${wo || "an einem Gymnasium"} (Gymnasium in Österreich${stufe ? ", " + stufe + ". Schulstufe, ca. " + (stufe + 5) + " Jahre alt" : ""}). Fach: ${AI.subj}. Thema: ${AI.topic || "(Thema einfügen)"}. Mein Stand: ${AI.lv}.`;
+  if(AI.subj === "Mathematik" && /4/.test(c.klasse)) ctx += " Wir arbeiten mit dem Schulbuch „Das ist Mathematik 4“.";
+  if(AI.int) ctx += ` Das interessiert mich: ${AI.int}.`;
+  const nx = termine().filter(x => daysTo(x.date) >= 0 && (!x.subj || x.subj === AI.subj || AI.subj === "Anderes Fach"))[0];
+  if(nx) ctx += ` Bald steht an: ${tName(nx)} (${nx.subj}) ${dayTxt(daysTo(nx.date))}, am ${new Date(nx.date).toLocaleDateString("de-AT")}.${nx.note ? " Stoff: " + nx.note + "." : ""}`;
+  if(AI.tried) ctx += `\nBisher versucht oder wo ich hänge: ${AI.tried}\nWiederhole nicht, was ich schon kann.`;
+  L.push(sec("kontext", "Kontext", ctx));
+  L.push(sec("aufgabe", "Aufgabe", PG_T[ty](n)));
+  if(AI.mat) L.push(sec("material", "Material", (ty === "check" ? "Meine Lösung" : "Text / Aufgabe") + ':\n"""\n' + AI.mat + '\n"""'));
+  const R = [PG_L[AI.lg], "Schreibe in einfacher, freundlicher Sprache, die zu meinem Alter passt."];
+  AI.opts.forEach(k => { if(k === "end" && !["ex","sum","quiz","exp"].includes(ty)) return; if(k === "frac" && AI.subj !== "Mathematik") return; R.push(PG_O[k]); });
+  if(AI.mat) R.push("Stütze dich auf das gelieferte Material. Was nicht darin steht, kennzeichne als Ergänzung.");
+  R.push("Wenn dir etwas fehlt, frage kurz nach, statt zu raten.");
+  L.push(sec("anforderungen", "Anforderungen", R.map(r => "- " + r).join("\n")));
+  L.push(sec("fertig_wenn", "Fertig, wenn", PG_D[ty]));
+  $("aout").value = L.join("\n\n");
+  $("acount").textContent = $("aout").value.length + " Zeichen";
+}
+function drawAiProfile(){ const c = C(); $("psch").textContent = c.school || "–"; $("pcl").textContent = c.klasse || "–"; $("pzw").textContent = c.zweig || "–"; }
+
+function drawAll(){ render(); drawLinks(); drawSettings(); drawAiProfile(); if($("aout").value !== undefined && window.__aiReady) aiGen(); }
+
+/* ---------- Lerntimer ---------- */
+let TM = Object.assign({ mode:"work", left:25*60, run:false, end:0 }, J("nh_timer", {}));
+const LOG = J("nh_log", {});
+const dayKey = (d = new Date()) => d.toLocaleDateString("sv-SE");
+function beep(){ try{ const c = new (window.AudioContext || window.webkitAudioContext)(), o = c.createOscillator(), g = c.createGain();
+  o.connect(g); g.connect(c.destination); o.frequency.value = 880; g.gain.value = .15; o.start(); setTimeout(() => { o.stop(); c.close(); }, 450); }catch(e){}
+  try{ navigator.vibrate && navigator.vibrate(200); }catch(e){} }
+const tmLen = m => (m === "work" ? +$("tw").value || 25 : +$("tbk").value || 5) * 60;
+function tmSave(){ store.set("nh_timer", JSON.stringify(TM)); }
+function tmDraw(){
+  const s = Math.max(0, Math.round(TM.run ? (TM.end - Date.now()) / 1000 : TM.left));
+  $("tmd").textContent = String(Math.floor(s/60)).padStart(2,"0") + ":" + String(s%60).padStart(2,"0");
+  $("tmm").textContent = TM.mode === "work" ? "Lernphase" : "Pause";
+  $("tms").textContent = TM.run ? "Pause" : "Start";
+  const sum = n => { let t = 0; for(let i = 0; i < n; i++){ const d = new Date(); d.setDate(d.getDate() - i); t += LOG[dayKey(d)] || 0; } return Math.round(t/60); };
+  $("today").textContent = sum(1); $("week").textContent = sum(7);
+  document.title = TM.run ? $("tmd").textContent + " · Mathe-Ablage" : "Mathe-Ablage";
+}
+function tmTick(){
+  if(!TM.run) return;
+  if(Date.now() >= TM.end){
+    if(TM.mode === "work"){ LOG[dayKey()] = (LOG[dayKey()] || 0) + tmLen("work"); store.set("nh_log", JSON.stringify(LOG)); toast("Gut gelernt. Zeit für eine Pause."); }
+    else toast("Pause vorbei – weiter geht’s.");
+    beep(); TM.mode = TM.mode === "work" ? "break" : "work"; TM.left = tmLen(TM.mode); TM.run = false; tmSave();
+  }
+  tmDraw();
+}
+$("tms").onclick = () => {
+  if(TM.run){ TM.left = Math.max(0, (TM.end - Date.now()) / 1000); TM.run = false; }
+  else { TM.end = Date.now() + TM.left * 1000; TM.run = true; }
+  tmSave(); tmDraw();
+};
+$("tmr").onclick = () => { TM = { mode:"work", left:tmLen("work"), run:false, end:0 }; tmSave(); tmDraw(); };
+["tw","tbk"].forEach(id => $(id).onchange = () => { if(!TM.run){ TM.left = tmLen(TM.mode); tmSave(); tmDraw(); } });
+setInterval(tmTick, 500); tmDraw();
+
+/* ---------- Noten ---------- */
+let GR = J("nh_grades", []);
+function drawGrades(){
+  const avg = GR.length ? GR.reduce((a,g) => a + g.g, 0) / GR.length : 0;
+  $("avg").textContent = GR.length ? avg.toFixed(2).replace(".", ",") : "–";
+  const cnt = [1,2,3,4,5].map(n => GR.filter(g => g.g === n).length);
+  $("gbars").innerHTML = GR.length ? cnt.map((c,i) => c ? `Note ${i+1}: ${c}×` : "").filter(Boolean).join(" · ") : "Noch keine Noten eingetragen.";
+  $("glist").innerHTML = [...GR].sort((a,b) => (b.d||"").localeCompare(a.d||"")).map(g =>
+    `<div class="card file"><div><b>${esc(g.l || "Note")}</b><div class="meta">${g.d ? new Date(g.d).toLocaleDateString("de-AT") : ""}</div></div>
+     <div class="row"><span class="grade g${g.g}">${g.g}</span><button class="g s" data-gdel="${g.id}" aria-label="Löschen">${ic("trash")}</button></div></div>`).join("");
+}
+$("ga").onclick = () => {
+  GR.push({ id: Date.now(), l: $("gl").value.trim(), d: $("gd").value, g: +$("gg").value });
+  store.set("nh_grades", JSON.stringify(GR)); $("gl").value = ""; drawGrades(); toast("Note eingetragen");
+};
+$("glist").addEventListener("click", e => {
+  const b = e.target.closest("[data-gdel]"); if(!b) return; const g = GR.find(x => x.id == b.dataset.gdel);
+  GR = GR.filter(x => x.id != b.dataset.gdel); store.set("nh_grades", JSON.stringify(GR)); drawGrades();
+  toast("Note gelöscht", { undo: () => { GR.push(g); store.set("nh_grades", JSON.stringify(GR)); drawGrades(); } });
+});
+drawGrades();
+
+/* ---------- Backup ---------- */
+$("bkx").onclick = () => {
+  const o = {}; try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i); if(k.startsWith("nh_") && k !== "nh_token") o[k] = localStorage.getItem(k); } }catch(e){}
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(o)], { type:"application/json" }));
+  a.download = "mathe-backup-" + dayKey() + ".json"; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+};
+$("bki").onclick = () => $("bkf").click();
+$("bkf").onchange = async e => {
+  try{ const o = JSON.parse(await e.target.files[0].text()); Object.keys(o).filter(k => k.startsWith("nh_") && k !== "nh_token").forEach(k => store.set(k, o[k]));
+    toast("Backup geladen"); setTimeout(() => location.reload(), 700); }catch(err){ toast("Datei nicht lesbar.", {err:true}); }
+  e.target.value = "";
+};
+
+/* ---------- Offline + PWA ---------- */
+const net = () => { $("off").style.display = navigator.onLine ? "none" : "block"; };
+addEventListener("online", () => { net(); load(); loadCfg(); }); addEventListener("offline", net); net();
+if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register("sw.js").catch(()=>{});
+
+/* ---------- Start ---------- */
+aiInit(); window.__aiReady = true;
+drawAll(); load(); loadCfg();
+if(token){ api("/api/session").then(() => setAdmin(true)).catch(() => {}); }
+</script>
+</body>
+</html>
