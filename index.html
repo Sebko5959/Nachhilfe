@@ -563,7 +563,7 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
     </div>
     <h2 class="sh">Kurs</h2>
     <div class="grid">
-      <div class="card"><h3>Schule und Klasse</h3><div id="schbox"></div></div>
+      <div class="card"><h3>Angaben zum Kurs</h3><div id="schbox"></div></div>
       <div class="card"><h3>Schularbeiten und Tests</h3><div id="tbox"></div></div>
     </div>
     <div id="admsec" class="stack hide">
@@ -659,7 +659,7 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
     <label class="lbl" for="tetitle" style="margin-top:0">Titel</label><input id="tetitle" placeholder="z. B. Zettel 3, Nr. 1 bis 5">
     <label class="lbl" for="tecat">Abschnitt</label><input id="tecat" list="cats">
     <label class="lbl" for="tedue">Abgabe bis (optional)</label><input id="tedue" type="date">
-    <label class="lbl" for="tedesc">Beschreibung</label><textarea id="tedesc" rows="4" placeholder="Was soll Simon machen?"></textarea>
+    <label class="lbl" for="tedesc">Beschreibung</label><textarea id="tedesc" rows="4" placeholder="Was soll gemacht werden?"></textarea>
     <div style="margin-top:12px"><button id="tes">Speichern</button></div>
   </div>
 </div></div>
@@ -693,7 +693,7 @@ const size = n => n > 1048576 ? (n/1048576).toFixed(1)+" MB" : Math.max(1,Math.r
 const dt = s => s ? new Date(s).toLocaleDateString("de-AT") : "";
 const isImg = f => (f.type||"").startsWith("image/");
 const fileUrl = (id, dl) => `${API}/api/file/${encodeURIComponent(id)}?t=${encodeURIComponent(token || "")}&c=${encodeURIComponent(CID)}${dl?"&download=1":""}`;
-const DEFAULT_CFG = { school:"Brucknergymnasium", klasse:"4. Klasse", zweig:"Medienzweig" };
+const EMPTY_CFG = { school:"", klasse:"", zweig:"", fach:"", buch:"" }, LEGACY_CFG = { school:"Brucknergymnasium", klasse:"4. Klasse", zweig:"Medienzweig", fach:"Mathematik", buch:"Das ist Mathematik 4" };
 const DEFAULT_LINKS = [
   { name:"Serlo – Mathe erklärt", url:"https://de.serlo.org/mathe", cat:"Mathe" },
   { name:"Studyflix – Mathe", url:"https://studyflix.de/mathematik", cat:"Mathe" },
@@ -708,7 +708,7 @@ const SNAME = () => ADM ? ((MEMBERS.find(m => m.id === SUID) || {}).name || "Tei
 let ROLE = null, ADM = false, QZ = [], TK = [], COURSE = { order: [] }, MSG = [], SEEN = J("nh_seen", {}), BOARD = {}, MAIL = null, edColor = "", DONE = J("nh_done", {}), FAV = J("nh_fav", {}), RECENT = J("nh_recent", []), onlyFav = false, cfg = {};
 let token = store.get("nh_token"), files = [], cat = "", sorting = store.get("nh_sort") || "cat", editId = null;
 $("sort").value = sorting;
-const C = () => ({ ...DEFAULT_CFG, ...cfg });
+const C = () => ({ ...EMPTY_CFG, ...(CID === "main" && cfg.school === undefined ? LEGACY_CFG : {}), ...cfg });
 const LINKS = () => Array.isArray(cfg.links) ? cfg.links : DEFAULT_LINKS;
 function markSeen(id){ if(!SEEN[id]){ SEEN[id] = 1; store.set("nh_seen", JSON.stringify(SEEN)); render(); } }
 document.addEventListener("click", e => { const a = e.target.closest("a[href*='download=1']"); if(a){ const m = a.href.match(/\/api\/file\/([^?]+)/); if(m) markSeen(decodeURIComponent(m[1])); } });
@@ -797,6 +797,9 @@ const MORE_V = ["ai","links","set","sim"];
 function openMore(o){ const m = $("more"), was = m.classList.contains("on"); if(was === o) return;
   m.classList.toggle("on", o); $("moreBtn").setAttribute("aria-expanded", o); m.querySelector(".sheet").style.transform = "";
   if(o) setTimeout(() => { const f = m.querySelector(".mi:not(.hide)"); if(f) f.focus(); }, 30); else $("moreBtn").focus({ preventScroll: true }); }
+let INBOX = [];
+async function loadInbox(){ if(!ADM){ INBOX = []; return; } try{ INBOX = await api("/api/admin/inbox"); }catch(e){ INBOX = []; } render(); }
+const inboxOther = () => INBOX.map(x => ({ ...x, msg: !!x.lastMsg && x.lastMsg > msSeen(x.cid, x.uid) })).filter(x => !(x.cid === CID && x.uid === SUID) && (x.subs || x.msg));
 let moving = false, LOADING = false, LASTACT = null, MIS = { n: 0, cats: {} }, SLOG = { next: "", list: [] }, STU = {}, PVF = null;
 function openGM(title, html){ $("gmt").textContent = title; $("gmb").innerHTML = html; $("gm").classList.add("on"); }
 function closeGM(){ $("gm").classList.remove("on"); }
@@ -929,6 +932,7 @@ function drawTodo(){
     if(n.length > 2) rows.push(row("task", (n.length - 2) + " weitere Abgaben", "", `data-todo="open"`));
     if(un) rows.push(row("msg", un === 1 ? "1 neue Nachricht" : un + " neue Nachrichten", "von " + esc(SNAME()), `data-todo="msg"`));
     if(nx) rows.push(row("timer", "Nächste Nachhilfe: " + nx, "mit " + esc(SNAME()), `data-todo="sim"`));
+    inboxOther().forEach(x => rows.push(row("user", esc(x.uname) + " · " + esc(x.cname), [x.subs ? (x.subs === 1 ? "1 Abgabe" : x.subs + " Abgaben") + " zu bewerten" : "", x.msg ? "neue Nachricht" : ""].filter(Boolean).join(" · "), `data-go="${esc(x.cid)}|${esc(x.uid)}"`)));
     if(MEMBERS.length) foot = `<p class="meta" style="margin:4px 0 0">${LASTACT ? esc(SNAME()) + " zuletzt aktiv: " + new Date(LASTACT).toLocaleString("de-AT", { day:"numeric", month:"numeric", hour:"2-digit", minute:"2-digit" }) : "Noch keine Aktivität von " + esc(SNAME())}</p>`;
   } else {
     const p = planInfo(), inPlan = new Set(p ? p.today.map(x => x.k) : []);
@@ -951,6 +955,7 @@ function drawTodo(){
 }
 $("todo").addEventListener("click", e => { const b = e.target.closest("button"); if(!b) return;
   if(b.dataset.ta) return openTask(b.dataset.id);
+  if(b.dataset.go){ const [c, u] = b.dataset.go.split("|"); CID = c; store.set("nh_course", CID); SUID = u; return loadCourseData(); }
   if(b.dataset.f){ const f = files.find(x => x.id === b.dataset.f); if(f) openPreview(f); return; }
   const t = b.dataset.todo;
   if(t === "msg") return showTab("msg");
@@ -1016,7 +1021,7 @@ function render(){
         </div>
       </div>
     </div>`;
-  { const nb = ADM ? TK.filter(x => x.sub && !x.fb).length : files.filter(isNew).length + (off("tasks") ? 0 : TK.filter(x => !x.sub && !x.fb).length);
+  { const nb = ADM ? TK.filter(x => x.sub && !x.fb).length + inboxOther().reduce((a, x) => a + x.subs, 0) : files.filter(isNew).length + (off("tasks") ? 0 : TK.filter(x => !x.sub && !x.fb).length);
     ["filebadge","bfilebadge"].forEach(id => { $(id).textContent = nb; $(id).classList.toggle("hide", !nb); $(id).title = ADM ? "Neue Abgaben zu bewerten" : "Neue Dateien und offene Aufgaben"; }); }
   const hit = x => !q || (x.title || "").toLowerCase().includes(q);
   let qs = QZ.filter(x => hit(x) && (!cat || (x.cat||"Sonstiges") === cat) && !onlyFav);
@@ -1325,14 +1330,19 @@ $("lka").onclick = async () => {
 /* ---------- Einstellungen: Schule/Klasse + Schularbeit ---------- */
 function drawSettings(){
   const c = C();
+  const cname = esc((COURSES.find(x => x.id === CID) || {}).name || "");
+  const kv = [["Fach", c.fach], ["Schule", c.school], ["Klasse", c.klasse], ["Zweig", c.zweig], ["Schulbuch", c.buch]].filter(x => x[1]);
   $("schbox").innerHTML = ADM ? `
-    <label class="lbl" for="sc1" style="margin-top:0">Schule</label><input id="sc1" value="${esc(c.school)}">
+    <p class="meta" style="margin:0 0 4px">Gilt nur für den Kurs „${cname}“. Jeder Kurs hat eigene Angaben.</p>
+    <label class="lbl" for="sc0">Fach</label><select id="sc0"><option value="">– nicht festgelegt –</option>${FAECHER.map(x => `<option${x === c.fach ? " selected" : ""}>${esc(x)}</option>`).join("")}</select>
+    <label class="lbl" for="sc1">Schule</label><input id="sc1" value="${esc(c.school)}" placeholder="z. B. Brucknergymnasium">
     <label class="lbl" for="sc2">Klasse</label><input id="sc2" value="${esc(c.klasse)}" placeholder="z. B. 4. Klasse">
     <label class="lbl" for="sc3">Zweig</label><input id="sc3" value="${esc(c.zweig)}" placeholder="z. B. Medienzweig">
+    <label class="lbl" for="sc4">Schulbuch</label><input id="sc4" value="${esc(c.buch)}" placeholder="z. B. Das ist Mathematik 4">
     <div style="margin-top:12px"><button id="scs">Speichern</button></div>`
-    : `<div class="kv"><span>Schule</span><b>${esc(c.school)}</b><span>Klasse</span><b>${esc(c.klasse)}</b><span>Zweig</span><b>${esc(c.zweig)}</b></div>
-       <p class="note">Schule, Klasse und Zweig stellt dein Nachhilfelehrer ein. Sie werden im KI-Prompt-Generator verwendet.</p>`;
-  if(ADM) $("scs").onclick = async () => { try{ await saveCfg({ school:$("sc1").value, klasse:$("sc2").value, zweig:$("sc3").value }); toast("Gespeichert"); }catch(e){ toast(e.message,{err:true}); } };
+    : (kv.length ? `<div class="kv">${kv.map(x => `<span>${x[0]}</span><b>${esc(x[1])}</b>`).join("")}</div>` : `<p class="meta" style="margin:0">Für diesen Kurs ist noch nichts eingetragen.</p>`) +
+      `<p class="note">Diese Angaben stellt dein Nachhilfelehrer für den Kurs „${cname}“ ein. Sie werden im KI-Prompt-Generator verwendet.</p>`;
+  if(ADM) $("scs").onclick = async () => { try{ await saveCfg({ fach:$("sc0").value, school:$("sc1").value, klasse:$("sc2").value, zweig:$("sc3").value, buch:$("sc4").value }); toast("Gespeichert"); if(PEOPLE) loadPeople(); }catch(e){ toast(e.message,{err:true}); } };
   drawTests();
 }
 const TYPEN = ["Schularbeit","Test","Wiederholung","Abgabe","Sonstiges"];
@@ -1352,7 +1362,7 @@ function drawTests(){
     <div class="row" style="margin-top:8px"><input id="tla" placeholder="Bezeichnung, z. B. 1. M-SA"><input type="date" id="tda" style="max-width:170px"></div>
     <input id="tno" placeholder="Stoff / Hinweis (optional)" style="margin-top:8px">
     <div style="margin-top:12px"><button id="tad">${ic("plus")}Eintragen</button></div>`;
-  $("tsu").value = "Mathematik";
+  $("tsu").value = FAECHER.includes(C().fach) ? C().fach : "Mathematik";
 }
 $("tbox").addEventListener("click", async e => {
   const pb = e.target.closest("[data-tp]"); if(pb){ if(!cfg.tests) return toast("Bitte den Termin zuerst neu eintragen.", {err:true}); return editPlan(pb.dataset.tp); }
@@ -1414,6 +1424,7 @@ const AI = Object.assign({ subj:"Mathematik", topic:"", type:"ex", lv:"", n:"5",
 function aiInit(){
   $("asubj").innerHTML = FAECHER.map(f => `<option>${esc(f)}</option>`).join("");
   $("aopts").innerHTML = OPTS.map(([k,t]) => `<label class="chip"><input type="checkbox" class="aopt" value="${k}"> ${esc(t)}</label>`).join("");
+  $("asubj").addEventListener("change", () => { AI.pick = true; });
   $("asubj").value = AI.subj; $("atopic").value = AI.topic; $("atype").value = AI.type;
   if(AI.lv) $("alv").value = AI.lv; $("an").value = AI.n; $("alg").value = AI.lg; $("atool").value = AI.tool;
   $("aname").value = AI.name; $("aint").value = AI.int; $("atried").value = AI.tried; $("amat").value = AI.mat;
@@ -1450,11 +1461,11 @@ function aiGen(){
   $("asug").innerHTML = AI.subj === "Mathematik" ? `<span class="meta">Vorschläge</span><div style="margin-top:6px">` + MATHE_THEMEN.map(t => `<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`).join("") + `</div>` : "";
   const n = +AI.n || 5, ty = AI.type, tool = AI.tool, L = [];
   const sec = (k, ti, b) => tool === "claude" ? `<${k}>\n${b}\n</${k}>` : `${ti}:\n${b}`;
-  const stufe = (c.klasse.match(/\d+/) || [])[0] ? +c.klasse.match(/\d+/)[0] + 4 : 0;
+  const kn = +((c.klasse.match(/\d+/) || [])[0] || 0), stufe = kn >= 1 && kn <= 8 ? kn + 4 : 0;
   const wo = [c.klasse && "in der " + c.klasse, c.zweig && "im " + c.zweig, c.school && "am " + c.school].filter(Boolean).join(" ");
-  L.push(sec("rolle", "Rolle", "Du bist ein geduldiger, freundlicher Lerncoach für Schüler der Unterstufe. Du erklärst klar und in einfacher Sprache und machst mir Mut."));
-  let ctx = `Ich ${AI.name ? "heiße " + AI.name + " und " : ""}bin Schüler ${wo || "an einem Gymnasium"} (Gymnasium in Österreich${stufe ? ", " + stufe + ". Schulstufe, ca. " + (stufe + 5) + " Jahre alt" : ""}). Fach: ${AI.subj}. Thema: ${AI.topic || "(Thema einfügen)"}. Mein Stand: ${AI.lv}.`;
-  if(AI.subj === "Mathematik" && /4/.test(c.klasse)) ctx += " Wir arbeiten mit dem Schulbuch „Das ist Mathematik 4“.";
+  L.push(sec("rolle", "Rolle", "Du bist ein geduldiger, freundlicher Lerncoach" + (stufe ? " für Schüler der " + (stufe <= 8 ? "Unterstufe" : "Oberstufe") : "") + ". Du erklärst klar und in einfacher Sprache und machst mir Mut."));
+  let ctx = `Ich ${AI.name ? "heiße " + AI.name + " und " : ""}bin Schüler${wo ? " " + wo : ""} (Schule in Österreich${stufe ? ", " + stufe + ". Schulstufe" : ""}). Fach: ${AI.subj}. Thema: ${AI.topic || "(Thema einfügen)"}. Mein Stand: ${AI.lv}.`;
+  if(c.buch && (!c.fach || c.fach === AI.subj)) ctx += ` Wir arbeiten mit dem Schulbuch „${c.buch}“.`;
   if(AI.int) ctx += ` Das interessiert mich: ${AI.int}.`;
   const nx = termine().filter(x => daysTo(x.date) >= 0 && (!x.subj || x.subj === AI.subj || AI.subj === "Anderes Fach"))[0];
   if(nx) ctx += ` Bald steht an: ${tName(nx)} (${nx.subj}) ${dayTxt(daysTo(nx.date))}, am ${new Date(nx.date).toLocaleDateString("de-AT")}.${nx.note ? " Stoff: " + nx.note + "." : ""}`;
@@ -1471,7 +1482,7 @@ function aiGen(){
   $("aout").value = L.join("\n\n");
   $("acount").textContent = $("aout").value.length + " Zeichen";
 }
-function drawAiProfile(){ const c = C(); $("psch").textContent = c.school || "–"; $("pcl").textContent = c.klasse || "–"; $("pzw").textContent = c.zweig || "–"; }
+function drawAiProfile(){ const c = C(); if(!AI.pick && FAECHER.includes(c.fach) && AI.subj !== c.fach){ AI.subj = c.fach; $("asubj").value = c.fach; } $("psch").textContent = c.school || "–"; $("pcl").textContent = c.klasse || "–"; $("pzw").textContent = c.zweig || "–"; }
 
 const FEATS = [["quiz","Quizze"],["tasks","Aufgaben und Abgaben"],["mistakes","Fehler wiederholen"],["ampel","Themen-Ampel"],["streak","Lernserie"],["msg","Nachrichten"],["timer","Lerntimer"],["grades","Noten"],["ai","KI-Prompts"],["links","Links"],["pw","Passwort selbst ändern"]];
 const off = k => !ADM && (cfg.off || []).includes(k);
@@ -1493,13 +1504,13 @@ function drawAll(){ applyOff(); render(); drawLinks(); drawSettings(); drawAiPro
 /* ---------- Pinnwand ---------- */
 async function loadBoard(){ try{ BOARD = await api("/api/board"); }catch(e){ BOARD = {}; } drawBoard(); }
 function drawBoard(){
-  const el = $("board"), dismissed = !ADM && BOARD.date && store.get("nh_boardseen") === BOARD.date;
+  const el = $("board"), dismissed = !ADM && BOARD.date && (store.get("nh_bs_" + CID) || store.get("nh_boardseen")) === BOARD.date;
   $("boardEd").classList.toggle("hide", !ADM);
   if(!BOARD.text || dismissed){ el.classList.add("hide"); return; }
   el.classList.remove("hide");
   el.innerHTML = `<div class="row" style="justify-content:space-between"><b>Pinnwand</b><span class="meta">${dt(BOARD.date)}</span></div><p class="txt">${esc(BOARD.text)}</p>` +
     (ADM ? "" : `<div style="margin-top:10px"><button class="g s" id="bok">Gelesen</button></div>`);
-  if(!ADM) $("bok").onclick = () => { store.set("nh_boardseen", BOARD.date); drawBoard(); };
+  if(!ADM) $("bok").onclick = () => { store.set("nh_bs_" + CID, BOARD.date); drawBoard(); };
 }
 $("bpub").onclick = async () => {
   try{ const r = await api("/api/board", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ text: $("bin").value, mail: $("bmail").checked }) });
@@ -1754,10 +1765,12 @@ $("list").addEventListener("click", async e => {
 /* ---------- Nachrichten ---------- */
 async function loadMsgs(){ try{ MSG = await api("/api/messages"); }catch(e){} drawMsgs(); }
 const lastMsg = () => MSG.length ? MSG[MSG.length - 1].date : "";
-function unreadMsgs(){ const s = store.get("nh_msgseen") || ""; return MSG.filter(m => m.from !== ROLE && m.date > s).length; }
+const msKey = (c = CID, u = ADM ? SUID : "") => "nh_ms_" + c + "_" + u;
+const msSeen = (c, u) => store.get(msKey(c, u)) || store.get("nh_msgseen") || "";
+function unreadMsgs(){ const s = msSeen(); return MSG.filter(m => m.from !== ROLE && m.date > s).length; }
 function drawMsgs(){
   const open = document.getElementById("v-msg").classList.contains("on");
-  if(open && lastMsg()) store.set("nh_msgseen", lastMsg());
+  if(open && lastMsg()) store.set(msKey(), lastMsg());
   const n = open ? 0 : unreadMsgs(); ["msgbadge","bmsgbadge"].forEach(id => { $(id).textContent = n; $(id).classList.toggle("hide", !n); });
   let lastDay = ""; const t0 = dkey(new Date()), y = new Date(); y.setDate(y.getDate() - 1); const t1 = dkey(y);
   $("msglist").innerHTML = MSG.length ? MSG.map(m => { const d = new Date(m.date), k = dkey(d); let sep = "";
@@ -1829,13 +1842,13 @@ async function drawSim(){
   try{
     const [st, at, ts] = await Promise.all([api("/api/state?u=" + encodeURIComponent(SUID)), api("/api/attempts"), api("/api/tasks")]);
     const S = st.state || {}, P = k => { try{ return JSON.parse(S[k]) || null }catch(e){ return null } };
-    const act = P("nh_active") || {}, gr = P("nh_grades") || [], done = Object.keys(P("nh_done") || {}).length;
+    const act = P("nh_active") || {}, gr = P("nh_grades") || [], dm = P("nh_done") || {}, done = files.filter(f => dm[f.id]).length + " von " + files.length;
     const ok = d => (act[dkey(d)] || 0) >= GOAL; let streak = 0; { const d = new Date(); if(!ok(d)) d.setDate(d.getDate() - 1); while(ok(d)){ streak++; d.setDate(d.getDate() - 1); } }
     const days = [...Array(14)].map((_, i) => { const d = new Date(); d.setDate(d.getDate() - i); return d; });
     const avg = gr.length ? (gr.reduce((a, g) => a + g.g, 0) / gr.length).toFixed(2).replace(".", ",") : "–";
     const open = ts.filter(x => x.sub && !x.fb).length, noSub = ts.filter(x => !x.sub).length;
     box.innerHTML = `<div class="grid">
-      <div class="card hero"><div><div class="meta">Lernserie</div><div class="big">${streak}</div></div><div class="meta">${st.ts ? "Zuletzt synchronisiert " + new Date(st.ts).toLocaleString("de-AT") : "Noch keine Daten von " + esc(SNAME())}<br>${done} Zettel erledigt</div></div>
+      <div class="card hero"><div><div class="meta">Lernserie</div><div class="big">${streak}</div></div><div class="meta">${st.ts ? "Zuletzt synchronisiert " + new Date(st.ts).toLocaleString("de-AT") : "Noch keine Daten von " + esc(SNAME())}<br>${done} Zetteln in diesem Kurs erledigt</div></div>
       <div class="card"><h3>Offene Aufgaben</h3><div class="kv"><span>Abgaben zu bewerten</span><b>${open}</b><span>Noch nicht abgegeben</span><b>${noSub}</b></div></div></div>
       <div class="card"><h3>Zeit auf der Seite (letzte 14 Tage)</h3>${days.map(d => { const m = Math.round((act[dkey(d)] || 0) / 60);
         return `<div class="row" style="flex-wrap:nowrap;gap:10px;margin:4px 0"><span class="meta" style="width:78px">${d.toLocaleDateString("de-AT", { weekday:"short", day:"numeric", month:"numeric" })}</span><div class="bar" style="flex:1"><i style="width:${Math.min(100, m / 20 * 100)}%;${m >= 10 ? "" : "background:var(--mut)"}"></i></div><span class="meta" style="width:48px;text-align:right">${m} Min</span></div>`; }).join("")}
@@ -1892,7 +1905,7 @@ async function loadCourseData(){
   if(ADM && MY.length){ MY = []; store.del("nh_mytests"); }
   if(!ADM && MY.some(x => !x.cid)){ MY = MY.map(x => x.cid ? x : { ...x, cid: CID }); store.set("nh_mytests", JSON.stringify(MY)); }
   LOADING = true; render();
-  await Promise.all([load(), loadCfg(), loadBoard(), loadCourse(), loadQuizzes(), loadTasks(), loadMsgs(), loadAct(), loadMis(), loadLog()]);
+  await Promise.all([load(), loadCfg(), loadBoard(), loadCourse(), loadQuizzes(), loadTasks(), loadMsgs(), loadAct(), loadMis(), loadLog(), loadInbox()]);
   LOADING = false;
   drawAll(); drawBoard();
 }
@@ -1922,9 +1935,10 @@ function drawPeople(){
   const U = pedit && pedit !== "new" ? PEOPLE.users.find(u => u.id === pedit) : null;
   const cn = id => (PEOPLE.courses.find(c => c.id === id) || {}).name || "?";
   box.innerHTML = `<span class="lbl" style="margin-top:0">Kurse</span>` +
-    PEOPLE.courses.map(c => `<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)"><span><b>${esc(c.name)}</b> <span class="meta">${PEOPLE.users.filter(u => u.courses.includes(c.id)).length} Teilnehmer</span></span>
+    PEOPLE.courses.map(c => `<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)"><span><b>${esc(c.name)}</b> <span class="meta">${[c.fach, c.klasse].filter(Boolean).map(esc).join(" · ")}${c.fach || c.klasse ? " · " : ""}${PEOPLE.users.filter(u => u.courses.includes(c.id)).length} Teilnehmer</span></span>
       <span class="row" style="gap:6px"><button class="g s" data-cr="${esc(c.id)}">Umbenennen</button><button class="r s" data-cd="${esc(c.id)}" aria-label="Kurs löschen">${ic("trash")}</button></span></div>`).join("") +
-    `<div class="row" style="margin-top:8px"><input id="cnew" placeholder="Neuer Kurs, z. B. Mathe 3. Klasse"><button class="s" id="cadd">${ic("plus")}Kurs anlegen</button></div>
+    `<div class="row" style="margin-top:8px"><input id="cnew" placeholder="Neuer Kurs, z. B. Mathe Anna" style="flex:2 1 180px" aria-label="Name des neuen Kurses"><select id="cnewf" style="flex:1 1 140px" aria-label="Fach"><option value="">Fach …</option>${FAECHER.map(x => `<option>${esc(x)}</option>`).join("")}</select><input id="cnewk" placeholder="Klasse, z. B. 3. Klasse" style="flex:1 1 140px" aria-label="Klasse"><button class="s" id="cadd">${ic("plus")}Kurs anlegen</button></div>
+    <p class="meta" style="margin:6px 0 0">Schule, Zweig, Schulbuch, Termine und abgeschaltete Funktionen stellst du pro Kurs ein: oben den Kurs wählen, dann hier in den Einstellungen.</p>
     <span class="lbl">Personen</span>` +
     (PEOPLE.users.length ? PEOPLE.users.map(u => `<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)"><span><b>${esc(u.name)}</b> <span class="meta">${u.courses.length ? u.courses.map(cn).map(esc).join(", ") : "kein Kurs"}${u.email ? " · " + esc(u.email) : ""}</span></span>
       <button class="g s" data-pe="${esc(u.id)}">${ic("edit")}Bearbeiten</button></div>`).join("") : `<p class="meta" style="margin:0">Noch keine Personen.</p>`) +
@@ -1940,7 +1954,7 @@ function drawPeople(){
 $("peoplebox").addEventListener("click", async e => {
   const b = e.target.closest("button"); if(!b) return;
   try{
-    if(b.id === "cadd"){ const n = $("cnew").value.trim(); if(!n) return; await api("/api/admin/course", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ name: n }) }); toast("Kurs angelegt"); await peopleChanged(); }
+    if(b.id === "cadd"){ const n = $("cnew").value.trim(); if(!n) return; await api("/api/admin/course", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ name: n, fach: $("cnewf").value, klasse: $("cnewk").value }) }); toast("Kurs angelegt"); await peopleChanged(); }
     else if(b.dataset.cr){ const c = PEOPLE.courses.find(x => x.id === b.dataset.cr); const n = await askText("Neuer Name des Kurses:", c.name); if(!n || !n.trim()) return; await api("/api/admin/course", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ id: c.id, name: n }) }); await peopleChanged(); }
     else if(b.dataset.cd){ const c = PEOPLE.courses.find(x => x.id === b.dataset.cd); if(!await ask("Kurs „" + c.name + "“ mit allen Dateien, Quizzen, Aufgaben und Abgaben endgültig löschen?", { ok:"Löschen", danger:true })) return; await api("/api/admin/course/" + encodeURIComponent(c.id), { method:"DELETE" }); toast("Kurs gelöscht"); if(CID === c.id) CID = ""; await peopleChanged(); }
     else if(b.id === "padd"){ pedit = "new"; drawPeople(); }
