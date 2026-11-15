@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-title" content="Nachhilfe">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Nachhilfe">
-<script>try{var t=localStorage.getItem('nh_theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>try{var t=localStorage.getItem('nh_theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;var a=localStorage.getItem('nh_accent');if(a)document.documentElement.dataset.accent=a}catch(e){}</script>
 <style>
 :root{--bg:#fafafa;--side:#ffffff;--card:#ffffff;--tx:#171717;--mut:#636b78;--main:#4f46e5;--on:#fff;--ring:#6366f1;--ok:#15803d;--warn:#b45309;--red:#dc2626;--on-s:#fff;--bd:#e5e7eb;--hov:#f3f4f6;--sh:0 1px 2px rgba(16,24,40,.05);--shl:0 12px 32px -8px rgba(16,24,40,.18);color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0f19;--side:#0b0f19;--card:#111827;--tx:#e8eaf0;--mut:#9aa3b2;--main:#818cf8;--on:#0b0f19;--ring:#6366f1;--ok:#4ade80;--warn:#fbbf24;--red:#f87171;--on-s:#0b0f19;--bd:#1f2937;--hov:#182030;--sh:0 1px 2px rgba(0,0,0,.4);--shl:0 16px 40px -8px rgba(0,0,0,.6);color-scheme:dark}}
@@ -168,7 +168,7 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
 .cx>span{font-size:.78rem;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
 .cx select{flex:1;min-width:0;width:auto;padding:6px 10px}
 .cx:has(>select.hide){display:none}
-.badge.soft{background:var(--ring);color:#fff}
+.badge.soft{background:var(--main);color:var(--on)}
 .dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:var(--gap) 28px}
 .dcol{display:flex;flex-direction:column;gap:14px;min-width:0}
 .dcol:last-child:not(.hide){padding-left:28px;border-left:1px solid var(--bd)}
@@ -276,6 +276,37 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
 .msgbar .ico{min-height:42px;min-width:42px}
 .txt{white-space:pre-wrap;overflow-wrap:anywhere}
 #logbox:empty,#simx:empty{display:none}
+
+/* ===== Akzentfarbe ===== */
+:root[data-accent="blue"]{--main:#2563eb;--ring:#3b82f6}
+@media (prefers-color-scheme:dark){:root[data-accent="blue"]:not([data-theme="light"]){--main:#60a5fa;--ring:#3b82f6}}
+:root[data-accent="blue"][data-theme="dark"]{--main:#60a5fa;--ring:#3b82f6}
+:root[data-accent="violet"]{--main:#7c3aed;--ring:#8b5cf6}
+@media (prefers-color-scheme:dark){:root[data-accent="violet"]:not([data-theme="light"]){--main:#a78bfa;--ring:#8b5cf6}}
+:root[data-accent="violet"][data-theme="dark"]{--main:#a78bfa;--ring:#8b5cf6}
+:root[data-accent="pink"]{--main:#db2777;--ring:#ec4899}
+@media (prefers-color-scheme:dark){:root[data-accent="pink"]:not([data-theme="light"]){--main:#f472b6;--ring:#ec4899}}
+:root[data-accent="pink"][data-theme="dark"]{--main:#f472b6;--ring:#ec4899}
+:root[data-accent="red"]{--main:#dc2626;--ring:#ef4444}
+@media (prefers-color-scheme:dark){:root[data-accent="red"]:not([data-theme="light"]){--main:#f87171;--ring:#ef4444}}
+:root[data-accent="red"][data-theme="dark"]{--main:#f87171;--ring:#ef4444}
+:root[data-accent="orange"]{--main:#c2410c;--ring:#f97316}
+@media (prefers-color-scheme:dark){:root[data-accent="orange"]:not([data-theme="light"]){--main:#fb923c;--ring:#f97316}}
+:root[data-accent="orange"][data-theme="dark"]{--main:#fb923c;--ring:#f97316}
+:root[data-accent="green"]{--main:#15803d;--ring:#22c55e}
+@media (prefers-color-scheme:dark){:root[data-accent="green"]:not([data-theme="light"]){--main:#4ade80;--ring:#22c55e}}
+:root[data-accent="green"][data-theme="dark"]{--main:#4ade80;--ring:#22c55e}
+:root[data-accent="teal"]{--main:#0f766e;--ring:#14b8a6}
+@media (prefers-color-scheme:dark){:root[data-accent="teal"]:not([data-theme="light"]){--main:#2dd4bf;--ring:#14b8a6}}
+:root[data-accent="teal"][data-theme="dark"]{--main:#2dd4bf;--ring:#14b8a6}
+:root[data-accent="slate"]{--main:#334155;--ring:#64748b}
+@media (prefers-color-scheme:dark){:root[data-accent="slate"]:not([data-theme="light"]){--main:#cbd5e1;--ring:#94a3b8}}
+:root[data-accent="slate"][data-theme="dark"]{--main:#cbd5e1;--ring:#94a3b8}
+.acdots{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.acdot{width:32px;height:32px;min-height:32px!important;padding:0;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1px var(--bd);background:var(--c)}
+.acdot:hover{filter:none;transform:scale(1.08)}
+.acdot.on{box-shadow:0 0 0 2px var(--tx)}
+@media (max-width:768px){.acdot{width:40px;height:40px;min-height:40px!important}}
 </style>
 </head>
 <body>
@@ -510,7 +541,9 @@ textarea#aout{min-height:260px;font:.88rem/1.5 ui-monospace,Menlo,Consolas,monos
         <span class="lbl" style="margin-top:0">Farbschema</span>
         <div class="seg" id="thseg" role="group" aria-label="Farbschema">
           <button data-th="auto">Automatisch</button><button data-th="dark">Dunkel</button><button data-th="light">Hell</button></div>
-        <p class="meta" style="margin:0">„Automatisch“ folgt der Einstellung deines Geräts. Gilt nur für dieses Gerät.</p>
+        <span class="lbl">Akzentfarbe</span>
+        <div class="acdots" id="acdots" role="group" aria-label="Akzentfarbe"><button class="acdot" data-ac="indigo" style="--c:#6366f1" aria-label="Indigo" title="Indigo"></button><button class="acdot" data-ac="blue" style="--c:#3b82f6" aria-label="Blau" title="Blau"></button><button class="acdot" data-ac="violet" style="--c:#8b5cf6" aria-label="Violett" title="Violett"></button><button class="acdot" data-ac="pink" style="--c:#ec4899" aria-label="Pink" title="Pink"></button><button class="acdot" data-ac="red" style="--c:#ef4444" aria-label="Rot" title="Rot"></button><button class="acdot" data-ac="orange" style="--c:#f97316" aria-label="Orange" title="Orange"></button><button class="acdot" data-ac="green" style="--c:#22c55e" aria-label="Grün" title="Grün"></button><button class="acdot" data-ac="teal" style="--c:#14b8a6" aria-label="Türkis" title="Türkis"></button><button class="acdot" data-ac="slate" style="--c:#64748b" aria-label="Grau" title="Grau"></button></div>
+        <p class="meta" style="margin:0">„Automatisch“ folgt der Einstellung deines Geräts. Farbschema und Akzentfarbe gelten nur für dieses Gerät.</p>
       </div>
       <div class="card"><h3>Backup</h3>
         <p class="meta" style="margin-top:0">Erledigt-Häkchen, Favoriten, Noten, Lernzeit und dein Profil liegen nur auf diesem Gerät. Hier kannst du sie sichern oder wiederherstellen.</p>
@@ -818,6 +851,13 @@ document.querySelectorAll("#thseg button").forEach(b => b.onclick = () => {
   thDraw();
 });
 thDraw();
+function acDraw(){ const cur = document.documentElement.dataset.accent || "indigo"; document.querySelectorAll("#acdots button").forEach(b => { b.classList.toggle("on", b.dataset.ac === cur); b.setAttribute("aria-pressed", b.dataset.ac === cur); }); }
+document.querySelectorAll("#acdots button").forEach(b => b.onclick = () => {
+  const a = b.dataset.ac;
+  if(a === "indigo"){ delete document.documentElement.dataset.accent; store.del("nh_accent"); } else { document.documentElement.dataset.accent = a; store.set("nh_accent", a); }
+  acDraw();
+});
+acDraw();
 
 /* ---------- Dateien ---------- */
 async function load(){
@@ -1055,7 +1095,7 @@ function daysTo(iso){ const d = new Date(iso + "T00:00:00"), n = new Date(); n.s
 let MY = J("nh_mytests", []);
 function termine(){
   const srv = Array.isArray(cfg.tests) ? cfg.tests : (cfg.examDate ? [{ id:"legacy", type:"Schularbeit", label:cfg.examLabel || "", subj:"Mathematik", date:cfg.examDate, note:cfg.note || "" }] : []);
-  return [...srv.map(x => ({ ...x, own:false })), ...MY.map(x => ({ ...x, own:true }))].sort((a,b) => a.date.localeCompare(b.date));
+  return [...srv.map(x => ({ ...x, own:false })), ...(ADM ? [] : MY.filter(x => !x.cid || x.cid === CID)).map(x => ({ ...x, own:true }))].sort((a,b) => a.date.localeCompare(b.date));
 }
 const tName = x => (x.label && x.label.toLowerCase().includes(x.type.toLowerCase())) ? x.label : (x.type + (x.label ? " " + x.label : ""));
 const dayTxt = d => d === 0 ? "heute" : d === 1 ? "morgen" : "in " + d + " Tagen";
@@ -1216,7 +1256,7 @@ $("pwGo").onclick = async () => {
   try{
     const r = await api("/api/login", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ email: $("nm").value, password: $("pw").value }) });
     const prev = store.get("nh_uid");
-    if(prev && prev !== r.uid){ try{ Object.keys(localStorage).filter(k => k.startsWith("nh_") && !["nh_theme","nh_sort"].includes(k)).forEach(k => localStorage.removeItem(k)); }catch(e){} }
+    if(prev && prev !== r.uid){ try{ Object.keys(localStorage).filter(k => k.startsWith("nh_") && !["nh_theme","nh_sort","nh_accent"].includes(k)).forEach(k => localStorage.removeItem(k)); }catch(e){} }
     token = r.token; store.set("nh_token", token); store.set("nh_uid", r.uid); $("pw").value = "";
     if(prev && prev !== r.uid){ location.reload(); return; }
     await boot();
@@ -1306,7 +1346,7 @@ function drawTests(){
       ${ADM && !x.own && !past ? `<button class="g s" data-tp="${esc(x.id)}">${ic("book")}Lernplan${(x.plan || []).length ? " (" + x.plan.length + ")" : ""}</button>` : ""}${canDel ? `<button class="g s" data-td="${esc(x.id)}" data-own="${x.own ? 1 : 0}" aria-label="Löschen">${ic("trash")}</button>` : ""}</div>`; }).join("")
     : `<p class="meta" style="margin:0">Noch keine Termine eingetragen.</p>`)
     + `<h3 style="margin:16px 0 4px">Termin hinzufügen</h3>
-    <p class="meta" style="margin:0 0 4px">${ADM ? "Gilt für alle im Kurs auf allen Geräten." : "Nur für dich auf diesem Gerät."}</p>
+    <p class="meta" style="margin:0 0 4px">${ADM ? "Gilt nur für den Kurs „" + esc((COURSES.find(c => c.id === CID) || {}).name || "") + "“ – für alle Schüler darin. Andere Kurse haben eigene Termine." : "Nur für dich, in diesem Kurs."}</p>
     <div class="row"><select id="tty" aria-label="Art">${TYPEN.map(x => `<option>${x}</option>`).join("")}</select>
       <select id="tsu" aria-label="Fach">${FAECHER.map(x => `<option>${esc(x)}</option>`).join("")}</select></div>
     <div class="row" style="margin-top:8px"><input id="tla" placeholder="Bezeichnung, z. B. 1. M-SA"><input type="date" id="tda" style="max-width:170px"></div>
@@ -1328,7 +1368,7 @@ $("tbox").addEventListener("click", async e => {
   if(!x.date) return toast("Bitte ein Datum wählen.", {err:true});
   if(ADM){
     try{ await saveCfg({ tests: [...(cfg.tests || termine().filter(y => !y.own)), x] }); toast("Termin eingetragen"); }catch(err){ toast(err.message, {err:true}); }
-  } else { MY.push(x); store.set("nh_mytests", JSON.stringify(MY)); drawAll(); toast("Termin eingetragen"); }
+  } else { MY.push({ ...x, cid: CID }); store.set("nh_mytests", JSON.stringify(MY)); drawAll(); toast("Termin eingetragen"); }
 });
 
 /* ---------- KI-Prompt-Generator ---------- */
@@ -1849,6 +1889,8 @@ async function loadCourseData(){
   files = []; QZ = []; TK = []; MSG = []; BOARD = {}; COURSE = { order: [] }; cfg = {};
   if(!CID){ MEMBERS = []; drawSel(); try{ drawAll(); drawBoard(); }catch(e){} return; }
   await loadMembers(); drawSel();
+  if(ADM && MY.length){ MY = []; store.del("nh_mytests"); }
+  if(!ADM && MY.some(x => !x.cid)){ MY = MY.map(x => x.cid ? x : { ...x, cid: CID }); store.set("nh_mytests", JSON.stringify(MY)); }
   LOADING = true; render();
   await Promise.all([load(), loadCfg(), loadBoard(), loadCourse(), loadQuizzes(), loadTasks(), loadMsgs(), loadAct(), loadMis(), loadLog()]);
   LOADING = false;

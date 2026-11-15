@@ -1,5 +1,5 @@
 // Service Worker: App-Hülle offline verfügbar, API immer online, Mitteilungen (Web Push)
-const C = "nh-shell-v14", KEEP = "nh-cfg", SHELL = ["./", "index.html"];
+const C = "nh-shell-v16", KEEP = "nh-cfg", SHELL = ["./", "index.html"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(C).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== C && x !== KEEP).map(x => caches.delete(x)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", e => {
