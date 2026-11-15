@@ -1324,7 +1324,8 @@ function drawSel(){
   const ss = $("ss"); ss.innerHTML = MEMBERS.map(u => `<option value="${esc(u.id)}"${u.id === SUID ? " selected" : ""}>${esc(u.name)}</option>`).join("");
   ss.classList.toggle("hide", !(ADM && MEMBERS.length > 1));
   $("msgto").textContent = SNAME();
-  $("nocourse").classList.toggle("hide", ADM || COURSES.length > 0);
+  $("nocourse").classList.toggle("hide", COURSES.length > 0);
+  $("nocourse").innerHTML = ADM ? `<b>Noch kein Kurs</b><p class="meta" style="margin:4px 0 0">Lege unter Einstellungen → Kurse und Personen einen Kurs an.</p>` : `<b>Noch kein Kurs</b><p class="meta" style="margin:4px 0 0">Du bist noch keinem Kurs zugeteilt. Dein Nachhilfelehrer fügt dich hinzu.</p>`;
 }
 async function loadMembers(){
   if(!ADM){ MEMBERS = []; SUID = MYUID; return; }
@@ -1333,6 +1334,7 @@ async function loadMembers(){
 }
 async function loadCourseData(){
   files = []; QZ = []; TK = []; MSG = []; BOARD = {}; COURSE = { order: [] }; cfg = {};
+  if(!CID){ MEMBERS = []; drawSel(); try{ drawAll(); drawBoard(); }catch(e){} return; }
   await loadMembers(); drawSel();
   await Promise.all([load(), loadCfg(), loadBoard(), loadCourse(), loadQuizzes(), loadTasks(), loadMsgs()]);
   drawAll(); drawBoard();
@@ -1348,7 +1350,7 @@ async function boot(){
   try{ await refreshMe(); }catch(e){ showGate(); return; }
   applyRole();
   if(ROLE === "student" && await syncDown()) return;
-  if(CID) await loadCourseData(); else { drawSel(); }
+  await loadCourseData();
   if(ADM){ loadMail(); loadPeople(); }
   if(ROLE === "student") schedulePush();
 }
@@ -1364,7 +1366,7 @@ function drawPeople(){
   const cn = id => (PEOPLE.courses.find(c => c.id === id) || {}).name || "?";
   box.innerHTML = `<span class="lbl" style="margin-top:0">Kurse</span>` +
     PEOPLE.courses.map(c => `<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)"><span><b>${esc(c.name)}</b> <span class="meta">${PEOPLE.users.filter(u => u.courses.includes(c.id)).length} Teilnehmer</span></span>
-      <span class="row" style="gap:6px"><button class="g s" data-cr="${esc(c.id)}">Umbenennen</button>${c.id === "main" ? "" : `<button class="r s" data-cd="${esc(c.id)}" aria-label="Kurs löschen">${ic("trash")}</button>`}</span></div>`).join("") +
+      <span class="row" style="gap:6px"><button class="g s" data-cr="${esc(c.id)}">Umbenennen</button><button class="r s" data-cd="${esc(c.id)}" aria-label="Kurs löschen">${ic("trash")}</button></span></div>`).join("") +
     `<div class="row" style="margin-top:8px"><input id="cnew" placeholder="Neuer Kurs, z. B. Mathe 3. Klasse"><button class="s" id="cadd">${ic("plus")}Kurs anlegen</button></div>
     <span class="lbl">Personen</span>` +
     (PEOPLE.users.length ? PEOPLE.users.map(u => `<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)"><span><b>${esc(u.name)}</b> <span class="meta">${u.courses.length ? u.courses.map(cn).map(esc).join(", ") : "kein Kurs"}${u.email ? " · " + esc(u.email) : ""}</span></span>
